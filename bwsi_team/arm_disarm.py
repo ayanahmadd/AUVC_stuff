@@ -23,7 +23,7 @@ class ArmDisarm(Node):
             self.get_logger().info(f"Service replied: success={future.result().success}, message='{future.result().message}'")
             start = time.time()
             if boolean_value:
-                while time.time()-start<70:
+                while time.time()-start<82:
                     time.sleep(1)
                 self.arm(False)
         else:
