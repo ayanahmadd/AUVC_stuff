@@ -29,7 +29,7 @@ class AUVMovement(Node):
         msg = ManualControl()
         msg.header.stamp = now.to_msg()
 
-        if elapsed_sec < 59.0:
+        if elapsed_sec < 72.0:
             # Scripted movement
             if self.tick < 3.0:
                 msg.x = 0.0
@@ -38,77 +38,134 @@ class AUVMovement(Node):
                 msg.r = 0.0
                 self.get_logger().info("AUV running move #0!")
 
-            elif self.tick < 8.0:
+            if self.tick < 5.0:
+                msg.x = 0.0
+                msg.y = 0.0
+                msg.z = 0.0
+                msg.r = 0.0
+                self.get_logger().info("Recalibrating...")
+
+            elif self.tick < 10.0:
                 msg.x = 0.0
                 msg.y = 0.0
                 msg.z = -20.0
                 msg.r = -10.0
                 self.get_logger().info("AUV running move #1, part 1!")
 
-            elif self.tick < 13.0:
+            elif self.tick < 12.0:
+                msg.x = 0.0
+                msg.y = 0.0
+                msg.z = 0.0
+                msg.r = 0.0
+                self.get_logger().info("Recalibrating...")
+
+            elif self.tick < 17.0:
                 msg.x = 0.0
                 msg.y = 0.0
                 msg.z = 20.0
                 msg.r = 10.0
                 self.get_logger().info("AUV running move #1, part 2!")
 
-            elif self.tick < 18.0:
+            elif self.tick < 19.0:
+                msg.x = 0.0
+                msg.y = 0.0
+                msg.z = 0.0
+                msg.r = 0.0
+                self.get_logger().info("Recalibrating...")
+
+            elif self.tick < 24.0:
                 msg.x = 20.0
                 msg.y = -20.0
                 msg.z = 0.0
                 msg.r = 0.0
                 self.get_logger().info("AUV running move #2, part 1!")
 
-            elif self.tick < 23.0:
+            elif self.tick < 26.0:
+                msg.x = 0.0
+                msg.y = 0.0
+                msg.z = 0.0
+                msg.r = 0.0
+                self.get_logger().info("Recalibrating...")
+
+            elif self.tick < 28.0:
                 msg.x = 20.0
                 msg.y = 20.0
                 msg.z = 0.0
                 msg.r = 0.0
                 self.get_logger().info("AUV running move #2, part 2!")
 
-            elif self.tick < 28.0:
+            elif self.tick < 30.0:
+                msg.x = 0.0
+                msg.y = 0.0
+                msg.z = 0.0
+                msg.r = 0.0
+                self.get_logger().info("Recalibrating...")
+
+            elif self.tick < 35.0:
                 msg.x = -20.0
                 msg.y = 20.0
                 msg.z = 0.0
                 msg.r = 0.0
                 self.get_logger().info("AUV running move #2, part 3!")
 
-            elif self.tick < 33.0:
+            elif self.tick < 37.0:
+                msg.x = 0.0
+                msg.y = 0.0
+                msg.z = 0.0
+                msg.r = 0.0
+                self.get_logger().info("Recalibrating...")
+
+            elif self.tick < 42.0:
                 msg.x = -20.0
                 msg.y = -20.0
                 msg.z = 0.0
                 msg.r = 0.0
                 self.get_logger().info("AUV running move #2, part 4!")
 
-            elif self.tick < 38.0:
+            elif self.tick < 44.0:
+                msg.x = 0.0
+                msg.y = 0.0
+                msg.z = 0.0
+                msg.r = 0.0
+                self.get_logger().info("Recalibrating...")
+
+            elif self.tick < 49.0:
                 msg.x = 20.0
                 msg.y = 0.0
                 msg.z = 0.0
                 msg.r = 0.0
                 self.get_logger().info("AUV running move #3, part 0!")
 
-            elif self.tick < 43.0:
+            elif self.tick < 51.0:
+                msg.x = 0.0
+                msg.y = 0.0
+                msg.z = 0.0
+                msg.r = 0.0
+                self.get_logger().info("Recalibrating...")
+
+            elif self.tick < 56.0:
                 msg.x = -20.0
                 msg.y = 0.0
                 msg.z = 0.0
                 msg.r = 25.0
                 self.get_logger().info("AUV running move #3, part 1!")
 
-            elif self.tick < 48.0:
+
+            elif self.tick < 61.0:
                 msg.x = -20.0
                 msg.y = 0.0
                 msg.z = 0.0
                 msg.r = -25.0
                 self.get_logger().info("AUV running move #3, part 2!")
 
-            elif self.tick < 53.0:
+            elif self.tick < 66.0:
                 msg.x = -20.0
                 msg.y = 0.0
                 msg.z = 0.0
                 msg.r = 25.0
                 self.get_logger().info("AUV running move #3, part 1 again!")
 
-            elif self.tick < 58.0:
+            elif self.tick < 71.0:
                 msg.x = -20.0
                 msg.y = 0.0
                 msg.z = 0.0
