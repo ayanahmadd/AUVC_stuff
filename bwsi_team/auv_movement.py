@@ -1,8 +1,9 @@
-#Testing changes
+# Testing changes
 import rclpy
 from rclpy.node import Node
 from mavros_msgs.msg import ManualControl
 import random
+import time
 
 class AUVMovement(Node):
     def __init__(self):
@@ -15,7 +16,7 @@ class AUVMovement(Node):
         self.beat_counter = 0
         self.in_random_mode = False
 
-        self.start_time = self.get_clock().now()
+        self.start_time = time.time()
         self.last_switch_time = self.start_time
         self.switch_interval_sec = 5.0
         self.current_axes = self.get_random_axes(exclude=[])
@@ -23,11 +24,10 @@ class AUVMovement(Node):
         self.timer = self.create_timer(1.0, self.run_sequence)  # 1 Hz
 
     def run_sequence(self):
-        now = self.get_clock().now()
-        elapsed_sec = (now - self.start_time).nanoseconds / 1e9
+        now = time.time()
+        elapsed_sec = now - self.start_time
 
         msg = ManualControl()
-        msg.header.stamp = now.to_msg()
 
         if elapsed_sec < 72.0:
             # Scripted movement
@@ -181,7 +181,7 @@ class AUVMovement(Node):
                 self.get_logger().info("🔀 Switching to RANDOM movement mode!")
                 self.last_switch_time = now
 
-            time_since_last_switch = (now - self.last_switch_time).nanoseconds / 1e9
+            time_since_last_switch = now - self.last_switch_time
             if time_since_last_switch >= self.switch_interval_sec:
                 prev_axes = self.current_axes
                 self.current_axes = self.get_random_axes(exclude=prev_axes)
@@ -190,7 +190,7 @@ class AUVMovement(Node):
 
             msg.x = 0.0
             msg.y = 0.0
-            msg.z = 20.0  # neutral throttle
+            msg.z = 20.0
             msg.r = 0.0
 
             amp = 400.0 * self.swing

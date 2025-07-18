@@ -10,7 +10,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-    ],
+        ('share/bwsi_team/launch', ['launch/example.launch.yaml']),
+],
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='blue',
@@ -20,8 +21,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'arm_disarm = bwsi_team.arm_disarm:main',
-            'auv_movement = bwsi_team.auv_movement:main',
-        ],
+        'auv_movement = bwsi_team.auv_movement:main',
+        'arm_disarm = bwsi_team.arm_disarm:main',
+    ],
     },
 )
