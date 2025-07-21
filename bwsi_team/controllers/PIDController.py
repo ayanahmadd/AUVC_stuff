@@ -1,7 +1,3 @@
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import Float64
-from mavros_msgs.msg import ManualControl
 
 class PIDController:
     def __init__(self, kp, ki, kd, setpoint, dt=0.1):
