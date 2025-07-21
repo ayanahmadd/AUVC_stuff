@@ -21,9 +21,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-        'auv_movement = bwsi_team.TestMovement:main',
-        'arm_disarm = bwsi_team.ArmDisarm:main',
-        'dance_movement = bwsi_team.DanceMovement:main',
+        'move = bwsi_team.TestMovement:main',
+        'armer = bwsi_team.ArmDisarm:main',
+        'dance = bwsi_team.DanceMovement:main',
     ],
     },
 )
