@@ -12,20 +12,20 @@ class AUVMovement(Node):
         self.get_logger().info("🚀 AUVMovement node has started.")
 
         self.tick = 0.0
-        self.swing = 1
-        self.beat_counter = 0
-        self.in_random_mode = False
+        # self.swing = 1
+        # self.beat_counter = 0
+        # self.in_random_mode = False
 
         self.start_time = time.time()
-        self.last_switch_time = self.start_time
-        self.switch_interval_sec = 5.0
-        self.current_axes = self.get_random_axes(exclude=[])
+        # self.last_switch_time = self.start_time
+        # self.switch_interval_sec = 5.0
+        # self.current_axes = self.get_random_axes(exclude=[])
 
         self.timer = self.create_timer(1.0, self.run_sequence)  # 1 Hz
 
     def run_sequence(self):
-        now = time.time()
-        elapsed_sec = now - self.start_time
+        self.now = time.time()
+        elapsed_sec = self.now - self.start_time
 
         msg = ManualControl()
 
@@ -73,7 +73,11 @@ class AUVMovement(Node):
                 msg.r = 0.0
                 self.get_logger().info("Recalibrating...")
 
+<<<<<<< HEAD
             elif 19.0 <= self.tick < 24.0:
+=======
+            if 19.0 <= self.tick < 24.0:
+>>>>>>> b4b6c70 (Pushing all the code updated for robot dance to main repo)
                 msg.x = 20.0
                 msg.y = -20.0
                 msg.z = 0.0
@@ -101,7 +105,11 @@ class AUVMovement(Node):
                 msg.r = 0.0
                 self.get_logger().info("Recalibrating...")
 
+<<<<<<< HEAD
             elif 30.0 <= self.tick < 35.0:
+=======
+            elif 30.0<= self.tick < 35.0:
+>>>>>>> b4b6c70 (Pushing all the code updated for robot dance to main repo)
                 msg.x = -20.0
                 msg.y = 20.0
                 msg.z = 0.0
@@ -143,7 +151,11 @@ class AUVMovement(Node):
                 msg.r = 0.0
                 self.get_logger().info("Recalibrating...")
 
+<<<<<<< HEAD
             elif 51.0 <= self.tick < 56.0:
+=======
+            elif 56.0 <= self.tick < 56.0:
+>>>>>>> b4b6c70 (Pushing all the code updated for robot dance to main repo)
                 msg.x = -20.0
                 msg.y = 0.0
                 msg.z = 0.0
@@ -174,50 +186,50 @@ class AUVMovement(Node):
 
             self.tick += 1.0
 
-        else:
-            # Random movement mode
-            if not self.in_random_mode:
-                self.in_random_mode = True
-                self.get_logger().info("🔀 Switching to RANDOM movement mode!")
-                self.last_switch_time = now
+    #     else:
+    #         # Random movement mode
+    #         if not self.in_random_mode:
+    #             self.in_random_mode = True
+    #             self.get_logger().info("🔀 Switching to RANDOM movement mode!")
+    #             self.last_switch_time = now
 
-            time_since_last_switch = now - self.last_switch_time
-            if time_since_last_switch >= self.switch_interval_sec:
-                prev_axes = self.current_axes
-                self.current_axes = self.get_random_axes(exclude=prev_axes)
-                self.last_switch_time = now
-                self.get_logger().info(f"🎭 New movement pattern: {self.current_axes}")
+    #         time_since_last_switch = now - self.last_switch_time
+    #         if time_since_last_switch >= self.switch_interval_sec:
+    #             prev_axes = self.current_axes
+    #             self.current_axes = self.get_random_axes(exclude=prev_axes)
+    #             self.last_switch_time = now
+    #             self.get_logger().info(f"🎭 New movement pattern: {self.current_axes}")
 
-            msg.x = 0.0
-            msg.y = 0.0
-            msg.z = 20.0
-            msg.r = 0.0
+    #         msg.x = 0.0
+    #         msg.y = 0.0
+    #         msg.z = 20.0
+    #         msg.r = 0.0
 
-            amp = 400.0 * self.swing
+    #         amp = 400.0 * self.swing
 
-            if 'x' in self.current_axes:
-                msg.x = amp
-            if 'y' in self.current_axes:
-                msg.y = amp
-            if 'z' in self.current_axes:
-                msg.z = 500.0 + (100.0 * self.swing)
-            if 'r' in self.current_axes:
-                msg.r = amp
+    #         if 'x' in self.current_axes:
+    #             msg.x = amp
+    #         if 'y' in self.current_axes:
+    #             msg.y = amp
+    #         if 'z' in self.current_axes:
+    #             msg.z = 500.0 + (100.0 * self.swing)
+    #         if 'r' in self.current_axes:
+    #             msg.r = 0
 
-            self.get_logger().info(
-                f"🎵 Beat {self.beat_counter+1}: moving {self.current_axes} ({'→' if self.swing > 0 else '←'})"
-            )
-            self.swing *= -1
-            self.beat_counter += 1
+    #         self.get_logger().info(
+    #             f"🎵 Beat {self.beat_counter+1}: moving {self.current_axes} ({'→' if self.swing > 0 else '←'})"
+    #         )
+    #         self.swing *= -1
+    #         self.beat_counter += 1
 
-        self.publisher.publish(msg)
+            self.publisher.publish(msg)
 
-    def get_random_axes(self, exclude):
-        all_axes = ['x', 'y', 'z', 'r']
-        new_set = []
-        while not new_set or set(new_set) == set(exclude):
-            new_set = random.sample(all_axes, k=random.randint(1, 4))
-        return new_set
+    # def get_random_axes(self, exclude):
+    #     all_axes = ['x', 'y', 'z', 'r']
+    #     new_set = []
+    #     while not new_set or set(new_set) == set(exclude):
+    #         new_set = random.sample(all_axes, k=random.randint(1, 4))
+    #     return new_set
 
 def main(args=None):
     rclpy.init(args=args)

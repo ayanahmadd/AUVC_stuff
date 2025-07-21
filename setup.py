@@ -23,6 +23,7 @@ setup(
         'console_scripts': [
         'auv_movement = bwsi_team.auv_movement:main',
         'arm_disarm = bwsi_team.arm_disarm:main',
+        'dance_movement = bwsi_team.dance_movement:main',
     ],
     },
 )
