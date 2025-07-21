@@ -1,0 +1,11 @@
+launch:
+
+- node:
+    pkg: "bwsi_team"
+    exec: "arm_disarm"
+    name: "arm_disarm_node"
+
+- node:
+    pkg: "bwsi_team"
+    exec: "dance_movement"
+    name: "dance_movement_node"
