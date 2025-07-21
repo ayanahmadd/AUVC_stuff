@@ -73,11 +73,7 @@ class AUVMovement(Node):
                 msg.r = 0.0
                 self.get_logger().info("Recalibrating...")
 
-<<<<<<< HEAD
             elif 19.0 <= self.tick < 24.0:
-=======
-            if 19.0 <= self.tick < 24.0:
->>>>>>> b4b6c70 (Pushing all the code updated for robot dance to main repo)
                 msg.x = 20.0
                 msg.y = -20.0
                 msg.z = 0.0
@@ -105,11 +101,7 @@ class AUVMovement(Node):
                 msg.r = 0.0
                 self.get_logger().info("Recalibrating...")
 
-<<<<<<< HEAD
             elif 30.0 <= self.tick < 35.0:
-=======
-            elif 30.0<= self.tick < 35.0:
->>>>>>> b4b6c70 (Pushing all the code updated for robot dance to main repo)
                 msg.x = -20.0
                 msg.y = 20.0
                 msg.z = 0.0
@@ -151,11 +143,7 @@ class AUVMovement(Node):
                 msg.r = 0.0
                 self.get_logger().info("Recalibrating...")
 
-<<<<<<< HEAD
             elif 51.0 <= self.tick < 56.0:
-=======
-            elif 56.0 <= self.tick < 56.0:
->>>>>>> b4b6c70 (Pushing all the code updated for robot dance to main repo)
                 msg.x = -20.0
                 msg.y = 0.0
                 msg.z = 0.0
