@@ -1,5 +1,6 @@
 import rclpy
 from rclpy.node import Node
+from std_msgs.msg import Float64
 from sensor_msgs.msg import FluidPressure
 
 class ConvertToDepth(Node):
@@ -13,12 +14,26 @@ class ConvertToDepth(Node):
             10              # QOS (will be covered later)
         )
 
+        self.pub = self.create_publisher(
+            Float64, #type
+            "/depth",
+            10
+        )
+
         self.get_logger().info("initialized pressure converter node")
 
     def convert_to_depth(self, msg, base_pressure = 101325.0, base_density = 1000.0, gravity = 9.8):
-        depth = (msg.fluid_pressure - base_pressure)/(gravity*base_density)
-        self.get_logger().info(f"Depth reading: {depth} meters!")
-        return depth
+        depth_meters = (msg.fluid_pressure - base_pressure)/(gravity*base_density)
+        depth_feet = depth_meters * 3.28084
+        self.get_logger().info(f"Depth reading: {depth_feet} feet!")
+        return depth_feet
+    
+    def publish_depth(self, msg):
+        depth = self.convert_to_depth(msg)
+
+        depth_msg = Float64()
+        depth_msg.data = depth
+        self.depth_pub.publish(depth_msg)
 
 def main(args=None):
     rclpy.init(args=args)
