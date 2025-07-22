@@ -7,5 +7,5 @@ launch:
 
 - node:
     pkg: "bwsi_team"
-    exec: "dance_movement"
-    name: "dance_movement_node"
+    exec: "heading_pid_node"
+    name: "heading_pid_stuff"

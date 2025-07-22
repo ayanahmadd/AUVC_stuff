@@ -21,9 +21,11 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-        'move = bwsi_team.TestMovement:main',
-        'armer = bwsi_team.ArmDisarm:main',
-        'dance = bwsi_team.DanceMovement:main',
-    ],
+            'auv_movement    = bwsi_team.auv_movement:main',
+            'arm_disarm      = bwsi_team.arm_disarm:main',
+            'dance_movement  = bwsi_team.dance_movement:main',
+            'heading_pid_node = bwsi_team.PID_heading:main',  # ← add this line
+        ],
     },
 )
+
