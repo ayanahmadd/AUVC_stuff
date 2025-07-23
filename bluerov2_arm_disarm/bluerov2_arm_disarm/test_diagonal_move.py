@@ -14,11 +14,11 @@ class AUVMovement(Node):
     def run_sequence(self):
         msg = ManualControl()
 
-        msg.x = 0.0
+        msg.x = 30.0
         msg.y = 0.0
-        msg.z = -10.0
-        msg.r = 20.0
-        self.get_logger().info("AUV rotate & sink!")
+        msg.z = 0.0
+        msg.r = 0.0
+        self.get_logger().info("AUV movement")
 
         self.publisher.publish(msg)
 

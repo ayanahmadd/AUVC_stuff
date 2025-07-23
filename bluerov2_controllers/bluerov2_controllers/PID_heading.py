@@ -12,7 +12,7 @@ class HeadingLockOnly(Node):
 
         # ── PID Tuning ──
         self.Kp = 2.0
-        self.Ki = 0.05
+        self.Ki = 0.1
         self.Kd = 0.75
         self.deadband = 0.5
         self.int_thresh = 15.0
