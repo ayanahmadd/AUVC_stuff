@@ -25,6 +25,10 @@ class ConvertToDepth(Node):
     def convert_to_depth(self, msg, base_pressure=101325.0, base_density=1000.0, gravity=9.8):
         depth_meters = (msg.fluid_pressure - base_pressure) / (gravity * base_density)
         depth_feet = depth_meters * 3.28084
+
+        if depth_meters <= 0:
+            depth_meters = 0.0
+
         self.get_logger().info(f"Depth reading: {depth_meters:.2f} meters!")
 
         depth_msg = Float64()
