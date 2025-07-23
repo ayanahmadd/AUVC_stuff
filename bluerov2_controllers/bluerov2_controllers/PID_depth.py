@@ -47,31 +47,7 @@ class DepthPIDController(Node):
         self.get_logger().info(f"Current depth: {self.current_depth:.2f} feet")
         return self.current_depth
 
-
-    # def depth_callback(self, msg: FluidPressure):
-    #     """Convert raw fluid_pressure to depth in meters, zeroed on first read."""
-    #     p = msg.fluid_pressure
-
-    #     # On first valid pressure, capture baseline atmospheric pressure
-    #     if self.base_pressure is None:
-    #         self.base_pressure = p
-    #         self.get_logger().info(
-    #             f"Baseline pressure = {self.base_pressure:.2f} Pa (zero depth)"
-    #         )
-
-    #     dp = p - self.base_pressure
-    #     rho = 1000.0   # kg/m³
-    #     g   = 9.8      # m/s²
-    #     self.depth = dp / (rho * g)
-
-    #     self.get_logger().debug(
-    #         f"Pressure {p:.0f} Pa → ΔP {dp:.0f} Pa → depth {self.depth:.3f} m"
-    #     )
-
     def control_loop(self):
-        # don’t run until we have a baseline
-        # if self.base_pressure is None:
-        #     return
 
         # run PID on the current depth
         thrust = self.pid.compute(self.current_depth)
