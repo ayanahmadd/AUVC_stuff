@@ -17,7 +17,7 @@ class DepthPIDController(Node):
 
         # --- State ---
         # self.base_pressure = None   # will hold “one atmosphere” at start
-        self.depth = 0.0
+        self.current_depth = 0.0
 
         # --- Publishers & Subscribers ---
         # Control output
@@ -74,7 +74,7 @@ class DepthPIDController(Node):
         #     return
 
         # run PID on the current depth
-        thrust = self.pid.compute(self.depth)
+        thrust = self.pid.compute(self.current_depth)
 
         # clamp into [-1, 1]
         # thrust = max(min(thrust, 1.0), -1.0)
