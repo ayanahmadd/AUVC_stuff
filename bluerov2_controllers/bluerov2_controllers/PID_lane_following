@@ -21,14 +21,14 @@ class StickToClosestLane(Node):
         self.pid = PIDController.PIDController(kp=70.0, ki=2.5, kd=5,
                                  setpoint=0.0, dt=0.1)
 
-        self.sub = self.create_subscription(
+        self.dir_sub = self.create_subscription(
             String,        # the message type
             "/lane_direction",    # the topic name,
             self.move_that_direction,  # the subscription's callback method
             10              # QOS (will be covered later)
         )
 
-        self.sub = self.create_subscription(
+        self.slope_sub = self.create_subscription(
             Float64,        # the message type
             "/lane_slope",    # the topic name,
             self.pid_slope,  # the subscription's callback method

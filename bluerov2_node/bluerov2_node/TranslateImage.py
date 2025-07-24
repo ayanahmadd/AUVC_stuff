@@ -43,7 +43,7 @@ class ImageToCode(Node):
         )
 
         # Timer to process image regularly
-        self.timer = self.create_timer(0.1, self.process_lane_info)  # 5Hz
+        self.timer = self.create_timer(0.1, self.process_lane_info)  # 10Hz
 
         self.get_logger().info("ImageToCode node initialized.")
 
