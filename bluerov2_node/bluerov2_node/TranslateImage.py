@@ -19,6 +19,7 @@ class ImageToCode(Node):
         super().__init__("bluerov2_camera_subscriber")
 
         self.latest_image = None
+        self.bridge = CvBridge()
 
         self.sub = self.create_subscription(
             Image,        # the message type
@@ -54,7 +55,7 @@ class ImageToCode(Node):
             return
         
         else:
-            cv_image = CvBridge().imgmsg_to_cv2(self.latest_image, desired_encoding='bgr8')
+            cv_image = self.bridge.imgmsg_to_cv2(self.latest_image, desired_encoding='bgr8')
 
             lines = lane_detection_functions.detect_lines(cv_image)
             
@@ -65,13 +66,14 @@ class ImageToCode(Node):
                 self.get_logger().info("Could not compute best lane.")
                 return
 
-            center_slope, center_intercept = lane_following.get_lane_center(lanes)  #Automatically filters for the closest lane within the function
+            center_slope, center_intercept = lane_following.get_lane_center(lanes)  #Automatically filters for the best_lane within the function
             if center_slope is None or center_intercept is None:
                 self.get_logger().info("Could not compute lane center.")
                 return
             
             wanted_direction = lane_following.recommend_direction(center_intercept, center_slope)
             
+            self.get_logger().info(f"Direction: {wanted_direction}, Slope: {center_slope}")
             self.dir_pub.publish(String(data=wanted_direction))
             self.slope_pub.publish(Float64(data=center_slope))
 

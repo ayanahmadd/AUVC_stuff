@@ -14,7 +14,8 @@ def detect_lines(img, threshold1=50, threshold2=150, apertureSize=3, minLineLeng
             maxLineGap = maxLineGap
         )
         return lines
-    
+
+#Not needed in moving ROV to line process    
 def draw_lines(img, lines, color=(0, 255, 0)):
             imgcopy = img.copy()
             if lines is not None:
@@ -60,6 +61,8 @@ def detect_lanes(lines, slope_threshold=0.1, intercept_threshold=50):
 
     return lanes
 
+
+#Not needed in moving ROV to line process    
 def draw_lanes(img, lanes):
     img_copy = img.copy()
     colors = [(255, 0, 0), (0, 255, 255), (255, 0, 255), (0, 128, 255)]
