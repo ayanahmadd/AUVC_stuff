@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
+
+from sensor_msgs.msg import Image
 from std_msgs.msg import Float64MultiArray
 from mavros_msgs.msg import ManualControl
 from bluerov2_controllers import PIDController
+from cv_bridge import CvBridge
 
 class StickToClosestLane(Node):
     def __init__(self):
@@ -16,6 +19,17 @@ class StickToClosestLane(Node):
         self.lat_pid = PIDController(kp=70.0, ki=2.5, kd=5.0,
                                      setpoint=0.0, dt=0.1)
 
+        # will be set once we see the first image
+        self.image_width = None
+
+        # Bridge for image messages
+        self.bridge = CvBridge()
+
+        # Subscribe to camera so we know width
+        self.create_subscription(
+            Image, '/camera/image_raw', self._image_cb, 10
+        )
+
         # Subscribe to best_lane [slope, angle, x_center]
         self.create_subscription(
             Float64MultiArray,
@@ -26,29 +40,45 @@ class StickToClosestLane(Node):
 
         self.pub = self.create_publisher(ManualControl, '/manual_control', 10)
 
+        # Latest sensor inputs
         self._latest_slope = None   # from best_lane[0]
-        self._latest_center = None  # from best_lane[2]
-        self.forward_speed = 20    # thrust once aligned & centered
+        self._latest_offset = None  # normalized in (–1…1)
+        self.forward_speed = 20     # thrust once aligned & centered
 
         self.create_timer(0.1, self.control_loop)
-        self.get_logger().info("StickToClosestLane ready, listening on /lane_detector/best_lane")
+
+        self.get_logger().info("StickToClosestLane ready. Listening on /camera/image_raw and /lane_detector/best_lane")
+
+    def _image_cb(self, img_msg: Image):
+        # Grab real image width for offset normalization
+        if self.image_width is None:
+            self.image_width = img_msg.width
+            self.get_logger().info(f"Got image width: {self.image_width}")
 
     def lane_cb(self, msg: Float64MultiArray):
         data = msg.data
-        if len(data) >= 3:
-            slope, _, x_center = data
-            self._latest_slope = float(slope)
-            # compute normalized offset: (x_center - image_center) / (image_width/2)
-            # assume image_width known or passed in; here hardcode 640:
-            self._latest_offset = (x_center - 640/2) / (640/2)
-        else:
+        if len(data) < 3:
             self.get_logger().warn("best_lane array too short")
-
-    def control_loop(self):
-        if self._latest_slope is None or self._latest_offset is None:
             return
 
-        # Stage 1: lateral until centered
+        slope, _, x_center = data
+        self._latest_slope = float(slope)
+
+        if self.image_width is None:
+            self.get_logger().warn("Image width unknown, skipping offset")
+            return
+
+        # normalize offset: center at 0, range ±1
+        half = self.image_width / 2.0
+        self._latest_offset = (x_center - half) / half
+
+    def control_loop(self):
+        if self._latest_slope is None:
+            return
+        if self._latest_offset is None:
+            return
+
+        # Stage 1: lateral until centered
         centered = abs(self._latest_offset) < 0.05
         aligned  = abs(self._latest_slope) < 0.1
 
@@ -56,7 +86,7 @@ class StickToClosestLane(Node):
         r_cmd = self.yaw_pid.compute(self._latest_slope)   if centered and not aligned else 0.0
         x_cmd = self.forward_speed if centered and aligned else 0.0
 
-        # clamp
+        # clamp into [-1, +1]
         y_cmd = max(min(y_cmd, 1.0), -1.0)
         r_cmd = max(min(r_cmd, 1.0), -1.0)
 
