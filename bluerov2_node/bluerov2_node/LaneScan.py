@@ -13,7 +13,11 @@ class LaneDetectorNode(Node):
         self.pub = self.create_publisher(Float32, '/lane_angle', 10)
         self.bridge = CvBridge()
 
+        self.get_logger().info("Node initialized properly!")
+
     def img_cb(self, msg):
+        self.get_logger().info("Ladies and gents we have entered the callback method.")
+
         img = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
         h, w = img.shape[:2]
 
@@ -26,6 +30,7 @@ class LaneDetectorNode(Node):
         lines = cv2.HoughLinesP(edges, 1, np.pi/180, 60, minLineLength=50, maxLineGap=30)
 
         if lines is None:
+            self.get_logger().info("Wow it really ran through and returned none...")
             return
 
         angles = []
@@ -41,6 +46,7 @@ class LaneDetectorNode(Node):
         msg_out = Float32()
         msg_out.data = avg_angle
         self.pub.publish(msg_out)
+        self.get_logger().info("Yep the node is properly publishing the message!")
 
 
 def main():

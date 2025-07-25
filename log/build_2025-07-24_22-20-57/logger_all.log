@@ -1,0 +1,311 @@
+[1.229s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--packages-select', 'bluerov2_node']
+[1.229s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=4, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=['bluerov2_node'], packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0xffff8bc76990>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffff8bc76720>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffff8bc76720>>, mixin_verb=('build',))
+[1.501s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.502s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.502s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.502s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.502s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[1.503s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.503s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/zguo27/auvc_ws/src/AUVC_stuff'
+[1.504s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.504s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.504s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.505s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[1.505s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[1.505s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[1.505s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[1.506s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.506s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[1.673s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[1.673s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[1.673s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[1.673s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[1.674s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[1.674s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_arm_disarm) by extensions ['ignore', 'ignore_ament_install']
+[1.675s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_arm_disarm) by extension 'ignore'
+[1.675s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_arm_disarm) by extension 'ignore_ament_install'
+[1.676s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_arm_disarm) by extensions ['colcon_pkg']
+[1.676s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_arm_disarm) by extension 'colcon_pkg'
+[1.676s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_arm_disarm) by extensions ['colcon_meta']
+[1.676s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_arm_disarm) by extension 'colcon_meta'
+[1.676s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_arm_disarm) by extensions ['ros']
+[1.676s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_arm_disarm) by extension 'ros'
+[1.691s] DEBUG:colcon.colcon_core.package_identification:Package 'bluerov2_arm_disarm' with type 'ros.ament_python' and name 'bluerov2_arm_disarm'
+[1.692s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_controllers) by extensions ['ignore', 'ignore_ament_install']
+[1.692s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_controllers) by extension 'ignore'
+[1.693s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_controllers) by extension 'ignore_ament_install'
+[1.693s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_controllers) by extensions ['colcon_pkg']
+[1.693s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_controllers) by extension 'colcon_pkg'
+[1.693s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_controllers) by extensions ['colcon_meta']
+[1.694s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_controllers) by extension 'colcon_meta'
+[1.694s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_controllers) by extensions ['ros']
+[1.694s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_controllers) by extension 'ros'
+[1.698s] DEBUG:colcon.colcon_core.package_identification:Package 'bluerov2_controllers' with type 'ros.ament_python' and name 'bluerov2_controllers'
+[1.699s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_launchers) by extensions ['ignore', 'ignore_ament_install']
+[1.699s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_launchers) by extension 'ignore'
+[1.700s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_launchers) by extension 'ignore_ament_install'
+[1.700s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_launchers) by extensions ['colcon_pkg']
+[1.700s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_launchers) by extension 'colcon_pkg'
+[1.700s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_launchers) by extensions ['colcon_meta']
+[1.701s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_launchers) by extension 'colcon_meta'
+[1.701s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_launchers) by extensions ['ros']
+[1.701s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_launchers) by extension 'ros'
+[1.706s] DEBUG:colcon.colcon_core.package_identification:Package 'bluerov2_launchers' with type 'ros.ament_python' and name 'bluerov2_launchers'
+[1.707s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_node) by extensions ['ignore', 'ignore_ament_install']
+[1.707s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_node) by extension 'ignore'
+[1.707s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_node) by extension 'ignore_ament_install'
+[1.708s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_node) by extensions ['colcon_pkg']
+[1.708s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_node) by extension 'colcon_pkg'
+[1.708s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_node) by extensions ['colcon_meta']
+[1.708s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_node) by extension 'colcon_meta'
+[1.709s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_node) by extensions ['ros']
+[1.709s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_node) by extension 'ros'
+[1.713s] DEBUG:colcon.colcon_core.package_identification:Package 'bluerov2_node' with type 'ros.ament_python' and name 'bluerov2_node'
+[1.714s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extensions ['ignore', 'ignore_ament_install']
+[1.714s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extension 'ignore'
+[1.715s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extension 'ignore_ament_install'
+[1.715s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extensions ['colcon_pkg']
+[1.715s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extension 'colcon_pkg'
+[1.716s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extensions ['colcon_meta']
+[1.716s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extension 'colcon_meta'
+[1.716s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extensions ['ros']
+[1.716s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extension 'ros'
+[1.716s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extensions ['cmake', 'python']
+[1.717s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extension 'cmake'
+[1.717s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extension 'python'
+[1.717s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extensions ['python_setup_py']
+[1.717s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv) by extension 'python_setup_py'
+[1.718s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv/log) by extensions ['ignore', 'ignore_ament_install']
+[1.718s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv/log) by extension 'ignore'
+[1.718s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_opencv/log) ignored
+[1.719s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_testers) by extensions ['ignore', 'ignore_ament_install']
+[1.719s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_testers) by extension 'ignore'
+[1.720s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_testers) by extension 'ignore_ament_install'
+[1.720s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_testers) by extensions ['colcon_pkg']
+[1.720s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_testers) by extension 'colcon_pkg'
+[1.720s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_testers) by extensions ['colcon_meta']
+[1.721s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_testers) by extension 'colcon_meta'
+[1.721s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_testers) by extensions ['ros']
+[1.721s] Level 1:colcon.colcon_core.package_identification:_identify(bluerov2_testers) by extension 'ros'
+[1.725s] DEBUG:colcon.colcon_core.package_identification:Package 'bluerov2_testers' with type 'ros.ament_python' and name 'bluerov2_testers'
+[1.725s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[1.726s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[1.726s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[1.726s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extensions ['ignore', 'ignore_ament_install']
+[1.727s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extension 'ignore'
+[1.727s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extension 'ignore_ament_install'
+[1.728s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extensions ['colcon_pkg']
+[1.728s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extension 'colcon_pkg'
+[1.728s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extensions ['colcon_meta']
+[1.728s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extension 'colcon_meta'
+[1.728s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extensions ['ros']
+[1.728s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extension 'ros'
+[1.729s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extensions ['cmake', 'python']
+[1.729s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extension 'cmake'
+[1.729s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extension 'python'
+[1.729s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extensions ['python_setup_py']
+[1.730s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team) by extension 'python_setup_py'
+[1.730s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extensions ['ignore', 'ignore_ament_install']
+[1.730s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extension 'ignore'
+[1.731s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extension 'ignore_ament_install'
+[1.731s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extensions ['colcon_pkg']
+[1.731s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extension 'colcon_pkg'
+[1.731s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extensions ['colcon_meta']
+[1.732s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extension 'colcon_meta'
+[1.732s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extensions ['ros']
+[1.732s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extension 'ros'
+[1.732s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extensions ['cmake', 'python']
+[1.733s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extension 'cmake'
+[1.733s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extension 'python'
+[1.733s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extensions ['python_setup_py']
+[1.733s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/__pycache__) by extension 'python_setup_py'
+[1.734s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extensions ['ignore', 'ignore_ament_install']
+[1.734s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extension 'ignore'
+[1.734s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extension 'ignore_ament_install'
+[1.735s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extensions ['colcon_pkg']
+[1.735s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extension 'colcon_pkg'
+[1.735s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extensions ['colcon_meta']
+[1.735s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extension 'colcon_meta'
+[1.735s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extensions ['ros']
+[1.735s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extension 'ros'
+[1.736s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extensions ['cmake', 'python']
+[1.736s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extension 'cmake'
+[1.736s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extension 'python'
+[1.736s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extensions ['python_setup_py']
+[1.737s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code) by extension 'python_setup_py'
+[1.737s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extensions ['ignore', 'ignore_ament_install']
+[1.737s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extension 'ignore'
+[1.738s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extension 'ignore_ament_install'
+[1.738s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extensions ['colcon_pkg']
+[1.738s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extension 'colcon_pkg'
+[1.738s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extensions ['colcon_meta']
+[1.738s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extension 'colcon_meta'
+[1.739s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extensions ['ros']
+[1.739s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extension 'ros'
+[1.739s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extensions ['cmake', 'python']
+[1.739s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extension 'cmake'
+[1.740s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extension 'python'
+[1.740s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extensions ['python_setup_py']
+[1.740s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/controllers) by extension 'python_setup_py'
+[1.740s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extensions ['ignore', 'ignore_ament_install']
+[1.741s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extension 'ignore'
+[1.741s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extension 'ignore_ament_install'
+[1.741s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extensions ['colcon_pkg']
+[1.742s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extension 'colcon_pkg'
+[1.742s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extensions ['colcon_meta']
+[1.742s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extension 'colcon_meta'
+[1.742s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extensions ['ros']
+[1.742s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extension 'ros'
+[1.743s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extensions ['cmake', 'python']
+[1.743s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extension 'cmake'
+[1.743s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extension 'python'
+[1.743s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extensions ['python_setup_py']
+[1.744s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/launch) by extension 'python_setup_py'
+[1.744s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extensions ['ignore', 'ignore_ament_install']
+[1.744s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extension 'ignore'
+[1.745s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extension 'ignore_ament_install'
+[1.745s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extensions ['colcon_pkg']
+[1.745s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extension 'colcon_pkg'
+[1.745s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extensions ['colcon_meta']
+[1.745s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extension 'colcon_meta'
+[1.746s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extensions ['ros']
+[1.746s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extension 'ros'
+[1.746s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extensions ['cmake', 'python']
+[1.746s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extension 'cmake'
+[1.747s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extension 'python'
+[1.747s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extensions ['python_setup_py']
+[1.747s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/nodes) by extension 'python_setup_py'
+[1.748s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extensions ['ignore', 'ignore_ament_install']
+[1.748s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extension 'ignore'
+[1.748s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extension 'ignore_ament_install'
+[1.748s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extensions ['colcon_pkg']
+[1.749s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extension 'colcon_pkg'
+[1.749s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extensions ['colcon_meta']
+[1.749s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extension 'colcon_meta'
+[1.749s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extensions ['ros']
+[1.749s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extension 'ros'
+[1.750s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extensions ['cmake', 'python']
+[1.750s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extension 'cmake'
+[1.750s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extension 'python'
+[1.750s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extensions ['python_setup_py']
+[1.750s] Level 1:colcon.colcon_core.package_identification:_identify(bwsi_team/code/testers) by extension 'python_setup_py'
+[1.751s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[1.751s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[1.752s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[1.752s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[1.752s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[1.753s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[1.753s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extensions ['ignore', 'ignore_ament_install']
+[1.753s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extension 'ignore'
+[1.754s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extension 'ignore_ament_install'
+[1.754s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extensions ['colcon_pkg']
+[1.754s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extension 'colcon_pkg'
+[1.754s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extensions ['colcon_meta']
+[1.755s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extension 'colcon_meta'
+[1.755s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extensions ['ros']
+[1.755s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extension 'ros'
+[1.756s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extensions ['cmake', 'python']
+[1.756s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extension 'cmake'
+[1.756s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extension 'python'
+[1.756s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extensions ['python_setup_py']
+[1.757s] Level 1:colcon.colcon_core.package_identification:_identify(resource) by extension 'python_setup_py'
+[1.757s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['ignore', 'ignore_ament_install']
+[1.757s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'ignore'
+[1.758s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'ignore_ament_install'
+[1.758s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['colcon_pkg']
+[1.758s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'colcon_pkg'
+[1.758s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['colcon_meta']
+[1.758s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'colcon_meta'
+[1.759s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['ros']
+[1.759s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'ros'
+[1.759s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['cmake', 'python']
+[1.759s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'cmake'
+[1.760s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'python'
+[1.760s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extensions ['python_setup_py']
+[1.760s] Level 1:colcon.colcon_core.package_identification:_identify(test) by extension 'python_setup_py'
+[1.760s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[1.760s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[1.761s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[1.761s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[1.761s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[1.902s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'bluerov2_arm_disarm' in 'bluerov2_arm_disarm'
+[1.903s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'bluerov2_controllers' in 'bluerov2_controllers'
+[1.903s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'bluerov2_testers' in 'bluerov2_testers'
+[1.903s] INFO:colcon.colcon_core.package_selection:Skipping not selected package 'bluerov2_launchers' in 'bluerov2_launchers'
+[1.906s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[1.906s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[1.927s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 10 installed packages in /home/zguo27/auvc_ws/install
+[1.942s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 258 installed packages in /opt/ros/jazzy
+[1.945s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[2.126s] WARNING:colcon.colcon_core.package_selection:Some selected packages are already built in one or more underlay workspaces:
+	'bluerov2_node' is in: /home/zguo27/auvc_ws/install/bluerov2_node
+If a package in a merged underlay workspace is overridden and it installs headers, then all packages in the overlay must sort their include directories by workspace order. Failure to do so may result in build failures or undefined behavior at run time.
+If the overridden package is used by another package in any underlay, then the overriding package in the overlay must be API and ABI compatible or undefined behavior at run time may occur.
+
+If you understand the risks and want to override a package anyways, add the following to the command line:
+	--allow-overriding bluerov2_node
+
+This may be promoted to an error in a future release of colcon-override-check.
+[2.129s] Level 5:colcon.colcon_core.verb:set package 'bluerov2_node' build argument 'cmake_args' from command line to 'None'
+[2.129s] Level 5:colcon.colcon_core.verb:set package 'bluerov2_node' build argument 'cmake_target' from command line to 'None'
+[2.130s] Level 5:colcon.colcon_core.verb:set package 'bluerov2_node' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.130s] Level 5:colcon.colcon_core.verb:set package 'bluerov2_node' build argument 'cmake_clean_cache' from command line to 'False'
+[2.130s] Level 5:colcon.colcon_core.verb:set package 'bluerov2_node' build argument 'cmake_clean_first' from command line to 'False'
+[2.130s] Level 5:colcon.colcon_core.verb:set package 'bluerov2_node' build argument 'cmake_force_configure' from command line to 'False'
+[2.130s] Level 5:colcon.colcon_core.verb:set package 'bluerov2_node' build argument 'ament_cmake_args' from command line to 'None'
+[2.130s] Level 5:colcon.colcon_core.verb:set package 'bluerov2_node' build argument 'catkin_cmake_args' from command line to 'None'
+[2.130s] Level 5:colcon.colcon_core.verb:set package 'bluerov2_node' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.130s] DEBUG:colcon.colcon_core.verb:Building package 'bluerov2_node' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node', 'merge_install': False, 'path': '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_node', 'symlink_install': False, 'test_result_base': None}
+[2.131s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[2.134s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[2.136s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_node' with build type 'ament_python'
+[2.136s] Level 1:colcon.colcon_core.shell:create_environment_hook('bluerov2_node', 'ament_prefix_path')
+[2.161s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[2.162s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/bluerov2_node/hook/ament_prefix_path.ps1'
+[2.166s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/bluerov2_node/hook/ament_prefix_path.dsv'
+[2.168s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/bluerov2_node/hook/ament_prefix_path.sh'
+[2.171s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.171s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[3.336s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_node'
+[3.337s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[3.337s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[7.022s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_node': PYTHONPATH=/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/bluerov2_node build --build-base /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/build install --record /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/install.log --single-version-externally-managed install_data
+[10.329s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_node' returned '0': PYTHONPATH=/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/bluerov2_node build --build-base /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/build install --record /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/install.log --single-version-externally-managed install_data
+[10.354s] Level 1:colcon.colcon_core.environment:checking '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node' for CMake module files
+[10.358s] Level 1:colcon.colcon_core.environment:checking '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node' for CMake config files
+[10.363s] Level 1:colcon.colcon_core.environment:checking '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib'
+[10.364s] Level 1:colcon.colcon_core.environment:checking '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/bin'
+[10.365s] Level 1:colcon.colcon_core.environment:checking '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/pkgconfig/bluerov2_node.pc'
+[10.366s] Level 1:colcon.colcon_core.environment:checking '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages'
+[10.366s] Level 1:colcon.colcon_core.shell:create_environment_hook('bluerov2_node', 'pythonpath')
+[10.367s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/bluerov2_node/hook/pythonpath.ps1'
+[10.369s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/bluerov2_node/hook/pythonpath.dsv'
+[10.371s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/bluerov2_node/hook/pythonpath.sh'
+[10.374s] Level 1:colcon.colcon_core.environment:checking '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/bin'
+[10.375s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(bluerov2_node)
+[10.376s] INFO:colcon.colcon_core.shell:Creating package script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/bluerov2_node/package.ps1'
+[10.381s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/bluerov2_node/package.dsv'
+[10.386s] INFO:colcon.colcon_core.shell:Creating package script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/bluerov2_node/package.sh'
+[10.390s] INFO:colcon.colcon_core.shell:Creating package script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/bluerov2_node/package.bash'
+[10.395s] INFO:colcon.colcon_core.shell:Creating package script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/bluerov2_node/package.zsh'
+[10.399s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/share/colcon-core/packages/bluerov2_node)
+[10.401s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[10.402s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[10.403s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[10.404s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[10.454s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[10.454s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[10.455s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[10.455s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[10.462s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Notifications was not provided by any .service files
+[10.462s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[10.463s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/local_setup.ps1'
+[10.468s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/zguo27/auvc_ws/src/AUVC_stuff/install/_local_setup_util_ps1.py'
+[10.474s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/setup.ps1'
+[10.482s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/local_setup.sh'
+[10.486s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/zguo27/auvc_ws/src/AUVC_stuff/install/_local_setup_util_sh.py'
+[10.489s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/setup.sh'
+[10.498s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/local_setup.bash'
+[10.500s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/setup.bash'
+[10.508s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/local_setup.zsh'
+[10.511s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zguo27/auvc_ws/src/AUVC_stuff/install/setup.zsh'
