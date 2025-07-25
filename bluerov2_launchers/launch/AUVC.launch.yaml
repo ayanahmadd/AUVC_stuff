@@ -1,4 +1,4 @@
-# example.launch.yaml
+#ros2 launch bluerov2_launchers AUVC.launch.yaml
 # Launch arm and depth concurrently, then heading and forward movement concurrently
 
 launch:
