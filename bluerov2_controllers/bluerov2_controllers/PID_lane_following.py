@@ -73,23 +73,32 @@ class StickToClosestLane(Node):
         self._latest_offset = (x_center - half) / half
 
     def control_loop(self):
-        if self._latest_slope is None:
-            return
+        # need both readings
         if self._latest_offset is None:
+            self.get_logger().warn_once("No offset updates yet")
             return
+        if self._latest_slope is None:
+            self.get_logger().warn_once("No slope updates yet")
+            return
+
+        # “close‐enough” thresholds
+        centered = abs(self._latest_offset) < 0.05
+        aligned  = abs(self._latest_slope)  < 0.1
 
         # Stage 1: lateral until centered
-        centered = abs(self._latest_offset) < 0.05
-        aligned  = abs(self._latest_slope) < 0.1
-
         y_cmd = self.lat_pid.compute(self._latest_offset) if not centered else 0.0
-        r_cmd = self.yaw_pid.compute(self._latest_slope)   if centered and not aligned else 0.0
-        x_cmd = self.forward_speed if centered and aligned else 0.0
+
+        # Stage 2 & 3: yaw correction once centered
+        r_cmd = self.yaw_pid.compute(self._latest_slope) if centered else 0.0
+
+        # Stage 3: forward only when both centered and aligned
+        x_cmd = self.forward_speed if (centered and aligned) else 0.0
 
         # clamp into [-1, +1]
         y_cmd = max(min(y_cmd, 1.0), -1.0)
         r_cmd = max(min(r_cmd, 1.0), -1.0)
 
+        # publish ManualControl
         mc = ManualControl()
         mc.header.stamp = self.get_clock().now().to_msg()
         mc.x = float(x_cmd)
@@ -97,6 +106,15 @@ class StickToClosestLane(Node):
         mc.z = 0.0
         mc.r = float(r_cmd)
         self.pub.publish(mc)
+
+        # logging by stage
+        if not centered:
+            self.get_logger().debug(f"[Stage 1] Lateral only → y={y_cmd:.2f}")
+        elif not aligned:
+            self.get_logger().debug(f"[Stage 2] Yaw only → r={r_cmd:.2f}")
+        else:
+            self.get_logger().info(f"[Stage 3] Forward x={x_cmd:.2f}, Yaw r={r_cmd:.2f}")
+
 
     def destroy_node(self):
         super().destroy_node()
