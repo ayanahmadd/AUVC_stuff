@@ -2,7 +2,7 @@
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Image
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 from cv_bridge import CvBridge
 import numpy as np
 import cv2
@@ -15,9 +15,9 @@ class LaneDetectorNode(Node):
             Image, '/camera/image_raw', self.img_cb, 10
         )
         # publisher for average lane angle (degrees)
-        self.pub_angle = self.create_publisher(Float32, '/lane_angle', 10)
+        self.pub_angle = self.create_publisher(Float64, '/lane_angle', 10)
         # publisher for horizontal offset from center (–1.0 … +1.0)
-        self.pub_offset = self.create_publisher(Float32, '/lane_offset', 10)
+        self.pub_offset = self.create_publisher(Float64, '/lane_offset', 10)
 
         self.bridge = CvBridge()
         self.get_logger().info("Node initialized properly!")
@@ -63,7 +63,7 @@ class LaneDetectorNode(Node):
 
         # 1) average angle
         avg_angle = float(np.mean(angles))
-        angle_msg = Float32(data=avg_angle)
+        angle_msg = Float64(data=avg_angle)
         self.pub_angle.publish(angle_msg)
 
         # 2) average horizontal midpoint → offset
@@ -71,7 +71,7 @@ class LaneDetectorNode(Node):
         # offset from image center, normalized to [–1..+1]
         offset_pixel = (avg_mid_x - (w * 0.5))
         offset_norm  = offset_pixel / (w * 0.5)
-        offset_msg   = Float32(data=offset_norm)
+        offset_msg   = Float64(data=offset_norm)
         self.pub_offset.publish(offset_msg)
 
         self.get_logger().info(
