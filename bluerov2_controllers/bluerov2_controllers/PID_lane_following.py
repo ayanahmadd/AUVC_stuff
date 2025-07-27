@@ -27,7 +27,7 @@ class StickToClosestLane(Node):
 
         # Subscribe to camera so we know width
         self.create_subscription(
-            Image, '/camera/image_raw', self._image_cb, 10
+            Image, 'bluerov2/camera', self._image_cb, 10
         )
 
         # Subscribe to best_lane [slope, angle, x_center]
@@ -43,7 +43,7 @@ class StickToClosestLane(Node):
         # Latest sensor inputs
         self._latest_slope = None   # from best_lane[0]
         self._latest_offset = None  # normalized in (–1…1)
-        self.forward_speed = 20     # thrust once aligned & centered
+        self.forward_speed = .20     # thrust once aligned & centered
 
         self.create_timer(0.1, self.control_loop)
 
@@ -85,18 +85,16 @@ class StickToClosestLane(Node):
         centered = abs(self._latest_offset) < 0.05
         aligned  = abs(self._latest_slope)  < 0.1
 
-        # Stage 1: lateral until centered
+        # Stage 1: … same as you have …
         y_cmd = self.lat_pid.compute(self._latest_offset) if not centered else 0.0
-
-        # Stage 2 & 3: yaw correction once centered
-        r_cmd = self.yaw_pid.compute(self._latest_slope) if centered else 0.0
-
-        # Stage 3: forward only when both centered and aligned
+        r_cmd = self.yaw_pid.compute(self._latest_slope)  if centered else 0.0
         x_cmd = self.forward_speed if (centered and aligned) else 0.0
 
-        # clamp into [-1, +1]
+        # clamp everything
+        x_cmd = max(min(x_cmd, 1.0), -1.0)
         y_cmd = max(min(y_cmd, 1.0), -1.0)
         r_cmd = max(min(r_cmd, 1.0), -1.0)
+
 
         # publish ManualControl
         mc = ManualControl()
