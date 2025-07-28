@@ -92,7 +92,7 @@ class BlueROV2CameraInterface(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    node = BlueRov2CameraInterface()
+    node = BlueROV2CameraInterface()
 
     try:
         rclpy.spin(node)
