@@ -12,7 +12,7 @@ class LaneDetector(Node):
         super().__init__('lane_detector')
         self.bridge = CvBridge()
 
-        # ✅ Subscribe to camera topic from BlueROV2CameraInterface
+        # Subscribe to camera topic from BlueROV2CameraInterface
         self.subscription = self.create_subscription(
             Image,
             'camera',  # <- topic name matches what your camera node publishes
