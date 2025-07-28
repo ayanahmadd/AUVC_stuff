@@ -1,0 +1,42 @@
+[9.528s] Invoking command in '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_controllers': PYTHONPATH=/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/bluerov2_controllers build --build-base /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build install --record /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/install.log --single-version-externally-managed install_data
+[12.193s] running egg_info
+[12.367s] writing ../build/bluerov2_controllers/bluerov2_controllers.egg-info/PKG-INFO
+[12.374s] writing dependency_links to ../build/bluerov2_controllers/bluerov2_controllers.egg-info/dependency_links.txt
+[12.375s] writing entry points to ../build/bluerov2_controllers/bluerov2_controllers.egg-info/entry_points.txt
+[12.375s] writing requirements to ../build/bluerov2_controllers/bluerov2_controllers.egg-info/requires.txt
+[12.376s] writing top-level names to ../build/bluerov2_controllers/bluerov2_controllers.egg-info/top_level.txt
+[12.380s] writing manifest file '../build/bluerov2_controllers/bluerov2_controllers.egg-info/SOURCES.txt'
+[12.752s] reading manifest file '../build/bluerov2_controllers/bluerov2_controllers.egg-info/SOURCES.txt'
+[12.763s] writing manifest file '../build/bluerov2_controllers/bluerov2_controllers.egg-info/SOURCES.txt'
+[12.767s] running build
+[12.768s] running build_py
+[12.774s] copying bluerov2_controllers/PID_heading.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build/lib/bluerov2_controllers
+[12.775s] copying bluerov2_controllers/PID_depth.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build/lib/bluerov2_controllers
+[12.776s] copying bluerov2_controllers/PID_lane_following.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build/lib/bluerov2_controllers
+[12.783s] copying bluerov2_controllers/PIDController.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build/lib/bluerov2_controllers
+[12.785s] copying bluerov2_controllers/__init__.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build/lib/bluerov2_controllers
+[12.792s] running install
+[12.845s] running install_lib
+[13.002s] copying /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build/lib/bluerov2_controllers/PID_heading.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers
+[13.008s] copying /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build/lib/bluerov2_controllers/PID_depth.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers
+[13.013s] copying /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build/lib/bluerov2_controllers/PID_lane_following.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers
+[13.014s] copying /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build/lib/bluerov2_controllers/PIDController.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers
+[13.018s] copying /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build/lib/bluerov2_controllers/__init__.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers
+[13.026s] byte-compiling /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers/PID_heading.py to PID_heading.cpython-312.pyc
+[13.027s] byte-compiling /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers/PID_depth.py to PID_depth.cpython-312.pyc
+[13.036s] byte-compiling /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers/PID_lane_following.py to PID_lane_following.cpython-312.pyc
+[13.041s] byte-compiling /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers/PIDController.py to PIDController.cpython-312.pyc
+[13.041s] byte-compiling /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers/__init__.py to __init__.cpython-312.pyc
+[13.051s] running install_data
+[13.052s] copying resource/bluerov2_controllers -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/share/ament_index/resource_index/packages
+[13.053s] copying package.xml -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/share/bluerov2_controllers
+[13.053s] running install_egg_info
+[13.534s] removing '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers-0.0.0-py3.12.egg-info' (and everything under it)
+[13.541s] Copying ../build/bluerov2_controllers/bluerov2_controllers.egg-info to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers-0.0.0-py3.12.egg-info
+[13.556s] running install_scripts
+[15.585s] Installing pid_controller script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/bluerov2_controllers
+[15.592s] Installing pid_depth script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/bluerov2_controllers
+[15.597s] Installing pid_heading script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/bluerov2_controllers
+[15.598s] Installing pid_lane script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/bluerov2_controllers
+[15.605s] writing list of installed files to '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/install.log'
+[15.987s] Invoked command in '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_controllers' returned '0': PYTHONPATH=/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/bluerov2_controllers build --build-base /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build install --record /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/install.log --single-version-externally-managed install_data

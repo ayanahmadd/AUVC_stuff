@@ -22,7 +22,8 @@ setup(
         'console_scripts': [
             'arm_disarm = bluerov2_node.ArmDisarm:main',
             'convert_to_depth = bluerov2_node.PressureToDepth:main',
-            'lane_scan = bluerov2_node.LaneScan:main',
+            'lane_detection = bluerov2_node.LaneDetection:main',
+            'camera_interface = bluerov2_node.CameraInterface:main',
         ],
     },
 )

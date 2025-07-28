@@ -1,0 +1,24 @@
+running egg_info
+writing ../build/bluerov2_launchers/bluerov2_launchers.egg-info/PKG-INFO
+writing dependency_links to ../build/bluerov2_launchers/bluerov2_launchers.egg-info/dependency_links.txt
+writing requirements to ../build/bluerov2_launchers/bluerov2_launchers.egg-info/requires.txt
+writing top-level names to ../build/bluerov2_launchers/bluerov2_launchers.egg-info/top_level.txt
+writing manifest file '../build/bluerov2_launchers/bluerov2_launchers.egg-info/SOURCES.txt'
+reading manifest file '../build/bluerov2_launchers/bluerov2_launchers.egg-info/SOURCES.txt'
+writing manifest file '../build/bluerov2_launchers/bluerov2_launchers.egg-info/SOURCES.txt'
+running build
+running build_py
+copying bluerov2_launchers/__init__.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/build/lib/bluerov2_launchers
+running install
+running install_lib
+copying /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/build/lib/bluerov2_launchers/__init__.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages/bluerov2_launchers
+byte-compiling /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages/bluerov2_launchers/__init__.py to __init__.cpython-312.pyc
+running install_data
+copying resource/bluerov2_launchers -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/share/ament_index/resource_index/packages
+copying package.xml -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/share/bluerov2_launchers
+copying launch/AUVC.launch.yaml -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/share/bluerov2_launchers/launch
+running install_egg_info
+removing '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages/bluerov2_launchers-0.0.0-py3.12.egg-info' (and everything under it)
+Copying ../build/bluerov2_launchers/bluerov2_launchers.egg-info to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages/bluerov2_launchers-0.0.0-py3.12.egg-info
+running install_scripts
+writing list of installed files to '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/install.log'

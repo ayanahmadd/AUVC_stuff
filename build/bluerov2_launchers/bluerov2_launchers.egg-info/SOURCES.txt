@@ -1,0 +1,15 @@
+package.xml
+setup.cfg
+setup.py
+../build/bluerov2_launchers/bluerov2_launchers.egg-info/PKG-INFO
+../build/bluerov2_launchers/bluerov2_launchers.egg-info/SOURCES.txt
+../build/bluerov2_launchers/bluerov2_launchers.egg-info/dependency_links.txt
+../build/bluerov2_launchers/bluerov2_launchers.egg-info/requires.txt
+../build/bluerov2_launchers/bluerov2_launchers.egg-info/top_level.txt
+../build/bluerov2_launchers/bluerov2_launchers.egg-info/zip-safe
+bluerov2_launchers/__init__.py
+launch/AUVC.launch.yaml
+resource/bluerov2_launchers
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py

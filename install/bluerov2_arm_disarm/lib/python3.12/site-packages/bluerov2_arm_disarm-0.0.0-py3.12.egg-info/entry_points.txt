@@ -1,0 +1,5 @@
+[console_scripts]
+arm_disarm = bluerov2_arm_disarm.arm_disarm:main
+auv_movement = bluerov2_arm_disarm.auv_movement:main
+dance_movement = bluerov2_arm_disarm.dance_movement:main
+test_diagonal = bluerov2_arm_disarm.test_diagonal_move:main

@@ -1,0 +1,26 @@
+[8.315s] Invoking command in '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_launchers': AMENT_PREFIX_PATH=/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_testers:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm:${AMENT_PREFIX_PATH} PYTHONPATH=/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_testers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/bluerov2_launchers build --build-base /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/build install --record /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/install.log --single-version-externally-managed install_data
+[9.800s] running egg_info
+[9.907s] writing ../build/bluerov2_launchers/bluerov2_launchers.egg-info/PKG-INFO
+[9.909s] writing dependency_links to ../build/bluerov2_launchers/bluerov2_launchers.egg-info/dependency_links.txt
+[9.910s] writing requirements to ../build/bluerov2_launchers/bluerov2_launchers.egg-info/requires.txt
+[9.911s] writing top-level names to ../build/bluerov2_launchers/bluerov2_launchers.egg-info/top_level.txt
+[9.911s] writing manifest file '../build/bluerov2_launchers/bluerov2_launchers.egg-info/SOURCES.txt'
+[10.142s] reading manifest file '../build/bluerov2_launchers/bluerov2_launchers.egg-info/SOURCES.txt'
+[10.144s] writing manifest file '../build/bluerov2_launchers/bluerov2_launchers.egg-info/SOURCES.txt'
+[10.145s] running build
+[10.146s] running build_py
+[10.146s] copying bluerov2_launchers/__init__.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/build/lib/bluerov2_launchers
+[10.147s] running install
+[10.174s] running install_lib
+[10.276s] copying /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/build/lib/bluerov2_launchers/__init__.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages/bluerov2_launchers
+[10.279s] byte-compiling /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages/bluerov2_launchers/__init__.py to __init__.cpython-312.pyc
+[10.281s] running install_data
+[10.282s] copying resource/bluerov2_launchers -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/share/ament_index/resource_index/packages
+[10.283s] copying package.xml -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/share/bluerov2_launchers
+[10.284s] copying launch/AUVC.launch.yaml -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/share/bluerov2_launchers/launch
+[10.286s] running install_egg_info
+[10.402s] removing '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages/bluerov2_launchers-0.0.0-py3.12.egg-info' (and everything under it)
+[10.404s] Copying ../build/bluerov2_launchers/bluerov2_launchers.egg-info to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages/bluerov2_launchers-0.0.0-py3.12.egg-info
+[10.409s] running install_scripts
+[11.187s] writing list of installed files to '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/install.log'
+[11.336s] Invoked command in '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_launchers' returned '0': AMENT_PREFIX_PATH=/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_testers:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm:${AMENT_PREFIX_PATH} PYTHONPATH=/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_testers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/bluerov2_launchers build --build-base /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/build install --record /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/install.log --single-version-externally-managed install_data

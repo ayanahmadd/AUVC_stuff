@@ -50,6 +50,9 @@ class LaneDetector(Node):
 
         if lane_candidates:
             best_lane = min(lane_candidates, key=lambda l: abs(l["x_center"] - img_center_x))
+
+            self.get_logger().info(f"Best lane: slope={best_lane['slope']:.3f}, angle={best_lane['angle']:.2f}, x_center={best_lane['x_center']}")
+            
             # Publish slope, angle, x_center as Float64MultiArray
             msg_out = Float64MultiArray()
             msg_out.data = [
