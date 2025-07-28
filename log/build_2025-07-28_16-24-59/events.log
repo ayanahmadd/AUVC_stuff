@@ -1,0 +1,360 @@
+[0.000000] (-) TimerEvent: {}
+[0.001641] (bluerov2_arm_disarm) JobQueued: {'identifier': 'bluerov2_arm_disarm', 'dependencies': OrderedDict()}
+[0.002219] (bluerov2_controllers) JobQueued: {'identifier': 'bluerov2_controllers', 'dependencies': OrderedDict()}
+[0.002912] (bluerov2_node) JobQueued: {'identifier': 'bluerov2_node', 'dependencies': OrderedDict()}
+[0.003075] (bluerov2_testers) JobQueued: {'identifier': 'bluerov2_testers', 'dependencies': OrderedDict()}
+[0.003153] (bluerov2_launchers) JobQueued: {'identifier': 'bluerov2_launchers', 'dependencies': OrderedDict({'bluerov2_arm_disarm': '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm', 'bluerov2_controllers': '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers', 'bluerov2_node': '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node', 'bluerov2_testers': '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_testers'})}
+[0.003320] (bluerov2_arm_disarm) JobStarted: {'identifier': 'bluerov2_arm_disarm'}
+[0.041976] (bluerov2_controllers) JobStarted: {'identifier': 'bluerov2_controllers'}
+[0.072880] (bluerov2_node) JobStarted: {'identifier': 'bluerov2_node'}
+[0.099318] (-) TimerEvent: {}
+[0.103455] (bluerov2_testers) JobStarted: {'identifier': 'bluerov2_testers'}
+[0.199541] (-) TimerEvent: {}
+[0.300437] (-) TimerEvent: {}
+[0.401391] (-) TimerEvent: {}
+[0.502169] (-) TimerEvent: {}
+[0.602912] (-) TimerEvent: {}
+[0.703592] (-) TimerEvent: {}
+[0.804283] (-) TimerEvent: {}
+[0.904916] (-) TimerEvent: {}
+[1.005576] (-) TimerEvent: {}
+[1.106260] (-) TimerEvent: {}
+[1.207002] (-) TimerEvent: {}
+[1.307805] (-) TimerEvent: {}
+[1.408464] (-) TimerEvent: {}
+[1.509209] (-) TimerEvent: {}
+[1.609932] (-) TimerEvent: {}
+[1.710670] (-) TimerEvent: {}
+[1.811340] (-) TimerEvent: {}
+[1.911984] (-) TimerEvent: {}
+[2.012626] (-) TimerEvent: {}
+[2.113326] (-) TimerEvent: {}
+[2.214073] (-) TimerEvent: {}
+[2.314947] (-) TimerEvent: {}
+[2.415771] (-) TimerEvent: {}
+[2.516511] (-) TimerEvent: {}
+[2.617364] (-) TimerEvent: {}
+[2.718104] (-) TimerEvent: {}
+[2.818859] (-) TimerEvent: {}
+[2.919624] (-) TimerEvent: {}
+[3.020458] (-) TimerEvent: {}
+[3.121166] (-) TimerEvent: {}
+[3.221795] (-) TimerEvent: {}
+[3.322561] (-) TimerEvent: {}
+[3.423575] (-) TimerEvent: {}
+[3.524370] (-) TimerEvent: {}
+[3.625103] (-) TimerEvent: {}
+[3.725785] (-) TimerEvent: {}
+[3.826530] (-) TimerEvent: {}
+[3.927250] (-) TimerEvent: {}
+[4.027915] (-) TimerEvent: {}
+[4.128564] (-) TimerEvent: {}
+[4.229265] (-) TimerEvent: {}
+[4.329936] (-) TimerEvent: {}
+[4.430685] (-) TimerEvent: {}
+[4.531759] (-) TimerEvent: {}
+[4.635983] (-) TimerEvent: {}
+[4.736878] (-) TimerEvent: {}
+[4.840035] (-) TimerEvent: {}
+[4.941005] (-) TimerEvent: {}
+[5.041776] (-) TimerEvent: {}
+[5.144268] (-) TimerEvent: {}
+[5.245307] (-) TimerEvent: {}
+[5.348954] (-) TimerEvent: {}
+[5.449779] (-) TimerEvent: {}
+[5.554262] (-) TimerEvent: {}
+[5.655915] (-) TimerEvent: {}
+[5.758670] (-) TimerEvent: {}
+[5.861959] (-) TimerEvent: {}
+[5.962724] (-) TimerEvent: {}
+[6.064969] (-) TimerEvent: {}
+[6.165708] (-) TimerEvent: {}
+[6.268258] (-) TimerEvent: {}
+[6.371963] (-) TimerEvent: {}
+[6.472700] (-) TimerEvent: {}
+[6.575975] (-) TimerEvent: {}
+[6.677016] (-) TimerEvent: {}
+[6.778419] (-) TimerEvent: {}
+[6.881660] (-) TimerEvent: {}
+[6.985348] (-) TimerEvent: {}
+[7.086261] (-) TimerEvent: {}
+[7.190961] (-) TimerEvent: {}
+[7.291787] (-) TimerEvent: {}
+[7.392601] (-) TimerEvent: {}
+[7.493951] (-) TimerEvent: {}
+[7.598194] (-) TimerEvent: {}
+[7.702957] (-) TimerEvent: {}
+[7.804200] (-) TimerEvent: {}
+[7.907963] (-) TimerEvent: {}
+[8.009942] (-) TimerEvent: {}
+[8.110713] (-) TimerEvent: {}
+[8.214964] (-) TimerEvent: {}
+[8.315795] (-) TimerEvent: {}
+[8.416653] (-) TimerEvent: {}
+[8.518289] (-) TimerEvent: {}
+[8.621654] (-) TimerEvent: {}
+[8.725282] (-) TimerEvent: {}
+[8.826152] (-) TimerEvent: {}
+[8.929964] (-) TimerEvent: {}
+[9.030804] (-) TimerEvent: {}
+[9.134012] (-) TimerEvent: {}
+[9.235287] (-) TimerEvent: {}
+[9.338036] (-) TimerEvent: {}
+[9.439018] (-) TimerEvent: {}
+[9.539133] (bluerov2_controllers) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../build/bluerov2_controllers', 'build', '--build-base', '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/build', 'install', '--record', '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_controllers', 'env': {'USER': 'zguo27', 'SSH_CLIENT': '169.254.138.162 59072 22', 'WORKON_HOME': '/home/zguo27/.virtualenvs', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/home/zguo27/auvc_ws/install/example_custom_srv/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'BROWSER': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/bin/helpers/browser.sh', 'HOME': '/home/zguo27', 'OLDPWD': '/home/zguo27/auvc_ws/src/AUVC_stuff', 'LESS': '-R', 'VIRTUALENVWRAPPER_PYTHON': '/usr/bin/python3', 'TERM_PROGRAM_VERSION': '1.102.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1005/vscode-ipc-5003134e-f8bc-41b4-a8ca-5d23c4a90454.sock', 'ZSH': '/home/zguo27/.oh-my-zsh', 'LSCOLORS': 'Gxfxcxdxbxegedabagacad', 'PAGER': 'less', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/extensions/git/dist/askpass-main.js', 'PS1': '(rosmav) %(?:%{\x1b[01;32m%}%1{➜%} :%{\x1b[01;31m%}%1{➜%} ) %{\x1b[36m%}%c%{\x1b[00m%} $(git_prompt_info)', 'SSL_CERT_FILE': '/usr/lib/ssl/cert.pem', 'VSCODE_GIT_ASKPASS_NODE': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/node', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1005/bus', 'PYDEVD_DISABLE_FILE_VALIDATION': '1', 'BUNDLED_DEBUGPY_PATH': '/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/libs/debugpy', 'COLORTERM': 'truecolor', 'ROS_DISTRO': 'jazzy', 'COLCON_PREFIX_PATH': '/home/zguo27/auvc_ws/install', 'LOGNAME': 'zguo27', '_': '/usr/bin/colcon', 'XDG_SESSION_CLASS': 'user', 'ROS_VERSION': '2', 'USER_ZDOTDIR': '/home/zguo27', 'XDG_SESSION_ID': '2', 'TERM': 'xterm-256color', 'PATH': '/home/zguo27/venvs/rosmav/bin:/usr/lib/ccache:/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/bin/remote-cli:/usr/lib/ccache:/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/zguo27/.local/bin:/home/zguo27/ardupilot/Tools/autotest:/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/scripts/noConfigScripts:/home/zguo27/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand:/home/zguo27/.local/bin:/home/zguo27/ardupilot/Tools/autotest', 'XDG_RUNTIME_DIR': '/run/user/1005', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS': '/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/.noConfigDebugAdapterEndpoints/endpoint-af9c3ccb3698f590.txt', 'VSCODE_INJECTION': '1', 'VIRTUAL_ENV_PROMPT': '(rosmav)', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'TERM_PROGRAM': 'vscode', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1005/vscode-git-7c08c7fd65.sock', 'AMENT_PREFIX_PATH': '/home/zguo27/auvc_ws/install/tutorial_virtualenvs:/home/zguo27/auvc_ws/install/tutorial_ardusub:/home/zguo27/auvc_ws/install/tutorial:/home/zguo27/auvc_ws/install/rosmav:/home/zguo27/auvc_ws/install/example_custom_srv:/home/zguo27/auvc_ws/install/bluerov2_launchers:/home/zguo27/auvc_ws/install/bluerov2_testers:/home/zguo27/auvc_ws/install/bluerov2_node:/home/zguo27/auvc_ws/install/bluerov2_controllers:/home/zguo27/auvc_ws/install/bluerov2_arm_disarm:/opt/ros/jazzy', 'SHELL': '/usr/bin/zsh', 'IGN_GAZEBO_RESOURCE_PATH': '/opt/ros/jazzy/share', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'VIRTUAL_ENV': '/home/zguo27/venvs/rosmav', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers', 'SSH_CONNECTION': '169.254.138.162 59072 169.254.193.89 22', 'ZDOTDIR': '/home/zguo27', 'PYTHONPATH': '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial_virtualenvs/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial_ardusub/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/rosmav/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/example_custom_srv/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_launchers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_testers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_node/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_controllers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_arm_disarm/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/zguo27/auvc_ws/install/example_custom_srv:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}, 'shell': False}
+[9.555035] (-) TimerEvent: {}
+[9.661720] (-) TimerEvent: {}
+[9.767976] (-) TimerEvent: {}
+[9.833144] (bluerov2_testers) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../build/bluerov2_testers', 'build', '--build-base', '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_testers/build', 'install', '--record', '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_testers/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_testers', 'env': {'USER': 'zguo27', 'SSH_CLIENT': '169.254.138.162 59072 22', 'WORKON_HOME': '/home/zguo27/.virtualenvs', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/home/zguo27/auvc_ws/install/example_custom_srv/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'BROWSER': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/bin/helpers/browser.sh', 'HOME': '/home/zguo27', 'OLDPWD': '/home/zguo27/auvc_ws/src/AUVC_stuff', 'LESS': '-R', 'VIRTUALENVWRAPPER_PYTHON': '/usr/bin/python3', 'TERM_PROGRAM_VERSION': '1.102.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1005/vscode-ipc-5003134e-f8bc-41b4-a8ca-5d23c4a90454.sock', 'ZSH': '/home/zguo27/.oh-my-zsh', 'LSCOLORS': 'Gxfxcxdxbxegedabagacad', 'PAGER': 'less', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/extensions/git/dist/askpass-main.js', 'PS1': '(rosmav) %(?:%{\x1b[01;32m%}%1{➜%} :%{\x1b[01;31m%}%1{➜%} ) %{\x1b[36m%}%c%{\x1b[00m%} $(git_prompt_info)', 'SSL_CERT_FILE': '/usr/lib/ssl/cert.pem', 'VSCODE_GIT_ASKPASS_NODE': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/node', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1005/bus', 'PYDEVD_DISABLE_FILE_VALIDATION': '1', 'BUNDLED_DEBUGPY_PATH': '/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/libs/debugpy', 'COLORTERM': 'truecolor', 'ROS_DISTRO': 'jazzy', 'COLCON_PREFIX_PATH': '/home/zguo27/auvc_ws/install', 'LOGNAME': 'zguo27', '_': '/usr/bin/colcon', 'XDG_SESSION_CLASS': 'user', 'ROS_VERSION': '2', 'USER_ZDOTDIR': '/home/zguo27', 'XDG_SESSION_ID': '2', 'TERM': 'xterm-256color', 'PATH': '/home/zguo27/venvs/rosmav/bin:/usr/lib/ccache:/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/bin/remote-cli:/usr/lib/ccache:/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/zguo27/.local/bin:/home/zguo27/ardupilot/Tools/autotest:/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/scripts/noConfigScripts:/home/zguo27/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand:/home/zguo27/.local/bin:/home/zguo27/ardupilot/Tools/autotest', 'XDG_RUNTIME_DIR': '/run/user/1005', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS': '/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/.noConfigDebugAdapterEndpoints/endpoint-af9c3ccb3698f590.txt', 'VSCODE_INJECTION': '1', 'VIRTUAL_ENV_PROMPT': '(rosmav)', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'TERM_PROGRAM': 'vscode', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1005/vscode-git-7c08c7fd65.sock', 'AMENT_PREFIX_PATH': '/home/zguo27/auvc_ws/install/tutorial_virtualenvs:/home/zguo27/auvc_ws/install/tutorial_ardusub:/home/zguo27/auvc_ws/install/tutorial:/home/zguo27/auvc_ws/install/rosmav:/home/zguo27/auvc_ws/install/example_custom_srv:/home/zguo27/auvc_ws/install/bluerov2_launchers:/home/zguo27/auvc_ws/install/bluerov2_testers:/home/zguo27/auvc_ws/install/bluerov2_node:/home/zguo27/auvc_ws/install/bluerov2_controllers:/home/zguo27/auvc_ws/install/bluerov2_arm_disarm:/opt/ros/jazzy', 'SHELL': '/usr/bin/zsh', 'IGN_GAZEBO_RESOURCE_PATH': '/opt/ros/jazzy/share', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'VIRTUAL_ENV': '/home/zguo27/venvs/rosmav', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_testers', 'SSH_CONNECTION': '169.254.138.162 59072 169.254.193.89 22', 'ZDOTDIR': '/home/zguo27', 'PYTHONPATH': '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_testers/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_testers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial_virtualenvs/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial_ardusub/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/rosmav/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/example_custom_srv/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_launchers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_testers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_node/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_controllers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_arm_disarm/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/zguo27/auvc_ws/install/example_custom_srv:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}, 'shell': False}
+[9.870972] (-) TimerEvent: {}
+[9.980061] (-) TimerEvent: {}
+[10.080843] (bluerov2_node) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../build/bluerov2_node', 'build', '--build-base', '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/build', 'install', '--record', '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_node', 'env': {'USER': 'zguo27', 'SSH_CLIENT': '169.254.138.162 59072 22', 'WORKON_HOME': '/home/zguo27/.virtualenvs', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/home/zguo27/auvc_ws/install/example_custom_srv/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'BROWSER': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/bin/helpers/browser.sh', 'HOME': '/home/zguo27', 'OLDPWD': '/home/zguo27/auvc_ws/src/AUVC_stuff', 'LESS': '-R', 'VIRTUALENVWRAPPER_PYTHON': '/usr/bin/python3', 'TERM_PROGRAM_VERSION': '1.102.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1005/vscode-ipc-5003134e-f8bc-41b4-a8ca-5d23c4a90454.sock', 'ZSH': '/home/zguo27/.oh-my-zsh', 'LSCOLORS': 'Gxfxcxdxbxegedabagacad', 'PAGER': 'less', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/extensions/git/dist/askpass-main.js', 'PS1': '(rosmav) %(?:%{\x1b[01;32m%}%1{➜%} :%{\x1b[01;31m%}%1{➜%} ) %{\x1b[36m%}%c%{\x1b[00m%} $(git_prompt_info)', 'SSL_CERT_FILE': '/usr/lib/ssl/cert.pem', 'VSCODE_GIT_ASKPASS_NODE': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/node', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1005/bus', 'PYDEVD_DISABLE_FILE_VALIDATION': '1', 'BUNDLED_DEBUGPY_PATH': '/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/libs/debugpy', 'COLORTERM': 'truecolor', 'ROS_DISTRO': 'jazzy', 'COLCON_PREFIX_PATH': '/home/zguo27/auvc_ws/install', 'LOGNAME': 'zguo27', '_': '/usr/bin/colcon', 'XDG_SESSION_CLASS': 'user', 'ROS_VERSION': '2', 'USER_ZDOTDIR': '/home/zguo27', 'XDG_SESSION_ID': '2', 'TERM': 'xterm-256color', 'PATH': '/home/zguo27/venvs/rosmav/bin:/usr/lib/ccache:/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/bin/remote-cli:/usr/lib/ccache:/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/zguo27/.local/bin:/home/zguo27/ardupilot/Tools/autotest:/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/scripts/noConfigScripts:/home/zguo27/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand:/home/zguo27/.local/bin:/home/zguo27/ardupilot/Tools/autotest', 'XDG_RUNTIME_DIR': '/run/user/1005', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS': '/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/.noConfigDebugAdapterEndpoints/endpoint-af9c3ccb3698f590.txt', 'VSCODE_INJECTION': '1', 'VIRTUAL_ENV_PROMPT': '(rosmav)', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'TERM_PROGRAM': 'vscode', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1005/vscode-git-7c08c7fd65.sock', 'AMENT_PREFIX_PATH': '/home/zguo27/auvc_ws/install/tutorial_virtualenvs:/home/zguo27/auvc_ws/install/tutorial_ardusub:/home/zguo27/auvc_ws/install/tutorial:/home/zguo27/auvc_ws/install/rosmav:/home/zguo27/auvc_ws/install/example_custom_srv:/home/zguo27/auvc_ws/install/bluerov2_launchers:/home/zguo27/auvc_ws/install/bluerov2_testers:/home/zguo27/auvc_ws/install/bluerov2_node:/home/zguo27/auvc_ws/install/bluerov2_controllers:/home/zguo27/auvc_ws/install/bluerov2_arm_disarm:/opt/ros/jazzy', 'SHELL': '/usr/bin/zsh', 'IGN_GAZEBO_RESOURCE_PATH': '/opt/ros/jazzy/share', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'VIRTUAL_ENV': '/home/zguo27/venvs/rosmav', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node', 'SSH_CONNECTION': '169.254.138.162 59072 169.254.193.89 22', 'ZDOTDIR': '/home/zguo27', 'PYTHONPATH': '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial_virtualenvs/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial_ardusub/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/rosmav/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/example_custom_srv/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_launchers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_testers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_node/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_controllers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_arm_disarm/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/zguo27/auvc_ws/install/example_custom_srv:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}, 'shell': False}
+[10.087873] (-) TimerEvent: {}
+[10.098971] (bluerov2_arm_disarm) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../build/bluerov2_arm_disarm', 'build', '--build-base', '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_arm_disarm/build', 'install', '--record', '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_arm_disarm/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_arm_disarm', 'env': {'USER': 'zguo27', 'SSH_CLIENT': '169.254.138.162 59072 22', 'WORKON_HOME': '/home/zguo27/.virtualenvs', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/home/zguo27/auvc_ws/install/example_custom_srv/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'BROWSER': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/bin/helpers/browser.sh', 'HOME': '/home/zguo27', 'OLDPWD': '/home/zguo27/auvc_ws/src/AUVC_stuff', 'LESS': '-R', 'VIRTUALENVWRAPPER_PYTHON': '/usr/bin/python3', 'TERM_PROGRAM_VERSION': '1.102.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1005/vscode-ipc-5003134e-f8bc-41b4-a8ca-5d23c4a90454.sock', 'ZSH': '/home/zguo27/.oh-my-zsh', 'LSCOLORS': 'Gxfxcxdxbxegedabagacad', 'PAGER': 'less', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/extensions/git/dist/askpass-main.js', 'PS1': '(rosmav) %(?:%{\x1b[01;32m%}%1{➜%} :%{\x1b[01;31m%}%1{➜%} ) %{\x1b[36m%}%c%{\x1b[00m%} $(git_prompt_info)', 'SSL_CERT_FILE': '/usr/lib/ssl/cert.pem', 'VSCODE_GIT_ASKPASS_NODE': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/node', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1005/bus', 'PYDEVD_DISABLE_FILE_VALIDATION': '1', 'BUNDLED_DEBUGPY_PATH': '/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/libs/debugpy', 'COLORTERM': 'truecolor', 'ROS_DISTRO': 'jazzy', 'COLCON_PREFIX_PATH': '/home/zguo27/auvc_ws/install', 'LOGNAME': 'zguo27', '_': '/usr/bin/colcon', 'XDG_SESSION_CLASS': 'user', 'ROS_VERSION': '2', 'USER_ZDOTDIR': '/home/zguo27', 'XDG_SESSION_ID': '2', 'TERM': 'xterm-256color', 'PATH': '/home/zguo27/venvs/rosmav/bin:/usr/lib/ccache:/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/bin/remote-cli:/usr/lib/ccache:/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/zguo27/.local/bin:/home/zguo27/ardupilot/Tools/autotest:/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/scripts/noConfigScripts:/home/zguo27/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand:/home/zguo27/.local/bin:/home/zguo27/ardupilot/Tools/autotest', 'XDG_RUNTIME_DIR': '/run/user/1005', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS': '/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/.noConfigDebugAdapterEndpoints/endpoint-af9c3ccb3698f590.txt', 'VSCODE_INJECTION': '1', 'VIRTUAL_ENV_PROMPT': '(rosmav)', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'TERM_PROGRAM': 'vscode', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1005/vscode-git-7c08c7fd65.sock', 'AMENT_PREFIX_PATH': '/home/zguo27/auvc_ws/install/tutorial_virtualenvs:/home/zguo27/auvc_ws/install/tutorial_ardusub:/home/zguo27/auvc_ws/install/tutorial:/home/zguo27/auvc_ws/install/rosmav:/home/zguo27/auvc_ws/install/example_custom_srv:/home/zguo27/auvc_ws/install/bluerov2_launchers:/home/zguo27/auvc_ws/install/bluerov2_testers:/home/zguo27/auvc_ws/install/bluerov2_node:/home/zguo27/auvc_ws/install/bluerov2_controllers:/home/zguo27/auvc_ws/install/bluerov2_arm_disarm:/opt/ros/jazzy', 'SHELL': '/usr/bin/zsh', 'IGN_GAZEBO_RESOURCE_PATH': '/opt/ros/jazzy/share', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'VIRTUAL_ENV': '/home/zguo27/venvs/rosmav', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_arm_disarm', 'SSH_CONNECTION': '169.254.138.162 59072 169.254.193.89 22', 'ZDOTDIR': '/home/zguo27', 'PYTHONPATH': '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_arm_disarm/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial_virtualenvs/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial_ardusub/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/rosmav/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/example_custom_srv/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_launchers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_testers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_node/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_controllers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_arm_disarm/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/zguo27/auvc_ws/install/example_custom_srv:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}, 'shell': False}
+[10.189988] (-) TimerEvent: {}
+[10.291508] (-) TimerEvent: {}
+[10.395183] (-) TimerEvent: {}
+[10.497986] (-) TimerEvent: {}
+[10.599134] (-) TimerEvent: {}
+[10.704094] (-) TimerEvent: {}
+[10.805903] (-) TimerEvent: {}
+[10.906845] (-) TimerEvent: {}
+[11.010292] (-) TimerEvent: {}
+[11.111803] (-) TimerEvent: {}
+[11.215294] (-) TimerEvent: {}
+[11.316207] (-) TimerEvent: {}
+[11.419303] (-) TimerEvent: {}
+[11.522970] (-) TimerEvent: {}
+[11.623789] (-) TimerEvent: {}
+[11.727009] (-) TimerEvent: {}
+[11.827883] (-) TimerEvent: {}
+[11.929126] (-) TimerEvent: {}
+[12.015125] (bluerov2_controllers) StdoutLine: {'line': b'running egg_info\n'}
+[12.029372] (-) TimerEvent: {}
+[12.133246] (-) TimerEvent: {}
+[12.168413] (bluerov2_testers) StdoutLine: {'line': b'running egg_info\n'}
+[12.181954] (bluerov2_controllers) StdoutLine: {'line': b'writing ../build/bluerov2_controllers/bluerov2_controllers.egg-info/PKG-INFO\n'}
+[12.189957] (bluerov2_controllers) StdoutLine: {'line': b'writing dependency_links to ../build/bluerov2_controllers/bluerov2_controllers.egg-info/dependency_links.txt\n'}
+[12.190805] (bluerov2_controllers) StdoutLine: {'line': b'writing entry points to ../build/bluerov2_controllers/bluerov2_controllers.egg-info/entry_points.txt\n'}
+[12.191403] (bluerov2_controllers) StdoutLine: {'line': b'writing requirements to ../build/bluerov2_controllers/bluerov2_controllers.egg-info/requires.txt\n'}
+[12.191896] (bluerov2_controllers) StdoutLine: {'line': b'writing top-level names to ../build/bluerov2_controllers/bluerov2_controllers.egg-info/top_level.txt\n'}
+[12.235962] (-) TimerEvent: {}
+[12.274292] (bluerov2_arm_disarm) StdoutLine: {'line': b'running egg_info\n'}
+[12.328167] (bluerov2_testers) StdoutLine: {'line': b'writing ../build/bluerov2_testers/bluerov2_testers.egg-info/PKG-INFO\n'}
+[12.333980] (bluerov2_testers) StdoutLine: {'line': b'writing dependency_links to ../build/bluerov2_testers/bluerov2_testers.egg-info/dependency_links.txt\n'}
+[12.334735] (bluerov2_testers) StdoutLine: {'line': b'writing entry points to ../build/bluerov2_testers/bluerov2_testers.egg-info/entry_points.txt\n'}
+[12.335372] (bluerov2_testers) StdoutLine: {'line': b'writing requirements to ../build/bluerov2_testers/bluerov2_testers.egg-info/requires.txt\n'}
+[12.335976] (-) TimerEvent: {}
+[12.342505] (bluerov2_testers) StdoutLine: {'line': b'writing top-level names to ../build/bluerov2_testers/bluerov2_testers.egg-info/top_level.txt\n'}
+[12.406032] (bluerov2_node) StdoutLine: {'line': b'running egg_info\n'}
+[12.437970] (-) TimerEvent: {}
+[12.444957] (bluerov2_arm_disarm) StdoutLine: {'line': b'writing ../build/bluerov2_arm_disarm/bluerov2_arm_disarm.egg-info/PKG-INFO\n'}
+[12.445645] (bluerov2_arm_disarm) StdoutLine: {'line': b'writing dependency_links to ../build/bluerov2_arm_disarm/bluerov2_arm_disarm.egg-info/dependency_links.txt\n'}
+[12.450219] (bluerov2_arm_disarm) StdoutLine: {'line': b'writing entry points to ../build/bluerov2_arm_disarm/bluerov2_arm_disarm.egg-info/entry_points.txt\n'}
+[12.450970] (bluerov2_arm_disarm) StdoutLine: {'line': b'writing requirements to ../build/bluerov2_arm_disarm/bluerov2_arm_disarm.egg-info/requires.txt\n'}
+[12.451589] (bluerov2_arm_disarm) StdoutLine: {'line': b'writing top-level names to ../build/bluerov2_arm_disarm/bluerov2_arm_disarm.egg-info/top_level.txt\n'}
+[12.542966] (-) TimerEvent: {}
+[12.577998] (bluerov2_controllers) StdoutLine: {'line': b"reading manifest file '../build/bluerov2_controllers/bluerov2_controllers.egg-info/SOURCES.txt'\n"}
+[12.584331] (bluerov2_node) StdoutLine: {'line': b'writing ../build/bluerov2_node/bluerov2_node.egg-info/PKG-INFO\n'}
+[12.587685] (bluerov2_node) StdoutLine: {'line': b'writing dependency_links to ../build/bluerov2_node/bluerov2_node.egg-info/dependency_links.txt\n'}
+[12.592017] (bluerov2_node) StdoutLine: {'line': b'writing entry points to ../build/bluerov2_node/bluerov2_node.egg-info/entry_points.txt\n'}
+[12.594884] (bluerov2_controllers) StdoutLine: {'line': b"writing manifest file '../build/bluerov2_controllers/bluerov2_controllers.egg-info/SOURCES.txt'\n"}
+[12.595643] (bluerov2_node) StdoutLine: {'line': b'writing requirements to ../build/bluerov2_node/bluerov2_node.egg-info/requires.txt\n'}
+[12.600304] (bluerov2_node) StdoutLine: {'line': b'writing top-level names to ../build/bluerov2_node/bluerov2_node.egg-info/top_level.txt\n'}
+[12.605982] (bluerov2_controllers) StdoutLine: {'line': b'running build\n'}
+[12.607374] (bluerov2_controllers) StdoutLine: {'line': b'running build_py\n'}
+[12.608288] (bluerov2_controllers) StdoutLine: {'line': b'running install\n'}
+[12.644970] (-) TimerEvent: {}
+[12.651559] (bluerov2_controllers) StdoutLine: {'line': b'running install_lib\n'}
+[12.747972] (-) TimerEvent: {}
+[12.849010] (-) TimerEvent: {}
+[12.893014] (bluerov2_controllers) StdoutLine: {'line': b'running install_data\n'}
+[12.893750] (bluerov2_controllers) StdoutLine: {'line': b'running install_egg_info\n'}
+[12.947963] (bluerov2_arm_disarm) StdoutLine: {'line': b"reading manifest file '../build/bluerov2_arm_disarm/bluerov2_arm_disarm.egg-info/SOURCES.txt'\n"}
+[12.949702] (-) TimerEvent: {}
+[12.957420] (bluerov2_arm_disarm) StdoutLine: {'line': b"writing manifest file '../build/bluerov2_arm_disarm/bluerov2_arm_disarm.egg-info/SOURCES.txt'\n"}
+[12.959482] (bluerov2_arm_disarm) StdoutLine: {'line': b'running build\n'}
+[12.960251] (bluerov2_arm_disarm) StdoutLine: {'line': b'running build_py\n'}
+[12.969300] (bluerov2_arm_disarm) StdoutLine: {'line': b'running install\n'}
+[13.000959] (bluerov2_testers) StdoutLine: {'line': b"reading manifest file '../build/bluerov2_testers/bluerov2_testers.egg-info/SOURCES.txt'\n"}
+[13.002078] (bluerov2_testers) StdoutLine: {'line': b"writing manifest file '../build/bluerov2_testers/bluerov2_testers.egg-info/SOURCES.txt'\n"}
+[13.015013] (bluerov2_testers) StdoutLine: {'line': b'running build\n'}
+[13.015925] (bluerov2_testers) StdoutLine: {'line': b'running build_py\n'}
+[13.028007] (bluerov2_testers) StdoutLine: {'line': b'running install\n'}
+[13.049971] (-) TimerEvent: {}
+[13.075694] (bluerov2_arm_disarm) StdoutLine: {'line': b'running install_lib\n'}
+[13.138008] (bluerov2_testers) StdoutLine: {'line': b'running install_lib\n'}
+[13.154032] (-) TimerEvent: {}
+[13.256968] (-) TimerEvent: {}
+[13.262468] (bluerov2_node) StdoutLine: {'line': b"reading manifest file '../build/bluerov2_node/bluerov2_node.egg-info/SOURCES.txt'\n"}
+[13.282317] (bluerov2_node) StdoutLine: {'line': b"writing manifest file '../build/bluerov2_node/bluerov2_node.egg-info/SOURCES.txt'\n"}
+[13.283311] (bluerov2_node) StdoutLine: {'line': b'running build\n'}
+[13.284300] (bluerov2_node) StdoutLine: {'line': b'running build_py\n'}
+[13.295884] (bluerov2_node) StdoutLine: {'line': b'running install\n'}
+[13.359976] (-) TimerEvent: {}
+[13.432204] (bluerov2_node) StdoutLine: {'line': b'running install_lib\n'}
+[13.463970] (-) TimerEvent: {}
+[13.557094] (bluerov2_controllers) StdoutLine: {'line': b"removing '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers-0.0.0-py3.12.egg-info' (and everything under it)\n"}
+[13.570097] (bluerov2_controllers) StdoutLine: {'line': b'Copying ../build/bluerov2_controllers/bluerov2_controllers.egg-info to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages/bluerov2_controllers-0.0.0-py3.12.egg-info\n'}
+[13.571967] (-) TimerEvent: {}
+[13.594052] (bluerov2_controllers) StdoutLine: {'line': b'running install_scripts\n'}
+[13.625691] (bluerov2_testers) StdoutLine: {'line': b'running install_data\n'}
+[13.630967] (bluerov2_testers) StdoutLine: {'line': b'running install_egg_info\n'}
+[13.675003] (-) TimerEvent: {}
+[13.767983] (bluerov2_arm_disarm) StdoutLine: {'line': b'running install_data\n'}
+[13.774108] (bluerov2_arm_disarm) StdoutLine: {'line': b'running install_egg_info\n'}
+[13.774995] (-) TimerEvent: {}
+[13.878985] (-) TimerEvent: {}
+[13.881212] (bluerov2_node) StdoutLine: {'line': b'running install_data\n'}
+[13.890977] (bluerov2_node) StdoutLine: {'line': b'running install_egg_info\n'}
+[13.979156] (-) TimerEvent: {}
+[13.999006] (bluerov2_testers) StdoutLine: {'line': b"removing '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_testers/lib/python3.12/site-packages/bluerov2_testers-0.0.0-py3.12.egg-info' (and everything under it)\n"}
+[14.005136] (bluerov2_testers) StdoutLine: {'line': b'Copying ../build/bluerov2_testers/bluerov2_testers.egg-info to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_testers/lib/python3.12/site-packages/bluerov2_testers-0.0.0-py3.12.egg-info\n'}
+[14.016028] (bluerov2_testers) StdoutLine: {'line': b'running install_scripts\n'}
+[14.072255] (bluerov2_arm_disarm) StdoutLine: {'line': b"removing '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm/lib/python3.12/site-packages/bluerov2_arm_disarm-0.0.0-py3.12.egg-info' (and everything under it)\n"}
+[14.074772] (bluerov2_arm_disarm) StdoutLine: {'line': b'Copying ../build/bluerov2_arm_disarm/bluerov2_arm_disarm.egg-info to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm/lib/python3.12/site-packages/bluerov2_arm_disarm-0.0.0-py3.12.egg-info\n'}
+[14.079356] (-) TimerEvent: {}
+[14.086437] (bluerov2_arm_disarm) StdoutLine: {'line': b'running install_scripts\n'}
+[14.181319] (-) TimerEvent: {}
+[14.290061] (-) TimerEvent: {}
+[14.331661] (bluerov2_node) StdoutLine: {'line': b"removing '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages/bluerov2_node-0.0.0-py3.12.egg-info' (and everything under it)\n"}
+[14.344123] (bluerov2_node) StdoutLine: {'line': b'Copying ../build/bluerov2_node/bluerov2_node.egg-info to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages/bluerov2_node-0.0.0-py3.12.egg-info\n'}
+[14.392127] (bluerov2_node) StdoutLine: {'line': b'running install_scripts\n'}
+[14.394310] (-) TimerEvent: {}
+[14.502535] (-) TimerEvent: {}
+[14.605036] (-) TimerEvent: {}
+[14.705975] (-) TimerEvent: {}
+[14.809659] (-) TimerEvent: {}
+[14.914967] (-) TimerEvent: {}
+[15.015969] (-) TimerEvent: {}
+[15.118998] (-) TimerEvent: {}
+[15.197527] (bluerov2_controllers) StdoutLine: {'line': b'Installing pid_controller script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/bluerov2_controllers\n'}
+[15.205805] (bluerov2_controllers) StdoutLine: {'line': b'Installing pid_depth script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/bluerov2_controllers\n'}
+[15.206514] (bluerov2_controllers) StdoutLine: {'line': b'Installing pid_heading script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/bluerov2_controllers\n'}
+[15.207125] (bluerov2_controllers) StdoutLine: {'line': b'Installing pid_lane script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/bluerov2_controllers\n'}
+[15.213980] (bluerov2_controllers) StdoutLine: {'line': b"writing list of installed files to '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_controllers/install.log'\n"}
+[15.221995] (-) TimerEvent: {}
+[15.322865] (-) TimerEvent: {}
+[15.423875] (-) TimerEvent: {}
+[15.430115] (bluerov2_controllers) CommandEnded: {'returncode': 0}
+[15.481874] (bluerov2_testers) StdoutLine: {'line': b'Installing heading_lock script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_testers/lib/bluerov2_testers\n'}
+[15.490396] (bluerov2_testers) StdoutLine: {'line': b"writing list of installed files to '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_testers/install.log'\n"}
+[15.527422] (-) TimerEvent: {}
+[15.540607] (bluerov2_controllers) JobEnded: {'identifier': 'bluerov2_controllers', 'rc': 0}
+[15.630028] (-) TimerEvent: {}
+[15.679680] (bluerov2_testers) CommandEnded: {'returncode': 0}
+[15.701292] (bluerov2_arm_disarm) StdoutLine: {'line': b'Installing arm_disarm script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm/lib/bluerov2_arm_disarm\n'}
+[15.703305] (bluerov2_arm_disarm) StdoutLine: {'line': b'Installing auv_movement script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm/lib/bluerov2_arm_disarm\n'}
+[15.718440] (bluerov2_testers) JobEnded: {'identifier': 'bluerov2_testers', 'rc': 0}
+[15.730601] (-) TimerEvent: {}
+[15.761472] (bluerov2_arm_disarm) StdoutLine: {'line': b'Installing dance_movement script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm/lib/bluerov2_arm_disarm\n'}
+[15.769007] (bluerov2_arm_disarm) StdoutLine: {'line': b'Installing test_diagonal script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm/lib/bluerov2_arm_disarm\n'}
+[15.782498] (bluerov2_arm_disarm) StdoutLine: {'line': b"writing list of installed files to '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_arm_disarm/install.log'\n"}
+[15.830973] (-) TimerEvent: {}
+[15.840403] (bluerov2_node) StdoutLine: {'line': b'Installing arm_disarm script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/bluerov2_node\n'}
+[15.849141] (bluerov2_node) StdoutLine: {'line': b'Installing camera_interface script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/bluerov2_node\n'}
+[15.851259] (bluerov2_node) StdoutLine: {'line': b'Installing convert_to_depth script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/bluerov2_node\n'}
+[15.855510] (bluerov2_node) StdoutLine: {'line': b'Installing lane_detection script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/bluerov2_node\n'}
+[15.860680] (bluerov2_node) StdoutLine: {'line': b"writing list of installed files to '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/install.log'\n"}
+[15.931390] (-) TimerEvent: {}
+[16.005408] (bluerov2_arm_disarm) CommandEnded: {'returncode': 0}
+[16.035522] (-) TimerEvent: {}
+[16.078664] (bluerov2_arm_disarm) JobEnded: {'identifier': 'bluerov2_arm_disarm', 'rc': 0}
+[16.083219] (bluerov2_node) CommandEnded: {'returncode': 0}
+[16.114068] (bluerov2_node) JobEnded: {'identifier': 'bluerov2_node', 'rc': 0}
+[16.117759] (bluerov2_launchers) JobStarted: {'identifier': 'bluerov2_launchers'}
+[16.135683] (-) TimerEvent: {}
+[16.236321] (-) TimerEvent: {}
+[16.338962] (-) TimerEvent: {}
+[16.439618] (-) TimerEvent: {}
+[16.540409] (-) TimerEvent: {}
+[16.641129] (-) TimerEvent: {}
+[16.741795] (-) TimerEvent: {}
+[16.842968] (-) TimerEvent: {}
+[16.943626] (-) TimerEvent: {}
+[17.044293] (-) TimerEvent: {}
+[17.145041] (-) TimerEvent: {}
+[17.245714] (-) TimerEvent: {}
+[17.346632] (-) TimerEvent: {}
+[17.447288] (-) TimerEvent: {}
+[17.547923] (-) TimerEvent: {}
+[17.648512] (-) TimerEvent: {}
+[17.749180] (-) TimerEvent: {}
+[17.850156] (-) TimerEvent: {}
+[17.950748] (-) TimerEvent: {}
+[18.051365] (-) TimerEvent: {}
+[18.151954] (-) TimerEvent: {}
+[18.252568] (-) TimerEvent: {}
+[18.353208] (-) TimerEvent: {}
+[18.453789] (-) TimerEvent: {}
+[18.554401] (-) TimerEvent: {}
+[18.655127] (-) TimerEvent: {}
+[18.756071] (-) TimerEvent: {}
+[18.856711] (-) TimerEvent: {}
+[18.957321] (-) TimerEvent: {}
+[19.057895] (-) TimerEvent: {}
+[19.158452] (-) TimerEvent: {}
+[19.259057] (-) TimerEvent: {}
+[19.359670] (-) TimerEvent: {}
+[19.460392] (-) TimerEvent: {}
+[19.560958] (-) TimerEvent: {}
+[19.661524] (-) TimerEvent: {}
+[19.762141] (-) TimerEvent: {}
+[19.862771] (-) TimerEvent: {}
+[19.965941] (-) TimerEvent: {}
+[20.066539] (-) TimerEvent: {}
+[20.167154] (-) TimerEvent: {}
+[20.267769] (-) TimerEvent: {}
+[20.368408] (-) TimerEvent: {}
+[20.469108] (-) TimerEvent: {}
+[20.570074] (-) TimerEvent: {}
+[20.642722] (bluerov2_launchers) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../build/bluerov2_launchers', 'build', '--build-base', '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/build', 'install', '--record', '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_launchers', 'env': {'USER': 'zguo27', 'SSH_CLIENT': '169.254.138.162 59072 22', 'WORKON_HOME': '/home/zguo27/.virtualenvs', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'tty', 'GIT_ASKPASS': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/extensions/git/dist/askpass.sh', 'SHLVL': '2', 'LD_LIBRARY_PATH': '/home/zguo27/auvc_ws/install/example_custom_srv/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/aarch64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'BROWSER': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/bin/helpers/browser.sh', 'HOME': '/home/zguo27', 'OLDPWD': '/home/zguo27/auvc_ws/src/AUVC_stuff', 'LESS': '-R', 'VIRTUALENVWRAPPER_PYTHON': '/usr/bin/python3', 'TERM_PROGRAM_VERSION': '1.102.0', 'VSCODE_IPC_HOOK_CLI': '/run/user/1005/vscode-ipc-5003134e-f8bc-41b4-a8ca-5d23c4a90454.sock', 'ZSH': '/home/zguo27/.oh-my-zsh', 'LSCOLORS': 'Gxfxcxdxbxegedabagacad', 'PAGER': 'less', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/extensions/git/dist/askpass-main.js', 'PS1': '(rosmav) %(?:%{\x1b[01;32m%}%1{➜%} :%{\x1b[01;31m%}%1{➜%} ) %{\x1b[36m%}%c%{\x1b[00m%} $(git_prompt_info)', 'SSL_CERT_FILE': '/usr/lib/ssl/cert.pem', 'VSCODE_GIT_ASKPASS_NODE': '/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/node', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1005/bus', 'PYDEVD_DISABLE_FILE_VALIDATION': '1', 'BUNDLED_DEBUGPY_PATH': '/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/libs/debugpy', 'COLORTERM': 'truecolor', 'ROS_DISTRO': 'jazzy', 'COLCON_PREFIX_PATH': '/home/zguo27/auvc_ws/install', 'LOGNAME': 'zguo27', '_': '/usr/bin/colcon', 'XDG_SESSION_CLASS': 'user', 'ROS_VERSION': '2', 'USER_ZDOTDIR': '/home/zguo27', 'XDG_SESSION_ID': '2', 'TERM': 'xterm-256color', 'PATH': '/home/zguo27/venvs/rosmav/bin:/usr/lib/ccache:/home/zguo27/.vscode-server/cli/servers/Stable-cb0c47c0cfaad0757385834bd89d410c78a856c0/server/bin/remote-cli:/usr/lib/ccache:/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/zguo27/.local/bin:/home/zguo27/ardupilot/Tools/autotest:/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/bundled/scripts/noConfigScripts:/home/zguo27/.vscode-server/data/User/globalStorage/github.copilot-chat/debugCommand:/home/zguo27/.local/bin:/home/zguo27/ardupilot/Tools/autotest', 'XDG_RUNTIME_DIR': '/run/user/1005', 'SSL_CERT_DIR': '/usr/lib/ssl/certs', 'LANG': 'en_US.UTF-8', 'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS': '/home/zguo27/.vscode-server/extensions/ms-python.debugpy-2025.10.0/.noConfigDebugAdapterEndpoints/endpoint-af9c3ccb3698f590.txt', 'VSCODE_INJECTION': '1', 'VIRTUAL_ENV_PROMPT': '(rosmav)', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'TERM_PROGRAM': 'vscode', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1005/vscode-git-7c08c7fd65.sock', 'AMENT_PREFIX_PATH': '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_testers:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm:/home/zguo27/auvc_ws/install/tutorial_virtualenvs:/home/zguo27/auvc_ws/install/tutorial_ardusub:/home/zguo27/auvc_ws/install/tutorial:/home/zguo27/auvc_ws/install/rosmav:/home/zguo27/auvc_ws/install/example_custom_srv:/home/zguo27/auvc_ws/install/bluerov2_launchers:/home/zguo27/auvc_ws/install/bluerov2_testers:/home/zguo27/auvc_ws/install/bluerov2_node:/home/zguo27/auvc_ws/install/bluerov2_controllers:/home/zguo27/auvc_ws/install/bluerov2_arm_disarm:/opt/ros/jazzy', 'SHELL': '/usr/bin/zsh', 'IGN_GAZEBO_RESOURCE_PATH': '/opt/ros/jazzy/share', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'VIRTUAL_ENV': '/home/zguo27/venvs/rosmav', 'LC_ALL': 'en_US.UTF-8', 'PWD': '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers', 'SSH_CONNECTION': '169.254.138.162 59072 169.254.193.89 22', 'ZDOTDIR': '/home/zguo27', 'PYTHONPATH': '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_testers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_controllers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_arm_disarm/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial_virtualenvs/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial_ardusub/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/tutorial/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/rosmav/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/example_custom_srv/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_launchers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_testers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_node/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_controllers/lib/python3.12/site-packages:/home/zguo27/auvc_ws/install/bluerov2_arm_disarm/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/home/zguo27/auvc_ws/install/example_custom_srv:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}, 'shell': False}
+[20.670192] (-) TimerEvent: {}
+[20.770999] (-) TimerEvent: {}
+[20.871893] (-) TimerEvent: {}
+[20.972802] (-) TimerEvent: {}
+[21.073461] (-) TimerEvent: {}
+[21.174136] (-) TimerEvent: {}
+[21.274735] (-) TimerEvent: {}
+[21.375577] (-) TimerEvent: {}
+[21.476205] (-) TimerEvent: {}
+[21.576788] (-) TimerEvent: {}
+[21.677656] (-) TimerEvent: {}
+[21.778565] (-) TimerEvent: {}
+[21.879272] (-) TimerEvent: {}
+[21.979912] (-) TimerEvent: {}
+[22.043171] (bluerov2_launchers) StdoutLine: {'line': b'running egg_info\n'}
+[22.080083] (-) TimerEvent: {}
+[22.147433] (bluerov2_launchers) StdoutLine: {'line': b'writing ../build/bluerov2_launchers/bluerov2_launchers.egg-info/PKG-INFO\n'}
+[22.148677] (bluerov2_launchers) StdoutLine: {'line': b'writing dependency_links to ../build/bluerov2_launchers/bluerov2_launchers.egg-info/dependency_links.txt\n'}
+[22.150000] (bluerov2_launchers) StdoutLine: {'line': b'writing requirements to ../build/bluerov2_launchers/bluerov2_launchers.egg-info/requires.txt\n'}
+[22.150722] (bluerov2_launchers) StdoutLine: {'line': b'writing top-level names to ../build/bluerov2_launchers/bluerov2_launchers.egg-info/top_level.txt\n'}
+[22.180211] (-) TimerEvent: {}
+[22.280801] (-) TimerEvent: {}
+[22.372067] (bluerov2_launchers) StdoutLine: {'line': b"reading manifest file '../build/bluerov2_launchers/bluerov2_launchers.egg-info/SOURCES.txt'\n"}
+[22.375481] (bluerov2_launchers) StdoutLine: {'line': b"writing manifest file '../build/bluerov2_launchers/bluerov2_launchers.egg-info/SOURCES.txt'\n"}
+[22.376202] (bluerov2_launchers) StdoutLine: {'line': b'running build\n'}
+[22.376722] (bluerov2_launchers) StdoutLine: {'line': b'running build_py\n'}
+[22.377581] (bluerov2_launchers) StdoutLine: {'line': b'running install\n'}
+[22.380954] (-) TimerEvent: {}
+[22.403379] (bluerov2_launchers) StdoutLine: {'line': b'running install_lib\n'}
+[22.481112] (-) TimerEvent: {}
+[22.510721] (bluerov2_launchers) StdoutLine: {'line': b'running install_data\n'}
+[22.511677] (bluerov2_launchers) StdoutLine: {'line': b'running install_egg_info\n'}
+[22.581293] (-) TimerEvent: {}
+[22.621111] (bluerov2_launchers) StdoutLine: {'line': b"removing '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages/bluerov2_launchers-0.0.0-py3.12.egg-info' (and everything under it)\n"}
+[22.622974] (bluerov2_launchers) StdoutLine: {'line': b'Copying ../build/bluerov2_launchers/bluerov2_launchers.egg-info to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_launchers/lib/python3.12/site-packages/bluerov2_launchers-0.0.0-py3.12.egg-info\n'}
+[22.628899] (bluerov2_launchers) StdoutLine: {'line': b'running install_scripts\n'}
+[22.681438] (-) TimerEvent: {}
+[22.783523] (-) TimerEvent: {}
+[22.885147] (-) TimerEvent: {}
+[22.985859] (-) TimerEvent: {}
+[23.086465] (-) TimerEvent: {}
+[23.187138] (-) TimerEvent: {}
+[23.287700] (-) TimerEvent: {}
+[23.370625] (bluerov2_launchers) StdoutLine: {'line': b"writing list of installed files to '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_launchers/install.log'\n"}
+[23.388009] (-) TimerEvent: {}
+[23.488983] (-) TimerEvent: {}
+[23.518706] (bluerov2_launchers) CommandEnded: {'returncode': 0}
+[23.576523] (bluerov2_launchers) JobEnded: {'identifier': 'bluerov2_launchers', 'rc': 0}
+[23.580250] (-) EventReactorShutdown: {}

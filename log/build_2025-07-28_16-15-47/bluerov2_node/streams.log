@@ -1,0 +1,30 @@
+[14.821s] Invoking command in '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_node': PYTHONPATH=/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/bluerov2_node build --build-base /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/build install --record /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/install.log --single-version-externally-managed install_data
+[17.505s] running egg_info
+[17.726s] writing ../build/bluerov2_node/bluerov2_node.egg-info/PKG-INFO
+[17.729s] writing dependency_links to ../build/bluerov2_node/bluerov2_node.egg-info/dependency_links.txt
+[17.732s] writing entry points to ../build/bluerov2_node/bluerov2_node.egg-info/entry_points.txt
+[17.733s] writing requirements to ../build/bluerov2_node/bluerov2_node.egg-info/requires.txt
+[17.736s] writing top-level names to ../build/bluerov2_node/bluerov2_node.egg-info/top_level.txt
+[18.199s] reading manifest file '../build/bluerov2_node/bluerov2_node.egg-info/SOURCES.txt'
+[18.210s] writing manifest file '../build/bluerov2_node/bluerov2_node.egg-info/SOURCES.txt'
+[18.213s] running build
+[18.214s] running build_py
+[18.219s] copying bluerov2_node/FlashyLights.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/build/lib/bluerov2_node
+[18.219s] copying bluerov2_node/ReadAprilTags.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/build/lib/bluerov2_node
+[18.225s] running install
+[18.297s] running install_lib
+[18.566s] copying /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/build/lib/bluerov2_node/FlashyLights.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages/bluerov2_node
+[18.572s] copying /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/build/lib/bluerov2_node/ReadAprilTags.py -> /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages/bluerov2_node
+[18.579s] byte-compiling /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages/bluerov2_node/FlashyLights.py to FlashyLights.cpython-312.pyc
+[18.585s] byte-compiling /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages/bluerov2_node/ReadAprilTags.py to ReadAprilTags.cpython-312.pyc
+[18.591s] running install_data
+[18.596s] running install_egg_info
+[18.819s] removing '/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages/bluerov2_node-0.0.0-py3.12.egg-info' (and everything under it)
+[18.823s] Copying ../build/bluerov2_node/bluerov2_node.egg-info to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages/bluerov2_node-0.0.0-py3.12.egg-info
+[18.838s] running install_scripts
+[20.390s] Installing arm_disarm script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/bluerov2_node
+[20.392s] Installing camera_interface script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/bluerov2_node
+[20.406s] Installing convert_to_depth script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/bluerov2_node
+[20.435s] Installing lane_detection script to /home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/bluerov2_node
+[20.441s] writing list of installed files to '/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/install.log'
+[20.806s] Invoked command in '/home/zguo27/auvc_ws/src/AUVC_stuff/bluerov2_node' returned '0': PYTHONPATH=/home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/zguo27/auvc_ws/src/AUVC_stuff/install/bluerov2_node/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/bluerov2_node build --build-base /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/build install --record /home/zguo27/auvc_ws/src/AUVC_stuff/build/bluerov2_node/install.log --single-version-externally-managed install_data

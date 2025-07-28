@@ -9,9 +9,10 @@ setup.py
 ../build/bluerov2_node/bluerov2_node.egg-info/top_level.txt
 ../build/bluerov2_node/bluerov2_node.egg-info/zip-safe
 bluerov2_node/ArmDisarm.py
-bluerov2_node/CameraInterface.py
+bluerov2_node/FlashyLights.py
 bluerov2_node/LaneDetection.py
 bluerov2_node/PressureToDepth.py
+bluerov2_node/ReadAprilTags.py
 bluerov2_node/TranslateImage.py
 bluerov2_node/__init__.py
 resource/bluerov2_node
