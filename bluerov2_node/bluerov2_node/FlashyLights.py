@@ -1,6 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from mavros_msgs.msg import OverrideRCIn
+from dt_apriltags import Detector
 
 
 class FlashLights(Node):
@@ -13,7 +14,7 @@ class FlashLights(Node):
 
         #Here, sub to a topic that will tell you to assign level = 100 when tag is within 1 meter
         
-        
+
         level = 0
         self.turn_lights_on(level)
 
