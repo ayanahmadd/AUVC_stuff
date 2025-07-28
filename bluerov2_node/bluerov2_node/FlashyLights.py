@@ -10,7 +10,13 @@ class FlashLights(Node):
         self.command_pub = self.create_publisher(
             OverrideRCIn, "override_rc", 10
         )
+
+        #Here, sub to a topic that will tell you to assign level = 100 when tag is within 1 meter
         
+        
+        level = 0
+        self.turn_lights_on(level)
+
     def turn_lights_on(self, level):
         """
         Turn the lights on.
