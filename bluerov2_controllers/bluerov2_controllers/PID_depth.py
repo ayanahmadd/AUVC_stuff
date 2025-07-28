@@ -49,6 +49,9 @@ class DepthPIDController(Node):
 
     def control_loop(self):
 
+        if self.current_depth is None:
+            return
+
         # run PID on the current depth
         thrust = self.pid.compute(self.current_depth)
 
