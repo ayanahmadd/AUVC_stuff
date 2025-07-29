@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'heading_lock = bluerov2_testers.HeadingLock:main',
+            'basic = bluerov2_testers.BasicStrategyTag:main',
         ],
     },
 )
