@@ -1,0 +1,39 @@
+#ros2 launch bluerov2_launchers arm_n_lane.launch.yaml
+# Launch arm and depth concurrently, then heading and forward movement concurrently
+
+launch:
+  # 1. Arm/Disarm node
+  - node:
+      pkg: "rosmav"
+      exec: "bluerov2_hardware_interface"
+      name: "rosmav_stuff"
+      output: "screen"
+  - node:
+      pkg: "bluerov2_arm_disarm"
+      exec: "arm_disarm"
+      name: "arm_disarm_node"
+      output: "screen"
+
+  # 2. Depth PID Controller (runs in parallel with arm)
+  - node:
+      pkg: "bluerov2_controllers"
+      exec: "pid_depth"
+      name: "depth_pid_node"
+      output: "screen"
+  - node:
+      pkg: "bluerov2_node"
+      exec: "convert_to_depth"
+      name: "depth_conversion_node"
+      output: "screen"
+
+  # 3. Run lane following stuff
+  - node:
+      pkg: "bluerov2_node"
+      exec: "camera_interface"
+      name: "camera_node"
+      output: "screen"
+  - node:
+      pkg: "bluerov2_node"
+      exec: "lane_detection"
+      name: "lane_detection_node"
+      output: "screen"
