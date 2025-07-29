@@ -30,7 +30,7 @@ class AprilTagDetectorNode(Node):
         # subscribe to raw camera feed on topic "camera"
         self.create_subscription(
             Image,
-            'camera',
+            '/bluerov2/camera',
             self.image_cb,
             10
         )

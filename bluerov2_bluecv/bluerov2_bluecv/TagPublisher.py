@@ -10,7 +10,7 @@ from dt_apriltags import Detector
 import math
 
 TAG_SIZE_METERS = 0.092  # actual tag side length
-CAMERA_PARAMS = (942.5, 942.5, 960, 540)  # fx, fy, cx, cy
+CAMERA_PARAMS = (273.25, 261.76, 307.89, 153.84)
 
 def rotation_matrix_to_euler(R):
     sy = math.sqrt(R[0,0] ** 2 + R[1,0] ** 2)
@@ -43,7 +43,7 @@ class AprilTagDetectorNode(Node):
 
         self.create_subscription(
             Image,
-            'camera',
+            '/bluerov2/camera',
             self.image_cb,
             10
         )
