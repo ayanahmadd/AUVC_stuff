@@ -21,6 +21,11 @@ launch:
       name: "depth_pid_node"
       output: "screen"
   - node:
+      pkg: "bluerov2_controllers"
+      exec: "depth_publisher"
+      name: "depth_setter"
+      output: "screen"
+  - node:
       pkg: "bluerov2_node"
       exec: "convert_to_depth"
       name: "depth_conversion_node"
