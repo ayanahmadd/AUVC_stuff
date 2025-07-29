@@ -52,6 +52,9 @@ class FlashLights(Node):
         if magnitude_norm < 1.0:
             self.level = 100
             self.turn_lights_on(100)
+        else:
+            self.level = 0
+            self.turn_lights_on(0)
 
 def main(args=None):
     rclpy.init(args=args)
