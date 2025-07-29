@@ -1,2 +1,0 @@
-[console_scripts]
-heading_lock = bluerov2_testers.HeadingLock:main
