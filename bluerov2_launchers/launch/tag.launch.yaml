@@ -35,3 +35,8 @@ launch:
       exec: "tag_publish"
       name: "publish_april_tag"
       output: "screen"
+  - node:
+      pkg: "bluerov2_node"
+      exec: "flash_lights"
+      name: "flash_the_lights"
+      output: "screen"

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
 from mavros_msgs.msg import OverrideRCIn
@@ -5,6 +6,11 @@ from dt_apriltags import Detector
 from std_msgs.msg import Float64MultiArray
 import numpy as np
 import math
+
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
+import cv2
+from dt_apriltags import Detector
 
 
 class FlashLights(Node):
@@ -46,6 +52,9 @@ class FlashLights(Node):
         if magnitude_norm < 1.0:
             self.level = 100
             self.turn_lights_on(100)
+        else:
+            self.level = 0
+            self.turn_lights_on(0)
 
 def main(args=None):
     rclpy.init(args=args)
