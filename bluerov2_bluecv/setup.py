@@ -27,6 +27,8 @@ setup(
         'console_scripts': [
             'virtualenvs = bluecv.virtualenvs:main',
             'april_tag = bluerov2_bluecv.ReadAprilTags:main',
+            'tag_follow = bluerov2_bluecv.TagFollower:main',
+            'tag_publish = bluerov2_bluecv.TagPublisher:main',
         ],
     },
     options={

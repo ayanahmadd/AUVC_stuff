@@ -1,0 +1,3 @@
+[console_scripts]
+april_tag = bluerov2_bluecv.ReadAprilTags:main
+virtualenvs = bluecv.virtualenvs:main

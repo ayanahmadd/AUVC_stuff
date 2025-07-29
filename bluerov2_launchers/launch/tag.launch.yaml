@@ -1,0 +1,37 @@
+#ros2 launch bluerov2_launchers tag.launch.yaml
+# Launch arm and depth concurrently, then april tag stuff concurrently
+
+launch:
+  # 1. Arm/Disarm node
+  - node:
+      pkg: "bluerov2_arm_disarm"
+      exec: "arm_disarm"
+      name: "arm_disarm_node"
+      output: "screen"
+
+  # 2. Camera and april tags
+  - node:
+      pkg: "rosmav"
+      exec: "bluerov2_hardware_interface"
+      name: "rosmav_stuff"
+      output: "screen"
+  - node:
+      pkg: "bluerov2_node"
+      exec: "camera_interface"
+      name: "camera_node"
+      output: "screen"
+  - node:
+      pkg: "bluerov2_bluecv"
+      exec: "april_tag"
+      name: "read_april_tag"
+      output: "screen"
+  - node:
+      pkg: "bluerov2_bluecv"
+      exec: "tag_follow"
+      name: "follow_april_tag"
+      output: "screen"
+  - node:
+      pkg: "bluerov2_bluecv"
+      exec: "tag_publish"
+      name: "publish_april_tag"
+      output: "screen"

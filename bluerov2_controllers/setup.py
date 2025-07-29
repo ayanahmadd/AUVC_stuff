@@ -24,6 +24,7 @@ setup(
             'pid_heading = bluerov2_controllers.PID_heading:main',
             'pid_controller = bluerov2_controllers.PIDController:main',
             'pid_lane = bluerov2_controllers.PID_lane_following:main',
+            'depth_publisher = bluerov2_node.DepthPublisher:main',
         ],
     },
 )
