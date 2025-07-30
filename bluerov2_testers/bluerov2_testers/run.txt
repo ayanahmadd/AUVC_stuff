@@ -5,4 +5,3 @@ for the stratgies to work, the following nodes need to be running:
 - april tag publisher
 - depth pid
 - heading pid (unsure)
-- 
