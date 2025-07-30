@@ -3,7 +3,7 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float64MultiArray, Int16
 from mavros_msgs.msg import ManualControl, OverrideRCIn
-from bluerov2_controllers.bluerov2_controllers.PIDController import PIDController
+from bluerov2_controllers.PIDController import PIDController
 
 class AprilTagFollower(Node):
     def __init__(self):
