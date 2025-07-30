@@ -24,6 +24,9 @@ class MissionNode(Node):
         self.state       = 0
         self.start_time  = self.get_clock().now()
 
+        # Time when entering state 6 (flash idle)
+        self.state6_start_time = None
+
         # Sensor readings
         self.current_depth   = None
         self.tag_position    = None  # [x, y, z]
@@ -34,7 +37,7 @@ class MissionNode(Node):
         self.TILT_UP        =  30.0   # degrees
         self.TILT_PERIOD    =   2.0   # seconds between toggles
         self.last_tilt_time = None
-        self.current_tilt   = self.TILT_DOWN
+        self.current_tilt   = self.TILT_UP
 
         # Spin parameters
         self.spin_start_head = None
@@ -102,13 +105,14 @@ class MissionNode(Node):
             else:
                 self.get_logger().info("→ Finished backing up")
                 self.state = 3
+                self.pub_manual.publish(ManualControl(x=0.0, y=0.0, z=0.0, r=0.0))
 
-        # State 3: initial camera tilt down
+        # State 3: initial camera tilt up
         elif self.state == 3:
-            self.get_logger().info(f"→ State 3: Tilting camera to {self.TILT_DOWN}°")
-            self.pub_camera_tilt.publish(Float64(data=self.TILT_DOWN))
+            self.get_logger().info(f"→ State 3: Tilting camera to {self.TILT_UP}°")
+            self.pub_camera_tilt.publish(Float64(data=self.TILT_UP))
             self.last_tilt_time = now
-            self.current_tilt   = self.TILT_DOWN
+            self.current_tilt   = self.TILT_UP
             self.state = 4
 
         # State 4: spin & wiggle camera until AprilTag seen
@@ -142,30 +146,38 @@ class MissionNode(Node):
                 self.get_logger().info("→ AprilTag detected! Beginning approach")
                 self.state = 5
 
-        # State 5: approach tag, aim camera, flash at <1 m
+        # State 5: approach tag, flash at <1 m
         elif self.state == 5:
             x, y, z = self.tag_position
 
-            # Aim camera at tag
-            pitch_rad = math.atan2(y, z)
-            pitch_deg = math.degrees(pitch_rad)
-            # negative if positive tilt is downward on your gimbal
-            self.pub_camera_tilt.publish(Float64(data=-pitch_deg))
-            self.get_logger().info(f"Aiming camera at tag: tilt to {-pitch_deg:.1f}°")
-
-            # Drive toward tag (simple P-style)
-            forward = max(min((z - 1.0) * 500.0, 600.0), -600.0)
-            yaw     = max(min(x         * 500.0, 600.0), -600.0)
-            self.pub_manual.publish(ManualControl(x=forward, y=0.0, z=0.0, r=yaw))
+            # Compute raw control efforts
+            raw_forward = (z - 1.0) * 500.0
+            raw_yaw     = x         * 500.0
+            # Clamp to ±600
+            clamped_fwd = max(min(raw_forward, 600.0), -600.0)
+            clamped_yaw = max(min(raw_yaw,     600.0), -600.0)
+            # Normalize into [-1.0, 1.0] for ManualControl
+            norm_fwd = clamped_fwd / 600.0
+            norm_yaw = clamped_yaw / 600.0
+            self.pub_manual.publish(ManualControl(x=norm_fwd, y=0.0, z=0.0, r=norm_yaw))
 
             # Flash lights when within 1 m
             if z < 1.0:
                 self.get_logger().info("→ Within 1 m: flashing lights")
                 self.turn_lights(100)
                 self.state = 6
+                self.state6_start_time = now
 
         # State 6: idle (lights remain on)
         elif self.state == 6:
+            # After flashing, wait 5 seconds then turn lights off
+            if self.state6_start_time is not None and (now - self.state6_start_time).nanoseconds * 1e-9 >= 3.0:
+                self.get_logger().info("→ Turning lights off after 3 seconds")
+                self.turn_lights(0)
+                self.state = 7
+
+        elif self.state == 7:
+            # Idle after lights-off
             pass
 
 def main():
