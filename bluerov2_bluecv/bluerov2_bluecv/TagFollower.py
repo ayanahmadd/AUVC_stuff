@@ -10,8 +10,8 @@ class AprilTagFollower(Node):
         super().__init__('apriltag_follower_pid')
 
         # PID Controllers
-        self.forward_pid = PIDController(kp=1.2, ki=0.01, kd=0.4, setpoint=1.0)  # target z = 1 m
-        self.yaw_pid     = PIDController(kp=500.0, ki=5.0, kd=200.0, setpoint=0.0)  # target x = 0
+        self.forward_pid = PIDController(kp=70.0, ki=2.5, kd=5.0, setpoint=1.0)  # target z = 1 m
+        self.yaw_pid     = PIDController(kp=2.0, ki=0.1, kd=0.75, setpoint=0.0)  # target x = 0
 
         # Publishers & Subscribers
         self.create_subscription(Float64MultiArray, 'apriltag/detection', self.detection_cb, 10)
