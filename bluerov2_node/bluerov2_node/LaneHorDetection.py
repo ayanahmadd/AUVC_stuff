@@ -5,7 +5,7 @@ from rclpy.node import Node
 from sensor_msgs.msg import Image
 from std_msgs.msg import Float64MultiArray
 from mavros_msgs.msg import ManualControl
-from bluerov2_controllers.PIDController import PIDController
+from bluerov2_controllers.bluerov2_controllers.PIDController import PIDController
 from cv_bridge import CvBridge
 
 class FollowHorizontalLane(Node):
