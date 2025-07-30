@@ -43,7 +43,7 @@ class AprilTagDetectorNode(Node):
 
         self.create_subscription(
             Image,
-            '/bluerov2/camera',
+            'camera',
             self.image_cb,
             10
         )

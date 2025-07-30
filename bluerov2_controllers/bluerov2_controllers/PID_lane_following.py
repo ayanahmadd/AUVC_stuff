@@ -27,7 +27,7 @@ class StickToClosestLane(Node):
 
         # Subscribe to camera so we know width
         self.create_subscription(
-            Image, 'bluerov2/camera', self._image_cb, 10
+            Image, 'camera', self._image_cb, 10
         )
 
         # Subscribe to best_lane [slope, angle, x_center]

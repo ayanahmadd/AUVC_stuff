@@ -10,7 +10,7 @@ from bluerov2_opencv import lane_following
 
 #same imports as rosmav camera publisher node - just to avoid errors
 from sensor_msgs.msg import Image
-import gi
+#import gi
 from cv_bridge import CvBridge
 import numpy as np
 
@@ -23,7 +23,7 @@ class ImageToCode(Node):
 
         self.sub = self.create_subscription(
             Image,        # the message type
-            "bluerov2/camera",    # the topic name,
+            "camera",    # the topic name,
             self.image_callback,  # the subscription's callback method
             10              # QOS (will be covered later)
         )
