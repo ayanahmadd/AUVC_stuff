@@ -26,7 +26,7 @@ class FollowHorizontalLane(Node):
 
         # Subscribe to camera so we know image height
         self.create_subscription(
-            Image, 'bluerov2/camera', self._image_cb, 10
+            Image, 'camera', self._image_cb, 10
         )
 
         # Subscribe to best horizontal lane [slope, angle, y_center]

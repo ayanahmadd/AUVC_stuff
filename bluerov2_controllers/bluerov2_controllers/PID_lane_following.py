@@ -23,7 +23,7 @@ class StickToClosestLane(Node):
         self.bridge = CvBridge()
 
         self.create_subscription(
-            Image, 'bluerov2/camera', self._image_cb, 10
+            Image, 'camera', self._image_cb, 10
         )
         self.create_subscription(
             Float64MultiArray,

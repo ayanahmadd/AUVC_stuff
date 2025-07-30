@@ -9,6 +9,18 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 import math
+from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.executors import MultiThreadedExecutor
+
+"""
+Dive → Back-up → (Rotate→Hold→Scan)×∞
+             ↘ if detect
+               Approach (prop-drive + camera tilt)
+               ↘ if close enough
+                 Hold & confirm
+                    ↘ success → Flash lights → Idle
+                    ↘ failure → restart whole sequence
+"""
 
 # === Camera intrinsics
 FX, FY = 273.25, 261.76
@@ -22,6 +34,10 @@ class BasicCVMission(Node):
     def __init__(self):
         super().__init__('basic_cv_mission')
 
+        # — Callback groups for async execution —
+        self.fast_group = ReentrantCallbackGroup()
+        self.slow_group = ReentrantCallbackGroup()
+
         # — Publishers —
         self.pub_target_depth = self.create_publisher(Float64,    'target_depth',    10)
         self.pub_manual       = self.create_publisher(ManualControl, '/manual_control', 10)
@@ -31,22 +47,24 @@ class BasicCVMission(Node):
 
         # — CV Detector setup —
         self.bridge = CvBridge()
-        self.model  = YOLO("bluerov2_bluecv/bluerov2_bluecv/best.pt")
-        self.create_subscription(Image, 'camera', self.image_cb, 10)
+        self.model  = YOLO("bluerov2_bluecv/bluerov2_bluecv/yolov8n.pt")
+        self.create_subscription(Image, 'camera', self.image_cb, 10, callback_group=self.slow_group)
 
         # — Subscribers for depth & heading —
-        self.create_subscription(Float64,            'depth',    self.depth_cb,   10)
-        self.create_subscription(Int16,              '/heading', self.heading_cb, 10)
+        self.create_subscription(Float64,            'depth',    self.depth_cb,   10, callback_group=self.fast_group)
+        self.create_subscription(Int16,              '/heading', self.heading_cb, 10, callback_group=self.fast_group)
 
         # — State & timing —
         self.state             = 0
         self.start_time        = self.get_clock().now()
         self.state6_start_time = None
+        # — Timestamp for “hold‑and‑rescan” confirmation —
+        self.rescan_start_time = None
 
         # — Sensor storage —
         self.current_depth   = None
-        self.tag_position    = None   # [x_m, y_m, z_m]
-        self.initial_tag_position = None
+        self.rov_position    = None   # [x_m, y_m, z_m]
+        self.initial_rov_position = None
         self.current_heading = None
 
         # — Scan parameters —
@@ -61,17 +79,21 @@ class BasicCVMission(Node):
         self.scanning_forward = True
         self.offset_idx       = 0
 
+        # — Inference throttle (seconds) —
+        self.INFERENCE_INTERVAL = 0.5
+        self.last_inference = self.get_clock().now()
+
         # — Dive & back-up constants —
         self.DIVE_DEPTH    = 2.0     # m
         self.DIVE_TOL      = 0.1     # m
         self.DIVE_SETTLE   = 2.0     # s
-        self.BACK_SPEED    = -1.0    # m/s
+        self.BACK_SPEED    = 1.0     # m/s
         self.BACK_DISTANCE = 2.0     # m
         self.backed_distance = 0.0
         self.last_back_time  = None
 
         # — Main loop @10 Hz —
-        self.create_timer(0.1, self.timer_cb)
+        self.create_timer(0.1, self.timer_cb, callback_group=self.fast_group)
         self.get_logger().info("BasicCVMission started")
 
     #
@@ -96,11 +118,17 @@ class BasicCVMission(Node):
         self.pub_lights.publish(cmd)
 
     #
-    # — Image callback: run YOLO, pick best box, estimate pose, set tag_position —
+    # — Image callback: run YOLO, pick best box, estimate pose, set rov_position —
     #
     def image_cb(self, msg: Image):
+        now = self.get_clock().now()
+        if (now - self.last_inference).nanoseconds * 1e-9 < self.INFERENCE_INTERVAL:
+            return
+        self.last_inference = now
+
         img = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-        results = self.model.predict(img, conf=0.5)[0]
+        small = cv2.resize(img, (320, 240))
+        results = self.model.predict(small, conf=0.5)[0]
         # pick largest box
         best = self.select_optimal_detection(results.boxes)
         if best:
@@ -108,13 +136,13 @@ class BasicCVMission(Node):
             pose = self.estimate_3d_pose((x, y, w, h), img.shape[:2])
             if pose:
                 x_m, y_m, z_m, _ = pose  # ignore angle
-                self.tag_position = [x_m, y_m, z_m]
+                self.rov_position = [x_m, y_m, z_m]
                 # debug log:
-                self.get_logger().info(f"→ Detected target at X={x_m:.2f}m, Y={y_m:.2f}m, Z={z_m:.2f}m")
+                self.get_logger().info(f"→ Detected ROV at X={x_m:.2f}m, Y={y_m:.2f}m, Z={z_m:.2f}m")
             else:
-                self.tag_position = None
+                self.rov_position = None
         else:
-            self.tag_position = None
+            self.rov_position = None
 
     def select_optimal_detection(self, boxes, min_area=500):
         best, max_area = None, 0
@@ -184,7 +212,7 @@ class BasicCVMission(Node):
                 self.pub_manual.publish(ManualControl(x=self.BACK_SPEED, y=0.0, z=0.0, r=0.0))
             else:
                 self.pub_manual.publish(ManualControl(x=0.0, y=0.0, z=0.0, r=0.0))
-                self.get_logger().info("→ Backed up 1 m")
+                self.get_logger().info("→ Backed up {BACKUP_DISTANCE} m")
                 self.state = 3
 
         # State 3 → init scan
@@ -192,19 +220,19 @@ class BasicCVMission(Node):
             if self.current_heading is not None:
                 self.start_heading    = self.current_heading
                 self.scanning_forward = True
-                self.offset_idx       = 0
-                self.next_heading     = (self.start_heading + self.cw_offsets[0]) % 360.0
+                self.offset_idx       = 3
+                self.next_heading     = (self.start_heading + self.cw_offsets[self.offset_idx]) % 360.0
                 self.hold_start       = None
                 self.state            = 4
                 self.get_logger().info(f"→ State 3: first scan at {self.next_heading:.1f}°")
 
         # State 4 → scan or detect
         elif self.state == 4:
-            if self.tag_position is not None:
+            if self.rov_position is not None:
                 # detected—go approach
-                self.initial_tag_position = list(self.tag_position)
+                self.initial_rov_position = list(self.rov_position)
                 self.state = 5
-                self.get_logger().info("→ Target detected, approaching…")
+                self.get_logger().info("→ ROV detected, approaching…")
                 return
 
             if self.current_heading is None:
@@ -233,10 +261,10 @@ class BasicCVMission(Node):
 
         # State 5 → approach & flash
         elif self.state == 5:
-            x, y, z = self.tag_position
-            # If target is above/below, tilt camera to face it
+            x, y, z = self.rov_position
+            # If ROV is above/below, tilt camera to face it
             vertical_tolerance = 0.1  # meters
-            y_m = y  # current vertical offset from tag_position
+            y_m = y  # current vertical offset from rov_position
             z_m = z  # current forward distance
             if abs(y_m) > vertical_tolerance:
                 # compute tilt angle (positive tilts up)
@@ -252,20 +280,35 @@ class BasicCVMission(Node):
             cy = max(min(raw_yaw, 600.0), -600.0) / 600.0
             self.pub_manual.publish(ManualControl(x=cf, y=0.0, z=0.0, r=cy))
 
-            x0, y0, z0 = self.initial_tag_position
+            # ── Reached predicted spot: stop & hold for a fresh re‑scan ──
+            x0, y0, z0 = self.initial_rov_position
             if (abs(z - z0) <= 0.05 and abs(x) <= 1.0 and abs(y - y0) <= 0.05):
-                # Rescan to ensure within 1m before flashing
-                if z <= 1.0:
-                    self.turn_lights(100)
-                    self.state6_start_time = now
-                    self.state = 6
-                    self.get_logger().info("→ Flashing lights!")
-                else:
-                    self.get_logger().info("→ Target out of 1m range; resuming scan…")
-                    # clear detection and go back to scan state
-                    self.tag_position = None
-                    self.state = 4
-                    return
+                # Freeze thrusters and start a timed re‑scan
+                self.pub_manual.publish(ManualControl(x=0.0, y=0.0, z=0.0, r=0.0))
+                self.rescan_start_time = now
+                self.state = 55      # new “re‑scan confirmation” state
+                self.get_logger().info("→ Holding position; rescanning to confirm ≤ 1 m")
+                return
+
+        # State 55 → hold & re‑scan to confirm we are truly ≤ 1 m
+        elif self.state == 55:
+            # Wait at least 1 s to gather fresh detections
+            if (now - self.rescan_start_time).nanoseconds * 1e-9 < 1.0:
+                return
+
+            # If detector still sees the ROV and z ≤ 1 m, flash; otherwise restart mission
+            if self.rov_position is not None and self.rov_position[2] <= 1.0:
+                self.turn_lights(100)
+                self.state6_start_time = now
+                self.state = 6
+                self.get_logger().info("→ Confirmed ≤ 1 m; flashing lights!")
+            else:
+                self.get_logger().info("→ Re‑scan failed; restarting full search cycle")
+                self.rov_position = None
+                self.backed_distance = 0.0
+                self.state = 0          # jump back to the dive/back‑up sequence
+                self.start_time = now   # reset timer for State 0
+                return
 
         # State 6 → lights off
         elif self.state == 6:
@@ -281,8 +324,10 @@ class BasicCVMission(Node):
 def main():
     rclpy.init()
     node = BasicCVMission()
+    executor = MultiThreadedExecutor()
+    executor.add_node(node)
     try:
-        rclpy.spin(node)
+        executor.spin()
     finally:
         node.destroy_node()
         rclpy.shutdown()
