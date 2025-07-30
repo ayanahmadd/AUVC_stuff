@@ -9,6 +9,8 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 import math
+from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.executors import MultiThreadedExecutor
 
 # === Camera intrinsics
 FX, FY = 273.25, 261.76
@@ -22,6 +24,10 @@ class BasicCVMission(Node):
     def __init__(self):
         super().__init__('basic_cv_mission')
 
+        # — Callback groups for async execution —
+        self.fast_group = ReentrantCallbackGroup()
+        self.slow_group = ReentrantCallbackGroup()
+
         # — Publishers —
         self.pub_target_depth = self.create_publisher(Float64,    'target_depth',    10)
         self.pub_manual       = self.create_publisher(ManualControl, '/manual_control', 10)
@@ -31,12 +37,12 @@ class BasicCVMission(Node):
 
         # — CV Detector setup —
         self.bridge = CvBridge()
-        self.model  = YOLO("bluerov2_bluecv/bluerov2_bluecv/best.pt")
-        self.create_subscription(Image, 'camera', self.image_cb, 10)
+        self.model  = YOLO("yolov8n.pt")
+        self.create_subscription(Image, 'camera', self.image_cb, 10, callback_group=self.slow_group)
 
         # — Subscribers for depth & heading —
-        self.create_subscription(Float64,            'depth',    self.depth_cb,   10)
-        self.create_subscription(Int16,              '/heading', self.heading_cb, 10)
+        self.create_subscription(Float64,            'depth',    self.depth_cb,   10, callback_group=self.fast_group)
+        self.create_subscription(Int16,              '/heading', self.heading_cb, 10, callback_group=self.fast_group)
 
         # — State & timing —
         self.state             = 0
@@ -61,6 +67,10 @@ class BasicCVMission(Node):
         self.scanning_forward = True
         self.offset_idx       = 0
 
+        # — Inference throttle (seconds) —
+        self.INFERENCE_INTERVAL = 0.5
+        self.last_inference = self.get_clock().now()
+
         # — Dive & back-up constants —
         self.DIVE_DEPTH    = 2.0     # m
         self.DIVE_TOL      = 0.1     # m
@@ -71,7 +81,7 @@ class BasicCVMission(Node):
         self.last_back_time  = None
 
         # — Main loop @10 Hz —
-        self.create_timer(0.1, self.timer_cb)
+        self.create_timer(0.1, self.timer_cb, callback_group=self.fast_group)
         self.get_logger().info("BasicCVMission started")
 
     #
@@ -99,8 +109,14 @@ class BasicCVMission(Node):
     # — Image callback: run YOLO, pick best box, estimate pose, set tag_position —
     #
     def image_cb(self, msg: Image):
+        now = self.get_clock().now()
+        if (now - self.last_inference).nanoseconds * 1e-9 < self.INFERENCE_INTERVAL:
+            return
+        self.last_inference = now
+
         img = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-        results = self.model.predict(img, conf=0.5)[0]
+        small = cv2.resize(img, (320, 240))
+        results = self.model.predict(small, conf=0.5)[0]
         # pick largest box
         best = self.select_optimal_detection(results.boxes)
         if best:
@@ -184,7 +200,7 @@ class BasicCVMission(Node):
                 self.pub_manual.publish(ManualControl(x=self.BACK_SPEED, y=0.0, z=0.0, r=0.0))
             else:
                 self.pub_manual.publish(ManualControl(x=0.0, y=0.0, z=0.0, r=0.0))
-                self.get_logger().info("→ Backed up 1 m")
+                self.get_logger().info("→ Backed up {BACKUP_DISTANCE} m")
                 self.state = 3
 
         # State 3 → init scan
@@ -281,8 +297,10 @@ class BasicCVMission(Node):
 def main():
     rclpy.init()
     node = BasicCVMission()
+    executor = MultiThreadedExecutor()
+    executor.add_node(node)
     try:
-        rclpy.spin(node)
+        executor.spin()
     finally:
         node.destroy_node()
         rclpy.shutdown()
