@@ -1,0 +1,58 @@
+#ros2 launch bluerov2_launchers the_strat.launch.yaml
+# Runs the giant strat file
+
+launch:
+  # 1. Arm/Disarm node, rosmav heartbeat
+  - node:
+      pkg: "rosmav"
+      exec: "bluerov2_hardware_interface"
+      name: "rosmav_stuff"
+      output: "screen"
+  - node:
+      pkg: "bluerov2_arm_disarm"
+      exec: "arm_disarm"
+      name: "arm_disarm_node"
+      output: "screen"
+
+  # 2. Camera and April Tag stuff
+  - node:
+      pkg: "bluerov2_node"
+      exec: "camera_interface"
+      name: "camera_node"
+      output: "screen"
+  - node:
+      pkg: "bluerov2_bluecv"
+      exec: "tag_publish"
+      name: "tag_publish_node"
+      output: "screen"
+
+  # 3. PID - depth and heading
+  - node:
+      pkg: "bluerov2_controllers"
+      exec: "pid_depth"
+      name: "depth_control"
+      output: "screen"
+  - node:
+      pkg: "bluerov2_controllers"
+      exec: "pid_heading"
+      name: "heading_control"
+      output: "screen"
+  
+  # 4. Take your pick of strats from below
+  # - node:
+  #     pkg: "bluerov2_testers"
+  #     exec: "basic_cv"
+  #     name: "basic_strat_cv"
+  #     output: "screen"
+
+  - node:
+      pkg: "bluerov2_testers"
+      exec: "basic_tag"
+      name: "basic_strat_tag"
+      output: "screen"
+
+  # - node:
+  #     pkg: "bluerov2_testers"
+  #     exec: "basic_tag_no_tilt"
+  #     name: "basic_strat_tag_no_cam_tilt"
+  #     output: "screen"
