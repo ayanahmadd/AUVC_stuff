@@ -29,6 +29,7 @@ setup(
             'basic_cv = bluerov2_testers.BasicStrategyCV:main',
             'basic_tag = bluerov2_testers.BasicStrategyTag:main',
             'basic_tag_no_tilt = bluerov2_testers.BasicStrategyTagNoTilt:main',
+            'basic_FSM = bluerov2_testers.BasicStrategyFSM:main',
         ],
     },
     options={
