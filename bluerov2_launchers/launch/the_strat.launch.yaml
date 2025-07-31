@@ -8,11 +8,11 @@ launch:
       exec: "bluerov2_hardware_interface"
       name: "rosmav_stuff"
       output: "screen"
-#   - node:
-#       pkg: "bluerov2_arm_disarm"
-#       exec: "arm_disarm"
-#       name: "arm_disarm_node"
-#       output: "screen"
+  - node:
+      pkg: "bluerov2_arm_disarm"
+      exec: "arm_disarm"
+      name: "arm_disarm_node"
+      output: "screen"
 
   # 2. Camera and April Tag stuff
   - node:
@@ -45,14 +45,20 @@ launch:
 #       name: "basic_strat_cv"
 #       output: "screen"
 
-  - node:
-      pkg: "bluerov2_testers"
-      exec: "basic_tag"
-      name: "basic_strat_tag"
-      output: "screen"
+#   - node:
+#       pkg: "bluerov2_testers"
+#       exec: "basic_tag"
+#       name: "basic_strat_tag"
+#       output: "screen"
 
   # - node:
   #     pkg: "bluerov2_testers"
   #     exec: "basic_tag_no_tilt"
   #     name: "basic_strat_tag_no_cam_tilt"
   #     output: "screen"
+
+  - node:
+      pkg: "bluerov2_testers"
+      exec: "basic_FSM"
+      name: "basic_FSM_strat"
+      output: "screen"
