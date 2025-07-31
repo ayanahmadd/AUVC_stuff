@@ -3,7 +3,7 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float64MultiArray, Int16
 from mavros_msgs.msg import ManualControl, OverrideRCIn
-from bluerov2_controllers.bluerov2_controllers.PIDController import PIDController
+from bluerov2_controllers.PIDController import PIDController
 
 class AprilTagFollower(Node):
     def __init__(self):
@@ -66,4 +66,4 @@ class AprilTagFollower(Node):
             # Initialize spin direction
             if self.spin_start_heading is None:
                 self.spin_start_heading = self.current_heading
-                self.get_logger().info(f"Started spinning from heading {self.spin_
+                self.get_logger().info(f"Started spinning from heading {self.spin_}")

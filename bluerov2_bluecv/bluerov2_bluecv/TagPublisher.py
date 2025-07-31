@@ -11,7 +11,7 @@ from dt_apriltags import Detector
 import math
 
 
-TAG_SIZE_METERS = 0.092  # actual tag side length
+TAG_SIZE_METERS = 0.05  # actual tag side length
 CAMERA_PARAMS = (273.25, 261.76, 307.89, 153.84)
 DETECTION_INTERVAL = 0.1   # seconds between detections (10 Hz)
 
