@@ -76,14 +76,14 @@ class FSMMissionMode(Node):
         if (
             self.detection and 
             self.tag_id is not None and 
-            1 <= self.tag_id <= 12 and 
+            0 <= self.tag_id <= 11 and 
             self.state not in (self.STATE_MOVE_TO_TAG, self.STATE_FLASH)
         ):
             self.publish_manual(0, 0, 0, 0)
             self.state = self.STATE_MOVE_TO_TAG
             self.get_logger().info(f'Tag {self.tag_id} detected → MOVE_TO_TAG')
             return
-        elif self.detection and (self.tag_id < 1 or self.tag_id > 12):
+        elif self.detection and (self.tag_id < 0 or self.tag_id > 11):
             self.get_logger().info(f"Ignored tag ID {self.tag_id} — not in [1–12]")
 
         if self.state == self.STATE_INIT:
