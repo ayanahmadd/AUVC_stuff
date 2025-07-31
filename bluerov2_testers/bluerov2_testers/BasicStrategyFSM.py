@@ -35,6 +35,7 @@ class FSMMissionMode(Node):
         self.tag_pose        = [0.0,0.0,0.0]
         self.dive_target     = None
         self.rise_target     = None
+        self.tag_id          = None  # new
 
         # Loop at 10Hz
         self.timer = self.create_timer(0.1, self.fsm_loop)
@@ -49,19 +50,15 @@ class FSMMissionMode(Node):
     def detect_cb(self, msg: Float64MultiArray):
         self.detection = True
         self.tag_pose = list(msg.data)[:3]
+        self.tag_id = int(msg.data[0])  # Extract tag ID
 
     def publish_manual(self, x=0.0, y=0.0, z=0.0, r=0.0):
-        """
-        Publish ManualControl with x,y,z,r in the same units as sample (e.g., ±100).
-        We'll scale from normalized [-1..1] inputs by 100.
-        """
         cmd = ManualControl()
         cmd.header.stamp = self.get_clock().now().to_msg()
         cmd.x = float(x * 100)
         cmd.y = float(y * 100)
         cmd.z = float(z * 100)
         cmd.r = float(r * 100)
-        # leave other fields default
         self.pub_manual.publish(cmd)
 
     def flash_lights(self, duration=2.0):
@@ -74,14 +71,21 @@ class FSMMissionMode(Node):
 
     def fsm_loop(self):
         now = time.time()
-        # detection preempt
-        if self.detection and self.state not in (self.STATE_MOVE_TO_TAG, self.STATE_FLASH):
-            self.publish_manual(0,0,0,0)
-            self.state = self.STATE_MOVE_TO_TAG
-            self.get_logger().info('Tag detected → MOVE_TO_TAG')
-            return
 
-        # INIT: 180° turn
+        # detection preempt (only for tag IDs 1–12)
+        if (
+            self.detection and 
+            self.tag_id is not None and 
+            1 <= self.tag_id <= 12 and 
+            self.state not in (self.STATE_MOVE_TO_TAG, self.STATE_FLASH)
+        ):
+            self.publish_manual(0, 0, 0, 0)
+            self.state = self.STATE_MOVE_TO_TAG
+            self.get_logger().info(f'Tag {self.tag_id} detected → MOVE_TO_TAG')
+            return
+        elif self.detection and (self.tag_id < 1 or self.tag_id > 12):
+            self.get_logger().info(f"Ignored tag ID {self.tag_id} — not in [1–12]")
+
         if self.state == self.STATE_INIT:
             if self.initial_heading is None and self.current_heading is not None:
                 self.initial_heading = self.current_heading
@@ -97,7 +101,6 @@ class FSMMissionMode(Node):
                     self.scan_start_time = now
                     self.get_logger().info('INIT done → SCAN')
 
-        # SCAN: spin 5s
         elif self.state == self.STATE_SCAN:
             self.publish_manual(r=0.2)
             if now - self.scan_start_time > 5.0:
@@ -106,7 +109,6 @@ class FSMMissionMode(Node):
                 self.state = self.STATE_DIVE
                 self.get_logger().info(f'No tag → DIVE to {self.dive_target:.2f}m')
 
-        # DIVE
         elif self.state == self.STATE_DIVE:
             if self.current_depth < self.dive_target - 0.1:
                 self.publish_manual(z=-0.3)
@@ -116,7 +118,6 @@ class FSMMissionMode(Node):
                 self.state = self.STATE_TURN_CW
                 self.get_logger().info('Reached dive → TURN_CW')
 
-        # TURN_CW
         elif self.state == self.STATE_TURN_CW:
             delta = (self.current_heading - self.turn_start_heading + 360) % 360
             if delta < 350:
@@ -127,7 +128,6 @@ class FSMMissionMode(Node):
                 self.state = self.STATE_RISE
                 self.get_logger().info('TURN_CW → RISE')
 
-        # RISE
         elif self.state == self.STATE_RISE:
             if self.current_depth > self.rise_target + 0.1:
                 self.publish_manual(z=0.3)
@@ -137,7 +137,6 @@ class FSMMissionMode(Node):
                 self.state = self.STATE_TURN_CCW
                 self.get_logger().info('RISE → TURN_CCW')
 
-        # TURN_CCW
         elif self.state == self.STATE_TURN_CCW:
             delta = (self.turn_start_heading - self.current_heading + 360) % 360
             if delta < 350:
@@ -147,20 +146,19 @@ class FSMMissionMode(Node):
                 self.state = self.STATE_CHECK_SURFACE
                 self.get_logger().info('TURN_CCW → CHECK_SURFACE')
 
-        # CHECK_SURFACE
         elif self.state == self.STATE_CHECK_SURFACE:
             if self.current_depth <= 0.2:
                 self.dive_target = self.current_depth + 3.0
                 self.state = self.STATE_DIVE
                 self.get_logger().info('At surface → DIVE')
 
-        # MOVE_TO_TAG
         elif self.state == self.STATE_MOVE_TO_TAG:
+            
             dx, dy, dz = self.tag_pose
             x_vel =  0.3 if dz >  0.1 else -0.3 if dz < -0.1 else 0.0
             y_vel =  0.3 if dx >  0.1 else -0.3 if dx < -0.1 else 0.0
             z_vel =  0.3 if dy >  0.1 else -0.3 if dy < -0.1 else 0.0
-            self.get_logger().info(x_vel, y_vel, z_vel)
+            self.get_logger().info(f"Approaching tag: x={x_vel}, y={y_vel}, z={z_vel}")
             self.publish_manual(x_vel, y_vel, z_vel, 0.0)
             if abs(dx) < 0.1 and abs(dy) < 0.1 and abs(dz) < 0.1:
                 self.publish_manual(0.0,0.0,0.0,0.0)
@@ -169,15 +167,13 @@ class FSMMissionMode(Node):
                 self.detection = False
                 self.get_logger().info('MOVE_TO_TAG → RESCAN')
 
-        # RESCAN
         elif self.state == self.STATE_RESCAN:
             self.publish_manual(r=0.2)
-            if self.detection:
+            if self.detection and 1 <= self.tag_id <= 12:
                 self.publish_manual(0.0,0.0,0.0,0.0)
                 self.state = self.STATE_FLASH
                 self.get_logger().info('RESCAN → FLASH')
 
-        # FLASH
         elif self.state == self.STATE_FLASH:
             self.publish_manual(0.0,0.0,0.0,0.0)
             self.flash_lights()
