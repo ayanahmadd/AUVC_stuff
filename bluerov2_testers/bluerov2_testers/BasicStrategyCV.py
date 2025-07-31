@@ -1,329 +1,268 @@
 #!/usr/bin/env python3
-import rclpy
+"""
+Finite-state mission node that drives a BlueROV2 solely through topic commands:
+* Vertical motion is delegated to a separate DepthPIDController listening to `/target_depth`.
+* Yaw motion is delegated to HeadingLockOnly (PID) listening to `/target_heading`.
+* This node orchestrates the mission: dive, 180° turn, step-scan every 45° holding 5 s
+  at each heading, reverses direction after each full revolution, runs YOLOv8 on the
+  camera stream, approaches a detected ROV to 1 m, flashes the lights, and idles.
+"""
+import rclpy, cv2, numpy as np
 from rclpy.node import Node
-from sensor_msgs.msg import Image
-from std_msgs.msg import Float64, Float64MultiArray, Int16
-from mavros_msgs.msg import ManualControl, OverrideRCIn
-from cv_bridge import CvBridge
-import cv2
-import numpy as np
-from ultralytics import YOLO
-import math
+from rclpy.qos import qos_profile_sensor_data
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
+from sensor_msgs.msg import Image
+from std_msgs.msg import Float64, Int16
+from mavros_msgs.msg import ManualControl, OverrideRCIn
+from cv_bridge import CvBridge
+from ultralytics import YOLO
 
-"""
-Dive → Back-up → (Rotate→Hold→Scan)×∞
-             ↘ if detect
-               Approach (prop-drive + camera tilt)
-               ↘ if close enough
-                 Hold & confirm
-                    ↘ success → Flash lights → Idle
-                    ↘ failure → restart whole sequence
-"""
-
-# === Camera intrinsics
+# === Camera intrinsics (px) ===
 FX, FY = 273.25, 261.76
 CX, CY = 307.89, 153.84
 
-# === ROV dimensions (meters)
+# === ROV physical dimensions (m) ===
 FRONT_WIDTH, FRONT_HEIGHT = 0.33805, 0.251
-SIDE_WIDTH, SIDE_HEIGHT   = 0.4572,  0.251
+SIDE_WIDTH,  SIDE_HEIGHT  = 0.4572,  0.251
 
-class BasicCVMission(Node):
+class FSMMissionMode(Node):
+    STATE_INIT, STATE_DIVE, STATE_TURN_180, STATE_SCAN, \
+    STATE_MOVE_TO_TARGET, STATE_FLASH, STATE_FLASHING, STATE_IDLE = range(8)
+
     def __init__(self):
-        super().__init__('basic_cv_mission')
-
-        # — Callback groups for async execution —
+        super().__init__('fsm_mission_mode')
         self.fast_group = ReentrantCallbackGroup()
         self.slow_group = ReentrantCallbackGroup()
 
-        # — Publishers —
-        self.pub_target_depth = self.create_publisher(Float64,    'target_depth',    10)
-        self.pub_manual       = self.create_publisher(ManualControl, '/manual_control', 10)
-        self.pub_lights       = self.create_publisher(OverrideRCIn, 'override_rc',     10)
-        # — Camera tilt publisher —
-        self.pub_camera_tilt = self.create_publisher(Float64, 'camera_tilt', 10)
+        # ── Parameters ──
+        defaults = {
+            'dive_depth_step': 2.0,
+            'vertical_speed':  0.06,
+            'pose_tolerance':  0.10,
+            'flash_duration':  2.0,
+            'stick_scale':     1000.0,
+            'heading_tolerance_deg': 3.0,
+            'depth_timeout':      1.0,
+            'heading_timeout':    1.0,
+            'detection_timeout':  1.0,
+            'scan_step_deg':      45.0,
+            'scan_hold_sec':      5.0,
+            'scan_tol_deg':       2.0,
+        }
+        for k, v in defaults.items():
+            self.declare_parameter(k, v)
+        gp = self.get_parameter
+        self.dive_step   = gp('dive_depth_step').value
+        self.vert_speed  = gp('vertical_speed').value
+        self.pose_tol    = gp('pose_tolerance').value
+        self.flash_dur   = gp('flash_duration').value
+        self.scale       = gp('stick_scale').value
+        self.head_tol    = gp('heading_tolerance_deg').value
+        self.depth_to    = gp('depth_timeout').value
+        self.head_to     = gp('heading_timeout').value
+        self.det_to      = gp('detection_timeout').value
+        self.scan_step   = gp('scan_step_deg').value
+        self.scan_hold   = gp('scan_hold_sec').value
+        self.scan_tol    = gp('scan_tol_deg').value
 
-        # — CV Detector setup —
+        # ── Publishers ──
+        self.pub_manual = self.create_publisher(ManualControl, '/manual_control', 10, callback_group=self.fast_group)
+        self.pub_lights = self.create_publisher(OverrideRCIn,   '/override_rc',    10, callback_group=self.fast_group)
+        self.pub_tdepth = self.create_publisher(Float64,        '/target_depth',   10, callback_group=self.fast_group)
+        self.pub_thead  = self.create_publisher(Float64,        '/target_heading', 10, callback_group=self.fast_group)
+
+        # ── Subscriptions ──
+        self.create_subscription(Float64, '/depth',   self.depth_cb,   qos_profile_sensor_data, callback_group=self.fast_group)
+        self.create_subscription(Int16,   '/heading', self.heading_cb, qos_profile_sensor_data, callback_group=self.fast_group)
         self.bridge = CvBridge()
-        self.model  = YOLO("bluerov2_bluecv/bluerov2_bluecv/yolov8n.pt")
-        self.create_subscription(Image, 'camera', self.image_cb, 10, callback_group=self.slow_group)
+        self.model  = YOLO('bluerov2_bluecv/bluerov2_bluecv/yolov8n.pt')
+        self.create_subscription(Image,   '/camera',  self.image_cb,   10, callback_group=self.slow_group)
 
-        # — Subscribers for depth & heading —
-        self.create_subscription(Float64,            'depth',    self.depth_cb,   10, callback_group=self.fast_group)
-        self.create_subscription(Int16,              '/heading', self.heading_cb, 10, callback_group=self.fast_group)
+        # ── State vars ──
+        self.state      = self.STATE_INIT
+        self.cur_depth  = None
+        self.cur_head   = None
+        self.t_depth    = None
+        self.t_head     = None
+        self.detection  = False
+        self.rov_pos    = None
+        self.t_det      = None
+        self.init_head  = None
+        self.turn_target= None
+        self.dive_target= None
+        self.flash_start= None
 
-        # — State & timing —
-        self.state             = 0
-        self.start_time        = self.get_clock().now()
-        self.state6_start_time = None
-        # — Timestamp for “hold‑and‑rescan” confirmation —
-        self.rescan_start_time = None
+        # ── Scan sequencing ──
+        self.scan_offsets = [i * self.scan_step for i in range(8)]  # [45, 90, ..., 360)
+        self.scan_forward = True
+        self.scan_idx     = 0
+        self.scan_hold_start = None
 
-        # — Sensor storage —
-        self.current_depth   = None
-        self.rov_position    = None   # [x_m, y_m, z_m]
-        self.initial_rov_position = None
-        self.current_heading = None
+        self.create_timer(0.1, self.loop, callback_group=self.fast_group)
+        self.get_logger().info('FSM mission node ready')
 
-        # — Scan parameters —
-        self.SCAN_STEP    = 45.0    # degrees
-        self.SCAN_TOL     =  2.0    # ± tolerance
-        self.SCAN_HOLD    =  2.0    # seconds to scan
-        self.SPIN_RATE    = 60.0    # °/s
-        self.start_heading    = None
-        self.next_heading     = None
-        self.hold_start       = None
-        self.cw_offsets       = [i * self.SCAN_STEP for i in range(1, 9)]
-        self.scanning_forward = True
-        self.offset_idx       = 0
-
-        # — Inference throttle (seconds) —
-        self.INFERENCE_INTERVAL = 0.5
-        self.last_inference = self.get_clock().now()
-
-        # — Dive & back-up constants —
-        self.DIVE_DEPTH    = 2.0     # m
-        self.DIVE_TOL      = 0.1     # m
-        self.DIVE_SETTLE   = 2.0     # s
-        self.BACK_SPEED    = 1.0     # m/s
-        self.BACK_DISTANCE = 2.0     # m
-        self.backed_distance = 0.0
-        self.last_back_time  = None
-
-        # — Main loop @10 Hz —
-        self.create_timer(0.1, self.timer_cb, callback_group=self.fast_group)
-        self.get_logger().info("BasicCVMission started")
-
-    #
-    # — Sensor callbacks —
-    #
+    # ── Callbacks ──
     def depth_cb(self, msg: Float64):
-        self.current_depth = msg.data
+        self.cur_depth, self.t_depth = msg.data, self.now()
 
     def heading_cb(self, msg: Int16):
-        self.current_heading = float(msg.data)
+        self.cur_head, self.t_head = float(msg.data), self.now()
 
-    def angle_diff(self, target: float, current: float) -> float:
-        """Smallest signed difference from current to target."""
-        a = (target - current + 180.0) % 360.0 - 180.0
-        return a
-
-    def turn_lights(self, level: int):
-        cmd = OverrideRCIn()
-        cmd.channels = [OverrideRCIn.CHAN_NOCHANGE]*10
-        cmd.channels[8] = 1000 + level*10
-        cmd.channels[9] = 1000 + level*10
-        self.pub_lights.publish(cmd)
-
-    #
-    # — Image callback: run YOLO, pick best box, estimate pose, set rov_position —
-    #
     def image_cb(self, msg: Image):
-        now = self.get_clock().now()
-        if (now - self.last_inference).nanoseconds * 1e-9 < self.INFERENCE_INTERVAL:
-            return
-        self.last_inference = now
-
-        img = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+        img = self.bridge.imgmsg_to_cv2(msg, 'bgr8')
         small = cv2.resize(img, (320, 240))
         results = self.model.predict(small, conf=0.5)[0]
-        # pick largest box
-        best = self.select_optimal_detection(results.boxes)
-        if best:
-            x, y, w, h = best
-            pose = self.estimate_3d_pose((x, y, w, h), img.shape[:2])
+        box = self.best_box(results.boxes)
+        if box:
+            pose = self.pose_from_box(box)
             if pose:
-                x_m, y_m, z_m, _ = pose  # ignore angle
-                self.rov_position = [x_m, y_m, z_m]
-                # debug log:
-                self.get_logger().info(f"→ Detected ROV at X={x_m:.2f}m, Y={y_m:.2f}m, Z={z_m:.2f}m")
+                self.rov_pos, self.detection, self.t_det = pose, True, self.now()
             else:
-                self.rov_position = None
+                self.detection = False
         else:
-            self.rov_position = None
+            self.detection = False
 
-    def select_optimal_detection(self, boxes, min_area=500):
-        best, max_area = None, 0
-        for box in boxes:
-            x1, y1, x2, y2 = map(int, box.xyxy[0])
+    # ── Helpers ──
+    def now(self):
+        return self.get_clock().now().nanoseconds * 1e-9
+
+    def best_box(self, boxes, min_area=500):
+        best, area = None, 0
+        for b in boxes:
+            x1, y1, x2, y2 = map(int, b.xyxy[0])
             w, h = x2 - x1, y2 - y1
-            area = w * h
-            if area >= min_area and area > max_area:
-                best, max_area = (x1, y1, w, h), area
+            a = w * h
+            if a >= min_area and a > area:
+                best, area = (x1, y1, w, h), a
         return best
 
-    def estimate_3d_pose(self, box, image_shape, fx=FX, fy=FY, cx=CX, cy=CY):
+    def pose_from_box(self, box):
         x, y, w, h = box
         if w <= 0 or h <= 0:
             return None
-
-        # decide orientation
-        z_front = (FRONT_WIDTH * fx) / w
-        z_side  = (SIDE_WIDTH * fx) / w
+        z_front = (FRONT_WIDTH * FX) / w
+        z_side  = (SIDE_WIDTH  * FX) / w
         if z_front > z_side:
             real_w, real_h = FRONT_WIDTH, FRONT_HEIGHT
         else:
             real_w, real_h = SIDE_WIDTH, SIDE_HEIGHT
+        z_w = (real_w * FX) / w
+        z_h = (real_h * FY) / h
+        z   = (z_w + z_h) / 2.0
+        cx_img = x + w / 2
+        cy_img = y + h / 2
+        dx = cx_img - CX
+        dy = cy_img - CY
+        x_m = (dx * z) / FX
+        y_m = -(dy * z) / FY
+        return [round(x_m, 4), round(y_m, 4), round(z, 4)]
 
-        z_w = (real_w * fx) / w
-        z_h = (real_h * fy) / h
-        z_m = (z_w + z_h) / 2.0
+    def send_target_depth(self, val):
+        self.pub_tdepth.publish(Float64(data=float(val)))
 
-        cx_img = x + w/2
-        cy_img = y + h/2
-        dx = cx_img - cx
-        dy = cy_img - cy
+    def send_target_heading(self, val):
+        self.pub_thead.publish(Float64(data=float(val % 360)))
 
-        x_m = (dx * z_m) / fx
-        y_m = -(dy * z_m) / fy
-        return round(x_m,4), round(y_m,4), round(z_m,4), 0.0
+    def diff_angle(self, a, b):
+        return ((a - b + 180) % 360) - 180
 
-    #
-    # — Main state machine timer —
-    #
-    def timer_cb(self):
-        now = self.get_clock().now()
+    # ── Main FSM loop ──
+    def loop(self):
+        t = self.now()
+        # sensor freshness
+        if (self.cur_depth is None or self.cur_head is None or
+            t - self.t_depth > self.depth_to or
+            t - self.t_head  > self.head_to):
+            return
+        if self.detection and t - self.t_det > self.det_to:
+            self.detection = False
+        if self.state == self.STATE_IDLE:
+            return
+        if self.detection and self.state not in (self.STATE_MOVE_TO_TARGET, self.STATE_FLASH, self.STATE_FLASHING):
+            self.state = self.STATE_MOVE_TO_TARGET
 
-        # State 0 → dive
-        if self.state == 0:
-            self.pub_target_depth.publish(Float64(data=self.DIVE_DEPTH))
-            self.start_time = now
-            self.state = 1
-            self.get_logger().info("→ State 0: Diving to 2 m")
+        if self.state == self.STATE_INIT:
+            self.init_head   = self.cur_head
+            self.dive_target = self.cur_depth + self.dive_step
+            self.send_target_depth(self.dive_target)
+            self.state = self.STATE_DIVE
 
-        # State 1 → wait settle
-        elif self.state == 1:
-            if (self.current_depth is not None
-                and abs(self.current_depth - self.DIVE_DEPTH) <= self.DIVE_TOL
-                and (now - self.start_time).nanoseconds * 1e-9 >= self.DIVE_SETTLE):
-                self.get_logger().info("→ Depth reached")
-                self.state = 2
-                self.backed_distance = 0.0
-                self.last_back_time  = now
+        elif self.state == self.STATE_DIVE:
+            if abs(self.cur_depth - self.dive_target) < 0.05:
+                self.turn_target = (self.init_head + 180) % 360
+                self.send_target_heading(self.turn_target)
+                self.state = self.STATE_TURN_180
 
-        # State 2 → back up
-        elif self.state == 2:
-            dt = (now - self.last_back_time).nanoseconds * 1e-9
-            self.last_back_time = now
-            self.backed_distance += abs(self.BACK_SPEED) * dt
-            if self.backed_distance < self.BACK_DISTANCE:
-                self.pub_manual.publish(ManualControl(x=self.BACK_SPEED, y=0.0, z=0.0, r=0.0))
+        elif self.state == self.STATE_TURN_180:
+            if abs(self.diff_angle(self.cur_head, self.turn_target)) < self.head_tol:
+                self._start_scan_sequence()
+
+        elif self.state == self.STATE_SCAN:
+            if abs(self.diff_angle(self.cur_head, self.scan_target)) < self.scan_tol:
+                if self.scan_hold_start is None:
+                    self.scan_hold_start = t
+                elif t - self.scan_hold_start >= self.scan_hold:
+                    self._advance_scan()
             else:
-                self.pub_manual.publish(ManualControl(x=0.0, y=0.0, z=0.0, r=0.0))
-                self.get_logger().info("→ Backed up {BACKUP_DISTANCE} m")
-                self.state = 3
+                self.scan_hold_start = None
 
-        # State 3 → init scan
-        elif self.state == 3:
-            if self.current_heading is not None:
-                self.start_heading    = self.current_heading
-                self.scanning_forward = True
-                self.offset_idx       = 3
-                self.next_heading     = (self.start_heading + self.cw_offsets[self.offset_idx]) % 360.0
-                self.hold_start       = None
-                self.state            = 4
-                self.get_logger().info(f"→ State 3: first scan at {self.next_heading:.1f}°")
+        elif self.state == self.STATE_MOVE_TO_TARGET:
+            self._approach_target()
 
-        # State 4 → scan or detect
-        elif self.state == 4:
-            if self.rov_position is not None:
-                # detected—go approach
-                self.initial_rov_position = list(self.rov_position)
-                self.state = 5
-                self.get_logger().info("→ ROV detected, approaching…")
-                return
+        elif self.state == self.STATE_FLASH:
+            on = OverrideRCIn(); on.channels = [2000] * 8
+            self.pub_lights.publish(on)
+            self.flash_start = t
+            self.state = self.STATE_FLASHING
 
-            if self.current_heading is None:
-                # spin until we get heading
-                self.pub_manual.publish(ManualControl(x=0.0, y=0.0, z=0.0, r=self.SPIN_RATE))
-                return
+        elif self.state == self.STATE_FLASHING and t - self.flash_start > self.flash_dur:
+            off = OverrideRCIn(); off.channels = [1000] * 8
+            self.pub_lights.publish(off)
+            self.state = self.EVENT_IDLE
 
-            diff = self.angle_diff(self.next_heading, self.current_heading)
-            if abs(diff) <= self.SCAN_TOL:
-                if self.hold_start is None:
-                    self.hold_start = now
-                    self.pub_manual.publish(ManualControl(x=0.0, y=0.0, z=0.0, r=0.0))
-                    self.get_logger().info(f"→ Holding at {self.next_heading:.1f}°")
-                elif (now - self.hold_start).nanoseconds * 1e-9 >= self.SCAN_HOLD:
-                    self.offset_idx += 1
-                    if self.offset_idx >= len(self.cw_offsets):
-                        self.scanning_forward = not self.scanning_forward
-                        self.offset_idx = 0
-                    offsets = self.cw_offsets if self.scanning_forward else [-o for o in self.cw_offsets]
-                    self.next_heading = (self.start_heading + offsets[self.offset_idx]) % 360.0
-                    self.hold_start = None
-                    self.get_logger().info(f"→ Next scan at {self.next_heading:.1f}°")
-            else:
-                rate = self.SPIN_RATE if diff > 0 else -self.SPIN_RATE
-                self.pub_manual.publish(ManualControl(x=0.0, y=0.0, z=0.0, r=rate))
+    # ── Scan helpers ──
+    def _start_scan_sequence(self):
+        self.state = self.STATE_SCAN
+        self.scan_forward = True
+        self.scan_idx     = 0
+        self.scan_hold_start = None
+        self.scan_base = self.cur_head
+        self.scan_target = (self.scan_base + self.scan_offsets[0]) % 360
+        self.send_target_heading(self.scan_target)
 
-        # State 5 → approach & flash
-        elif self.state == 5:
-            x, y, z = self.rov_position
-            # If ROV is above/below, tilt camera to face it
-            vertical_tolerance = 0.1  # meters
-            y_m = y  # current vertical offset from rov_position
-            z_m = z  # current forward distance
-            if abs(y_m) > vertical_tolerance:
-                # compute tilt angle (positive tilts up)
-                tilt_angle = math.degrees(math.atan2(y_m, z_m))
-                self.pub_camera_tilt.publish(Float64(data=tilt_angle))
-                self.get_logger().info(f"→ Tilting camera to {tilt_angle:.1f}° to align target")
-                return
+    def _advance_scan(self):
+        self.scan_idx += 1
+        if self.scan_idx >= len(self.scan_offsets):
+            self.scan_forward = not self.scan_forward
+            self.scan_idx = 0
+        offset_list = self.scan_offsets if self.scan_forward else [-o for o in self.scan_offsets]
+        self.scan_target = (self.scan_base + offset_list[self.scan_idx]) % 360
+        self.send_target_heading(self.scan_target)
+        self.scan_hold_start = None
 
-            # proportional drive
-            raw_fwd = (z - 1.0) * 500.0
-            raw_yaw = x * 500.0
-            cf = max(min(raw_fwd, 600.0), -600.0) / 600.0
-            cy = max(min(raw_yaw, 600.0), -600.0) / 600.0
-            self.pub_manual.publish(ManualControl(x=cf, y=0.0, z=0.0, r=cy))
+    # ── Approach helper ──
+    def _approach_target(self):
+        d   = 1.0
+        x,y,z = self.rov_pos
+        v   = self.vert_speed
+        # vertical via depth PID
+        self.send_target_depth(self.cur_depth + y)
+        # forward/side via manual control
+        mc = ManualControl()
+        mc.x = v if z > d + self.pose_tol else -v if z < d - self.pose_tol else 0.0
+        mc.y = v if x > self.pose_tol else -v if x < -self.pose_tol else 0.0
+        mc.z = 0.0
+        mc.r = 0.0
+        self.pub_manual.publish(mc)
+        if abs(z - d) < self.pose_tol and abs(x) < self.pose_tol and abs(y) < self.pose_tol:
+            self.pub_manual.publish(ManualControl())
+            self.state = self.STATE_FLASH
 
-            # ── Reached predicted spot: stop & hold for a fresh re‑scan ──
-            x0, y0, z0 = self.initial_rov_position
-            if (abs(z - z0) <= 0.05 and abs(x) <= 1.0 and abs(y - y0) <= 0.05):
-                # Freeze thrusters and start a timed re‑scan
-                self.pub_manual.publish(ManualControl(x=0.0, y=0.0, z=0.0, r=0.0))
-                self.rescan_start_time = now
-                self.state = 55      # new “re‑scan confirmation” state
-                self.get_logger().info("→ Holding position; rescanning to confirm ≤ 1 m")
-                return
-
-        # State 55 → hold & re‑scan to confirm we are truly ≤ 1 m
-        elif self.state == 55:
-            # Wait at least 1 s to gather fresh detections
-            if (now - self.rescan_start_time).nanoseconds * 1e-9 < 1.0:
-                return
-
-            # If detector still sees the ROV and z ≤ 1 m, flash; otherwise restart mission
-            if self.rov_position is not None and self.rov_position[2] <= 1.0:
-                self.turn_lights(100)
-                self.state6_start_time = now
-                self.state = 6
-                self.get_logger().info("→ Confirmed ≤ 1 m; flashing lights!")
-            else:
-                self.get_logger().info("→ Re‑scan failed; restarting full search cycle")
-                self.rov_position = None
-                self.backed_distance = 0.0
-                self.state = 0          # jump back to the dive/back‑up sequence
-                self.start_time = now   # reset timer for State 0
-                return
-
-        # State 6 → lights off
-        elif self.state == 6:
-            if (now - self.state6_start_time).nanoseconds * 1e-9 >= 3.0:
-                self.turn_lights(0)
-                self.state = 7
-                self.get_logger().info("→ Lights off, mission complete")
-
-        # State 7 → idle
-        elif self.state == 7:
-            pass
-
+# ── main ──
 def main():
     rclpy.init()
-    node = BasicCVMission()
+    node = FSMMissionMode()
     executor = MultiThreadedExecutor()
     executor.add_node(node)
     try:

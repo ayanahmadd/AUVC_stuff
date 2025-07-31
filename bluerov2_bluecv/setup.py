@@ -31,6 +31,7 @@ setup(
             'tag_follow = bluerov2_bluecv.TagFollower:main',
             'tag_publish = bluerov2_bluecv.TagPublisher:main',
             'flash_lights = bluerov2_bluecv.FlashyLights:main',
+            'rov_scan = bluerov2_bluecv.ROVPoseStrategy:main',
         ],
     },
     options={

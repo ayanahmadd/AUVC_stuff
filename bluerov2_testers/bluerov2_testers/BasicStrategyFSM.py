@@ -1,191 +1,181 @@
 #!/usr/bin/env python3
-import rclpy
-from rclpy.node import Node
-from mavros_msgs.msg import ManualControl, OverrideRCIn
-from std_msgs.msg import Float64, Float64MultiArray, Int16
-import time
+import rclpy, math
+from rclpy.node         import Node
+from rclpy.qos          import qos_profile_sensor_data
+from mavros_msgs.msg    import ManualControl, OverrideRCIn
+from std_msgs.msg       import Float64, Float64MultiArray, Int16
 
 class FSMMissionMode(Node):
-    STATE_INIT, STATE_SCAN, STATE_DIVE, STATE_TURN_CW, STATE_RISE, \
-    STATE_TURN_CCW, STATE_CHECK_SURFACE, STATE_MOVE_TO_TAG, \
-    STATE_RESCAN, STATE_FLASH = range(10)
+    # ── States ─────────────────────────────────────────────────────
+    STATE_INIT, STATE_DIVE, STATE_TURN_180, STATE_SCAN, \
+    STATE_MOVE_TO_TAG, STATE_FLASH, STATE_FLASHING, STATE_IDLE = range(8)
 
     def __init__(self):
         super().__init__('fsm_mission_mode')
 
-        # Movement publisher using ManualControl
+        # — Parameters you may tune —
+        self.declare_parameter('dive_depth_step', 2.0)
+        self.declare_parameter('vertical_speed', 0.06)
+        self.declare_parameter('turn_speed', 0.05)
+        self.declare_parameter('spin_rate', 0.05)
+        self.declare_parameter('pose_tolerance', 0.1)
+        self.declare_parameter('flash_duration', 2.0)
+        self.declare_parameter('stick_scale', 1000.0)
+        self.declare_parameter('heading_tolerance_deg', 5.0)
+        self.declare_parameter('depth_timeout', 1.0)
+        self.declare_parameter('heading_timeout', 1.0)
+        self.declare_parameter('detection_timeout', 1.0)
+
+        p                   = self.get_parameter
+        self.dive_step      = p('dive_depth_step').value
+        self.vert_speed     = p('vertical_speed').value
+        self.turn_speed     = p('turn_speed').value
+        self.spin_rate      = p('spin_rate').value
+        self.pose_tol       = p('pose_tolerance').value
+        self.flash_duration = p('flash_duration').value
+        self.stick_scale    = p('stick_scale').value
+        self.head_tol       = p('heading_tolerance_deg').value
+        self.depth_timeout  = p('depth_timeout').value
+        self.heading_timeout = p('heading_timeout').value
+        self.detection_timeout = p('detection_timeout').value
+
+        # — Comms —
         self.pub_manual = self.create_publisher(ManualControl, 'manual_control', 10)
-        # Lights override
-        self.pub_lights = self.create_publisher(OverrideRCIn, 'override_rc', 10)
+        self.pub_lights = self.create_publisher(OverrideRCIn,   'override_rc',   10)
+        self.create_subscription(Float64, '/depth', self.depth_cb, 10)
+        self.create_subscription(Int16, '/heading', self.heading_cb, 10)
+        self.create_subscription(Float64MultiArray, '/apriltag/detection', self.detect_cb, 10)
 
-        # Subscribers
-        self.create_subscription(Float64,           'depth',              self.depth_cb,   10)
-        self.create_subscription(Float64MultiArray, 'apriltag/detection', self.detect_cb,  10)
-        self.create_subscription(Int16,             '/heading',           self.heading_cb, 10)
+        # — State variables —
+        self.state            = self.STATE_INIT
+        self.current_depth    = None
+        self.current_heading  = None
+        self.last_depth_t     = None
+        self.last_head_t      = None
+        self.detection        = False
+        self.tag_pose         = [0.0, 0.0, 0.0]
+        self.last_det_t       = None
+        self.initial_heading  = None
+        self.target_heading   = None
+        self.dive_target      = None
+        self.flash_start      = None
+        # scanning direction and initial heading
+        self.scan_direction      = 1
+        self.scan_heading_start  = None
 
-        # FSM state & data
-        self.state = self.STATE_INIT
-        self.initial_heading = None
-        self.target_heading  = None
-        self.turn_start_heading = None
-        self.scan_start_time = None
-        self.current_depth   = 0.0
-        self.current_heading = None
-        self.detection       = False
-        self.tag_pose        = [0.0,0.0,0.0]
-        self.dive_target     = None
-        self.rise_target     = None
+        self.timer = self.create_timer(0.1, self.loop)   # 10 Hz
+        self.get_logger().info('FSM mission node ready')
 
-        # Loop at 10Hz
-        self.timer = self.create_timer(0.1, self.fsm_loop)
-        self.get_logger().info('FSM manual-control mode initialized')
+    # ── Call-backs ───────────────────────────────────────────────────
+    def depth_cb(self, msg):   self.current_depth, self.last_depth_t = msg.data, self.now()
+    def heading_cb(self, msg): self.current_heading, self.last_head_t = msg.data, self.now()
+    def detect_cb(self, msg):
+        self.tag_pose      = list(msg.data)[:3]
+        self.detection     = True
+        self.last_det_t    = self.now()
 
-    def depth_cb(self, msg: Float64):
-        self.current_depth = msg.data
+    # ── Helpers ─────────────────────────────────────────────────────
+    def now(self): return self.get_clock().now().nanoseconds * 1e-9
+    def hold(self): self.pub_manual.publish(ManualControl())              # zero cmd
+    def cmd(self, x=0, y=0, z=0, r=0):
+        m = ManualControl()
+        m.header.stamp = self.get_clock().now().to_msg()
+        m.x, m.y, m.z, m.r = (v * self.stick_scale for v in (x, y, z, r))
+        self.pub_manual.publish(m)
 
-    def heading_cb(self, msg: Int16):
-        self.current_heading = msg.data
+    # ── Main loop ───────────────────────────────────────────────────
+    def loop(self):
+        t = self.now()
 
-    def detect_cb(self, msg: Float64MultiArray):
-        self.detection = True
-        self.tag_pose = list(msg.data)[:3]
+        # Sensor stale check
+        if (self.current_depth is None or self.current_heading is None or
+            t - self.last_depth_t > self.depth_timeout or
+            t - self.last_head_t  > self.heading_timeout):
+            self.get_logger().warn('Stale sensors; holding')
+            self.hold()
+            return
+        if self.detection and t - self.last_det_t > self.detection_timeout:
+            self.detection = False
 
-    def publish_manual(self, x=0.0, y=0.0, z=0.0, r=0.0):
-        """
-        Publish ManualControl with x,y,z,r in the same units as sample (e.g., ±100).
-        We'll scale from normalized [-1..1] inputs by 100.
-        """
-        cmd = ManualControl()
-        cmd.header.stamp = self.get_clock().now().to_msg()
-        cmd.x = float(x * 100)
-        cmd.y = float(y * 100)
-        cmd.z = float(z * 100)
-        cmd.r = float(r * 100)
-        # leave other fields default
-        self.pub_manual.publish(cmd)
-
-    def flash_lights(self, duration=2.0):
-        blink = OverrideRCIn()
-        blink.channels = [2000]*8
-        self.pub_lights.publish(blink)
-        time.sleep(duration)
-        blink.channels = [1000]*8
-        self.pub_lights.publish(blink)
-
-    def fsm_loop(self):
-        now = time.time()
-        # detection preempt
-        if self.detection and self.state not in (self.STATE_MOVE_TO_TAG, self.STATE_FLASH):
-            self.publish_manual(0.0,0.0,0.0,0.0)
-            self.state = self.STATE_MOVE_TO_TAG
-            self.get_logger().info('Tag detected → MOVE_TO_TAG')
+        # Idle state
+        if self.state == self.STATE_IDLE:
+            self.hold()
             return
 
-        # INIT: 180° turn
+        # Tag pre-empt (except when already moving or flashing)
+        if self.detection and self.state not in (self.STATE_MOVE_TO_TAG,
+                                                 self.STATE_FLASH,
+                                                 self.STATE_FLASHING):
+            self.state = self.STATE_MOVE_TO_TAG
+            self.get_logger().info('TAG → MOVE_TO_TAG')
+
+        # ── FSM ───────────────────────────────────────────────────────
         if self.state == self.STATE_INIT:
-            if self.initial_heading is None and self.current_heading is not None:
-                self.initial_heading = self.current_heading
-                self.target_heading  = (self.initial_heading + 180) % 360
-                self.get_logger().info(f'INIT → rotate to {self.target_heading}°')
-            if self.current_heading is not None:
-                err = ((self.target_heading - self.current_heading + 540) % 360) - 180
-                if abs(err) > 5:
-                    self.publish_manual(r=0.5 if err>0 else -0.5)
-                else:
-                    self.publish_manual(0.0,0.0,0.0,0.0)
-                    self.state = self.STATE_SCAN
-                    self.scan_start_time = now
-                    self.get_logger().info('INIT done → SCAN')
+            self.initial_heading = self.current_heading
+            self.dive_target     = self.current_depth + self.dive_step
+            self.state           = self.STATE_DIVE
+            self.get_logger().info(f'INIT → DIVE to {self.dive_target:.2f} m')
 
-        # SCAN: spin 5s
-        elif self.state == self.STATE_SCAN:
-            self.publish_manual(r=0.2)
-            if now - self.scan_start_time > 5.0:
-                self.publish_manual(0.0,0.0,0.0,0.0)
-                self.dive_target = self.current_depth + 3.0
-                self.state = self.STATE_DIVE
-                self.get_logger().info(f'No tag → DIVE to {self.dive_target:.2f}m')
-
-        # DIVE
         elif self.state == self.STATE_DIVE:
             if self.current_depth < self.dive_target - 0.1:
-                self.publish_manual(z=-0.3)
+                self.cmd(z=-self.vert_speed)
             else:
-                self.publish_manual(0.0,0.0,0.0,0.0)
-                self.turn_start_heading = self.current_heading
-                self.state = self.STATE_TURN_CW
-                self.get_logger().info('Reached dive → TURN_CW')
+                self.hold()
+                self.target_heading = (self.initial_heading + 180) % 360
+                self.state          = self.STATE_TURN_180
+                self.get_logger().info(f'DIVE done → TURN_180 to {self.target_heading:.1f}°')
 
-        # TURN_CW
-        elif self.state == self.STATE_TURN_CW:
-            delta = (self.current_heading - self.turn_start_heading + 360) % 360
-            if delta < 350:
-                self.publish_manual(r=0.5)
+        elif self.state == self.STATE_TURN_180:
+            err = ((self.target_heading - self.current_heading + 540) % 360) - 180
+            if abs(err) > self.head_tol:
+                self.cmd(r=self.turn_speed if err > 0 else -self.turn_speed)
             else:
-                self.publish_manual(0.0,0.0,0.0,0.0)
-                self.rise_target = self.current_depth - 1.0
-                self.state = self.STATE_RISE
-                self.get_logger().info('TURN_CW → RISE')
+                self.hold()
+                self.state = self.STATE_SCAN
+                self.scan_heading_start = self.current_heading
+                self.scan_direction = 1
+                self.get_logger().info('TURN complete → SCAN start')
 
-        # RISE
-        elif self.state == self.STATE_RISE:
-            if self.current_depth > self.rise_target + 0.1:
-                self.publish_manual(z=0.3)
-            else:
-                self.publish_manual(0.0,0.0,0.0,0.0)
-                self.turn_start_heading = self.current_heading
-                self.state = self.STATE_TURN_CCW
-                self.get_logger().info('RISE → TURN_CCW')
+        elif self.state == self.STATE_SCAN:
+            # continuous spin
+            self.cmd(r=self.scan_direction * self.spin_rate)
+            # check for full revolution
+            delta = (self.current_heading - self.scan_heading_start + 360) % 360
+            if delta > 350:
+                self.scan_direction *= -1
+                self.scan_heading_start = self.current_heading
+                self.get_logger().info(f'Full revolution → reverse scan direction to {self.scan_direction}')
 
-        # TURN_CCW
-        elif self.state == self.STATE_TURN_CCW:
-            delta = (self.turn_start_heading - self.current_heading + 360) % 360
-            if delta < 350:
-                self.publish_manual(r=-0.5)
-            else:
-                self.publish_manual(0.0,0.0,0.0,0.0)
-                self.state = self.STATE_CHECK_SURFACE
-                self.get_logger().info('TURN_CCW → CHECK_SURFACE')
-
-        # CHECK_SURFACE
-        elif self.state == self.STATE_CHECK_SURFACE:
-            if self.current_depth <= 0.2:
-                self.dive_target = self.current_depth + 3.0
-                self.state = self.STATE_DIVE
-                self.get_logger().info('At surface → DIVE')
-
-        # MOVE_TO_TAG
         elif self.state == self.STATE_MOVE_TO_TAG:
+            # move until 1m away
+            target_dist = 1.0
             dx, dy, dz = self.tag_pose
-            x_vel =  0.3 if dz >  0.1 else -0.3 if dz < -0.1 else 0.0
-            y_vel =  0.3 if dx >  0.1 else -0.3 if dx < -0.1 else 0.0
-            z_vel =  0.3 if dy >  0.1 else -0.3 if dy < -0.1 else 0.0
-            self.get_logger().info(f'MOVE_TO_TAG velocities → x={x_vel:.2f}, y={y_vel:.2f}, z={z_vel:.2f}')
-
-            self.publish_manual(x_vel, y_vel, z_vel, 0.0)
-            if abs(dx) < 0.1 and abs(dy) < 0.1 and abs(dz) < 0.1:
-                self.publish_manual(0.0,0.0,0.0,0.0)
-                self.state = self.STATE_RESCAN
-                self.scan_start_time = now
+            v = self.vert_speed
+            x_cmd =  v if dz > target_dist + self.pose_tol else -v if dz < target_dist - self.pose_tol else 0
+            y_cmd =  v if dx >  self.pose_tol else -v if dx < -self.pose_tol else 0
+            z_cmd =  v if -dy > self.pose_tol else -v if -dy < -self.pose_tol else 0
+            self.cmd(x=x_cmd, y=y_cmd, z=z_cmd)
+            if abs(dz - target_dist) < self.pose_tol and abs(dx) < self.pose_tol and abs(dy) < self.pose_tol:
+                self.hold()
                 self.detection = False
-                self.get_logger().info('MOVE_TO_TAG → RESCAN')
+                self.state     = self.STATE_FLASH
+                self.get_logger().info('At 1m from tag → FLASH')
 
-        # RESCAN
-        elif self.state == self.STATE_RESCAN:
-            self.publish_manual(r=0.2)
-            if self.detection:
-                self.publish_manual(0.0,0.0,0.0,0.0)
-                self.state = self.STATE_FLASH
-                self.get_logger().info('RESCAN → FLASH')
-
-        # FLASH
         elif self.state == self.STATE_FLASH:
-            self.publish_manual(0.0,0.0,0.0,0.0)
-            self.flash_lights()
-            self.detection = False
-            self.state = self.STATE_SCAN
-            self.scan_start_time = now
-            self.get_logger().info('FLASH → SCAN')
+            on = OverrideRCIn()
+            on.channels = [2000] * 8
+            self.pub_lights.publish(on)
+            self.flash_start = t
+            self.state       = self.STATE_FLASHING
+            self.get_logger().info('FLASHING…')
+
+        elif self.state == self.STATE_FLASHING:
+            if t - self.flash_start > self.flash_duration:
+                off = OverrideRCIn()
+                off.channels = [1000] * 8
+                self.pub_lights.publish(off)
+                self.state = self.STATE_IDLE
+                self.get_logger().info('FLASH done → IDLE')
 
 
 def main():
@@ -196,6 +186,7 @@ def main():
     finally:
         node.destroy_node()
         rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()
