@@ -76,7 +76,7 @@ class FSMMissionMode(Node):
         now = time.time()
         # detection preempt
         if self.detection and self.state not in (self.STATE_MOVE_TO_TAG, self.STATE_FLASH):
-            self.publish_manual(0,0,0,0)
+            self.publish_manual(0.0,0.0,0.0,0.0)
             self.state = self.STATE_MOVE_TO_TAG
             self.get_logger().info('Tag detected → MOVE_TO_TAG')
             return
@@ -92,7 +92,7 @@ class FSMMissionMode(Node):
                 if abs(err) > 5:
                     self.publish_manual(r=0.5 if err>0 else -0.5)
                 else:
-                    self.publish_manual(0,0,0,0)
+                    self.publish_manual(0.0,0.0,0.0,0.0)
                     self.state = self.STATE_SCAN
                     self.scan_start_time = now
                     self.get_logger().info('INIT done → SCAN')
@@ -101,7 +101,7 @@ class FSMMissionMode(Node):
         elif self.state == self.STATE_SCAN:
             self.publish_manual(r=0.2)
             if now - self.scan_start_time > 5.0:
-                self.publish_manual(0,0,0,0)
+                self.publish_manual(0.0,0.0,0.0,0.0)
                 self.dive_target = self.current_depth + 3.0
                 self.state = self.STATE_DIVE
                 self.get_logger().info(f'No tag → DIVE to {self.dive_target:.2f}m')
@@ -111,7 +111,7 @@ class FSMMissionMode(Node):
             if self.current_depth < self.dive_target - 0.1:
                 self.publish_manual(z=-0.3)
             else:
-                self.publish_manual(0,0,0,0)
+                self.publish_manual(0.0,0.0,0.0,0.0)
                 self.turn_start_heading = self.current_heading
                 self.state = self.STATE_TURN_CW
                 self.get_logger().info('Reached dive → TURN_CW')
@@ -160,7 +160,7 @@ class FSMMissionMode(Node):
             x_vel =  0.3 if dz >  0.1 else -0.3 if dz < -0.1 else 0.0
             y_vel =  0.3 if dx >  0.1 else -0.3 if dx < -0.1 else 0.0
             z_vel =  0.3 if dy >  0.1 else -0.3 if dy < -0.1 else 0.0
-            self.get_logger().info(x_vel, y_vel, z_vel)
+            self.get_logger().info(f"x_vel={x_vel:.2f}, y_vel={y_vel:.2f}, z_vel={z_vel:.2f}")
             self.publish_manual(x_vel, y_vel, z_vel, 0.0)
             if abs(dx) < 0.1 and abs(dy) < 0.1 and abs(dz) < 0.1:
                 self.publish_manual(0.0,0.0,0.0,0.0)
