@@ -160,7 +160,8 @@ class FSMMissionMode(Node):
             x_vel =  0.3 if dz >  0.1 else -0.3 if dz < -0.1 else 0.0
             y_vel =  0.3 if dx >  0.1 else -0.3 if dx < -0.1 else 0.0
             z_vel =  0.3 if dy >  0.1 else -0.3 if dy < -0.1 else 0.0
-            self.get_logger().info(f"x_vel={x_vel:.2f}, y_vel={y_vel:.2f}, z_vel={z_vel:.2f}")
+            self.get_logger().info(f'MOVE_TO_TAG velocities → x={x_vel:.2f}, y={y_vel:.2f}, z={z_vel:.2f}')
+
             self.publish_manual(x_vel, y_vel, z_vel, 0.0)
             if abs(dx) < 0.1 and abs(dy) < 0.1 and abs(dz) < 0.1:
                 self.publish_manual(0.0,0.0,0.0,0.0)
