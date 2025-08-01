@@ -11,7 +11,7 @@ tick = 0.0
 class DanceMovement(Node):
     def __init__(self):
         super().__init__("auv_movement_node")
-        self.publisher = self.create_publisher(ManualControl, 'manual_control', 10)
+        self.publisher = self.create_publisher(ManualControl, '/rov1/manual_control', 10)
         self.get_logger().info("🚀 DanceMovement node has started (ARM + MANUAL mode).")
 
         # sensor‐feedback state
