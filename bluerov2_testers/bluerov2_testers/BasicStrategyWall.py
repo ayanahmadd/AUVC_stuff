@@ -166,7 +166,7 @@ class FSMMissionNode(Node):
             # ─ horizontal strafing ─
             mc = ManualControl()
             #mc.y =  500 if x_m >  X_TOL else (-500 if x_m < -X_TOL else 0)
-            mc.y =  70 if x_m >  X_TOL else (-70 if x_m < -X_TOL else 0)
+            mc.y =  70.0 if x_m >  X_TOL else (-70.0 if x_m < -X_TOL else 0.0)
             # ─ depth correction ─
             depth_delta = y_m    # +y_m ⇒ object below centre ⇒ we must go deeper
             self.pub_tdepth.publish(Float64(data=self.depth + depth_delta))
