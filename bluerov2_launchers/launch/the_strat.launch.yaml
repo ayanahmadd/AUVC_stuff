@@ -28,6 +28,11 @@ launch:
 
   # 3. PID - depth and heading
   - node:
+      pkg: "bluerov2_node"
+      exec: "convert_to_depth"
+      name: "depth_converter"
+      output: "screen"
+  - node:
       pkg: "bluerov2_controllers"
       exec: "pid_depth"
       name: "depth_control"
