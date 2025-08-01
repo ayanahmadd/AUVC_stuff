@@ -24,6 +24,7 @@ setup(
             'convert_to_depth = bluerov2_node.PressureToDepth:main',
             'lane_detection = bluerov2_node.LaneDetection:main',
             'camera_interface = rosmav.bluerov2_camera_interface:main',
+            
         ],
     },
 )
