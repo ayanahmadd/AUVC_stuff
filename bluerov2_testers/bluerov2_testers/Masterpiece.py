@@ -163,7 +163,7 @@ class FSMPIDMissionNode(Node):
                 self.transition(self.STATE_APPROACH)
             elif (t - self.t_state) > SCAN_DURATION:
                 # surge forward
-                self.manual_cmd = ManualControl(x=1000, y=0, z=0.0, r=0)
+                self.manual_cmd = ManualControl(x=70.0, y=0.0, z=0.0, r=0.0)
                 self.transition(self.STATE_FORWARD)
         elif self.state == self.STATE_FORWARD:
             if (t - self.t_state) > FORWARD_DURATION:
@@ -173,7 +173,8 @@ class FSMPIDMissionNode(Node):
             x_m, y_m, _ = self.rov_pos
             mc = ManualControl()
             # strafe until |x|< tol
-            mc.y =  500 if x_m >  X_TOL else (-500 if x_m < -X_TOL else 0)
+            #mc.y =  500 if x_m >  X_TOL else (-500 if x_m < -X_TOL else 0)
+            mc.y =  70 if x_m >  X_TOL else (-70 if x_m < -X_TOL else 0)
             self.manual_cmd = mc
             # adjust depth setpoint toward object
             self.pid.setpoint = self.depth + y_m

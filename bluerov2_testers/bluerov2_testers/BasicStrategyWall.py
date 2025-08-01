@@ -153,7 +153,7 @@ class FSMMissionNode(Node):
                 self.transition(self.STATE_APPROACH)
             elif (t_now - self.t_state) > SCAN_DURATION:
                 # surge forward for FORWARD_DURATION
-                self.pub_manual.publish(ManualControl(x=1000, y=0, z=0, r=0))
+                self.pub_manual.publish(ManualControl(x=70.0, y=0.0, z=0.0, r=0.0))
                 self.transition(self.STATE_FORWARD)
 
         elif self.state == self.STATE_FORWARD:
@@ -165,7 +165,8 @@ class FSMMissionNode(Node):
             x_m, y_m, _ = self.rov_pos
             # ─ horizontal strafing ─
             mc = ManualControl()
-            mc.y =  500 if x_m >  X_TOL else (-500 if x_m < -X_TOL else 0)
+            #mc.y =  500 if x_m >  X_TOL else (-500 if x_m < -X_TOL else 0)
+            mc.y =  70 if x_m >  X_TOL else (-70 if x_m < -X_TOL else 0)
             # ─ depth correction ─
             depth_delta = y_m    # +y_m ⇒ object below centre ⇒ we must go deeper
             self.pub_tdepth.publish(Float64(data=self.depth + depth_delta))
