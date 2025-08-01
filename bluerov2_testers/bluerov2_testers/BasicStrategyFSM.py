@@ -15,7 +15,7 @@ class FSMMissionMode(Node):
 
         # — Parameters you may tune —
         self.declare_parameter('dive_depth_step', 2.0)
-        self.declare_parameter('vertical_speed', 0.06)
+        self.declare_parameter('vertical_speed', 0.07)
         self.declare_parameter('turn_speed', 0.05)
         self.declare_parameter('spin_rate', 0.05)
         self.declare_parameter('pose_tolerance', 0.1)
@@ -70,14 +70,22 @@ class FSMMissionMode(Node):
     def depth_cb(self, msg):   self.current_depth, self.last_depth_t = msg.data, self.now()
     def heading_cb(self, msg): self.current_heading, self.last_head_t = msg.data, self.now()
     def detect_cb(self, msg):
-        self.tag_pose      = list(msg.data)[:3]
-        self.detection     = True
-        self.last_det_t    = self.now()
+        data = list(msg.data)
+        tag_id = int(data[0])
+        # only accept tags 0 through 11
+        if 0 <= tag_id <= 11:
+            # store just the x,y,z
+            self.tag_pose   = data[1:4]
+            self.detection  = True
+            self.last_det_t = self.now()
+        else:
+            # drop any other tag
+            self.detection = False
 
     # ── Helpers ─────────────────────────────────────────────────────
     def now(self): return self.get_clock().now().nanoseconds * 1e-9
     def hold(self): self.pub_manual.publish(ManualControl())              # zero cmd
-    def cmd(self, x=0, y=0, z=0, r=0):
+    def cmd(self, x=0.0, y=0.0, z=0.0, r=0.0):
         m = ManualControl()
         m.header.stamp = self.get_clock().now().to_msg()
         m.x, m.y, m.z, m.r = (v * self.stick_scale for v in (x, y, z, r))

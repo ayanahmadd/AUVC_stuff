@@ -1,250 +1,218 @@
 #!/usr/bin/env python3
-import rclpy
+"""
+ScanAndFlashStrategy
+===================
+ROS 2 mission node that *orchestrates* the existing heading-, depth- and vision-controller nodes to:
+  1. Dive to 2 m.
+  2. Perform a 360 ° scan in 45 ° increments.
+  3. Rise to 1 m and repeat the scan.
+  4. Toggle between 2 m and 1 m until an AprilTag is detected.
+  5. Approach the tag, stopping 0.5 m short in the X-direction.
+  6. Flash lights for 2 s, then restart at step 1.
+
+
+**Prerequisite running nodes**
+• `convert_to_depth`  (pressure → `/depth`)
+• `depth_lock`        (DepthPIDController; listens on `/target_depth`)
+• `heading_lock_only` (Heading PID;       listens on `/target_heading`)
+• `apriltag_detector_node` (publishes `/apriltag/detection`)
+• A camera driver publishing `sensor_msgs/Image` on `/camera`
+
+
+This node only *publishes*:
+• `std_msgs/Float64`   `/target_depth`
+• `std_msgs/Float64`   `/target_heading`
+• `mavros_msgs/ManualControl` `/manual_control` (x / y for surge/strafe)
+• `mavros_msgs/OverrideRCIn`  `/override_rc`    (lights flash)
+"""
+import rclpy, math, time
 from rclpy.node import Node
-from std_msgs.msg import Float64, Float64MultiArray, Int16
+from std_msgs.msg import Float64, Int16, Float64MultiArray
 from mavros_msgs.msg import ManualControl, OverrideRCIn
-from rclpy.callback_groups import ReentrantCallbackGroup
-import math
 
-"""
-State‑flow summary
-Dive → Back‑up → (Rotate→Hold→Scan @ 45° spokes)×∞
-            ↘ if AprilTag detected
-              Approach (lin‑yaw) + camera‑tilt
-              ↘ if close enough
-                Hold & confirm (re‑scan)
-                   ↘ success → Flash lights → Idle
-                   ↘ failure → Restart entire sequence
-"""
 
-class BasicTagMission(Node):
+DEPTH_DEEP   = 2.0  # m
+DEPTH_SHALLOW= 0.0  # m
+HEAD_STEP    = 45   # deg
+HEAD_TOL     = 3.0  # deg tolerance to consider heading reached
+DEPTH_TOL    = 0.08 # m tolerance to consider depth reached
+TAG_STALE    = 1.0  # s
+FLASH_TIME   = 2.0  # s
+APP_X_TOL    = 0.1  # m (target x-offset 0.5 ± tol)
+APP_Y_TOL    = 0.1  # m lateral tol
+APP_TARGET_X = 0.5  # m stand-off
+CMD_SCALE    = 700  # ManualControl stick scale for x/y
+
+
+class ScanAndFlashStrategy(Node):
+    STATE_WAIT, STATE_SCAN, STATE_APPROACH, STATE_FLASH = range(4)
+
+
     def __init__(self):
-        super().__init__('basic_tag_mission')
+        super().__init__('scan_and_flash_strategy')
 
-        # — Callback groups —
-        self.fast_group = ReentrantCallbackGroup()
 
-        # — Publishers —
-        self.pub_target_depth = self.create_publisher(Float64,      'target_depth',     10)
-        self.pub_manual       = self.create_publisher(ManualControl,'/manual_control',  10)
-        self.pub_lights       = self.create_publisher(OverrideRCIn, 'override_rc',      10)
-        self.pub_camera_tilt  = self.create_publisher(Float64,      'camera_tilt',      10)
+        # ── pubs for other controllers ──
+        self.pub_depth   = self.create_publisher(Float64,       '/target_depth',   10)
+        self.pub_heading = self.create_publisher(Float64,       '/target_heading', 10)
+        self.pub_manual  = self.create_publisher(ManualControl, '/manual_control', 10)
+        self.pub_lights  = self.create_publisher(OverrideRCIn,  '/override_rc',    10)
 
-        # — Subscribers —
-        self.create_subscription(Float64,            'depth',              self.depth_cb,   10,
-                                 callback_group=self.fast_group)
-        self.create_subscription(Float64MultiArray, 'apriltag/detection', self.detect_cb,  10,
-                                 callback_group=self.fast_group)
-        self.create_subscription(Int16,              '/heading',           self.heading_cb, 10,
-                                 callback_group=self.fast_group)
 
-        # — State machine —
-        self.state              = 0          # see timer_cb()
-        self.start_time         = self.get_clock().now()
-        self.rescan_start_time  = None
-        self.state6_start_time  = None
+        # ── subs ──
+        self.create_subscription(Int16, '/heading', self.heading_cb, 10)
+        self.create_subscription(Float64, '/depth', self.depth_cb, 10)
+        self.create_subscription(Float64MultiArray, '/apriltag/detection', self.tag_cb, 10)
 
-        # — Sensor storage —
-        self.current_depth      = None
-        self.tag_position       = None      # [x, y, z] metres in camera frame
-        self.initial_tag_pos    = None
-        self.current_heading    = None
 
-        # — Dive / backup params —
-        self.DIVE_DEPTH   = 2.0     # m
-        self.DIVE_TOL     = 0.10    # m
-        self.DIVE_SETTLE  = 2.0     # s  hold at depth
-        self.BACK_SPEED   = -0.20   # m s⁻¹   (negative = reverse)
-        self.BACK_DIST    = 2.0     # m
+        # ── internal ──
+        self.head   = None
+        self.depth  = None
+        self.tag_pos= None   # [id,x,y,z,...]
+        self.t_tag  = 0.0
+        self.scan_depth     = DEPTH_DEEP
+        self.scan_start_head= None
+        self.next_head      = None
+        self.state = self.STATE_WAIT
+        self.t_state = self.now()
 
-        self.backed_dist  = 0.0
-        self.last_back_ts = None
 
-        # — Scan pattern params —
-        self.SCAN_STEP      = 45.0      # °  spokes
-        self.SCAN_TOL       =  2.0      # °  heading tolerance
-        self.SCAN_HOLD      =  2.0      # s  dwell at each spoke
-        self.SPIN_RATE      = 60.0      # ° s⁻¹ commanded yaw rate
+        self.create_timer(0.1, self.loop)
+        self.get_logger().info('Scan-and-flash strategy node initialised.')
 
-        self.cw_offsets     = [i*self.SCAN_STEP for i in range(1,9)]
-        self.scanning_fw    = True
-        self.start_heading  = None
-        self.next_heading   = None
-        self.offset_idx     = 0
-        self.hold_start     = None
 
-        # — Tilt limits —
-        self.TILT_MIN       = -30.0
-        self.TILT_MAX       =  30.0
+    # time helper
+    def now(self):
+        return self.get_clock().now().nanoseconds * 1e-9
 
-        # — Timer @10 Hz —
-        self.create_timer(0.1, self.timer_cb, callback_group=self.fast_group)
-        self.get_logger().info("🚀 BasicTagMission node started")
 
-    # ───────────────────────── Callbacks ──────────────────────────
-    def depth_cb(self, msg: Float64):
-        self.current_depth = msg.data
-
-    def detect_cb(self, msg: Float64MultiArray):
-        # Expected layout: [id, x, y, z, ...] in metres
-        if len(msg.data) >= 4:
-            self.tag_position = list(msg.data[1:4])
-
+    # subscriptions
     def heading_cb(self, msg: Int16):
-        self.current_heading = float(msg.data)
+        self.head = float(msg.data)
 
-    # ───────────────────────── Helpers ────────────────────────────
-    @staticmethod
-    def angle_diff(target: float, current: float) -> float:
-        """Return signed smallest difference target‑current (°)."""
-        return (target - current + 180.0) % 360.0 - 180.0
 
-    def turn_lights(self, level: int):
-        """Set both light channels to `level` (0‑100)."""
-        cmd = OverrideRCIn()
-        cmd.channels = [OverrideRCIn.CHAN_NOCHANGE]*10
-        for ch in (8,9):
-            cmd.channels[ch] = 1000 + level*10
-        self.pub_lights.publish(cmd)
+    def depth_cb(self, msg: Float64):
+        self.depth = msg.data
 
-    # ───────────────────────── Main FSM ───────────────────────────
-    def timer_cb(self):
-        now = self.get_clock().now()
 
-        # 0 — Dive
-        if self.state == 0:
-            self.pub_target_depth.publish(Float64(data=self.DIVE_DEPTH))
-            self.start_time = now
-            self.state = 1
-            self.get_logger().info("→ State 0: Diving to %.1f m" % self.DIVE_DEPTH)
+    def tag_cb(self, msg: Float64MultiArray):
+        self.tag_pos = list(msg.data)
+        self.t_tag = self.now()
 
-        # 1 — Wait & settle
-        elif self.state == 1:
-            if ( self.current_depth is not None
-                 and abs(self.current_depth - self.DIVE_DEPTH) <= self.DIVE_TOL
-                 and (now - self.start_time).nanoseconds*1e-9 >= self.DIVE_SETTLE ):
-                self.state = 2
-                self.backed_dist  = 0.0
-                self.last_back_ts = now
-                self.get_logger().info("→ Depth settled, start backing up")
 
-        # 2 — Back‑up for fixed distance
-        elif self.state == 2:
-            dt = (now - self.last_back_ts).nanoseconds*1e-9
-            self.last_back_ts = now
-            self.backed_dist += abs(self.BACK_SPEED)*dt
-            if self.backed_dist < self.BACK_DIST:
-                self.pub_manual.publish(ManualControl(x=self.BACK_SPEED, y=0.0, z=0.0, r=0.0))
-            else:
-                self.pub_manual.publish(ManualControl(x=0.0, y=0.0, z=0.0, r=0.0))
-                self.state = 3
-                self.get_logger().info("→ Back‑up complete (%.1f m)" % self.BACK_DIST)
+    # utilities
+    def publish_depth(self, d):
+        self.pub_depth.publish(Float64(data=float(d)))
 
-        # 3 — Initialise spoke‑scan
-        elif self.state == 3:
-            if self.current_heading is not None:
-                self.start_heading = self.current_heading
-                self.scanning_fw   = True
-                self.offset_idx    = 0
-                self.next_heading  = (self.start_heading + self.cw_offsets[0]) % 360.0
-                self.hold_start    = None
-                self.state         = 4
-                self.get_logger().info(f"→ Scan initialised, first spoke at {self.next_heading:.1f}°")
 
-        # 4 — Rotate → Hold → Scan
-        elif self.state == 4:
-            # Detection overrides scan loop
-            if self.tag_position is not None:
-                self.initial_tag_pos = list(self.tag_position)
-                self.state = 5
-                self.get_logger().info("→ AprilTag detected, begin approach")
+    def publish_heading(self, h):
+        self.pub_heading.publish(Float64(data=float(h % 360)))
+
+
+    def heading_reached(self):
+        if self.head is None or self.next_head is None:
+            return False
+        err = ((self.next_head - self.head + 540) % 360) - 180
+        return abs(err) < HEAD_TOL
+
+
+    def depth_reached(self):
+        return self.depth is not None and abs(self.depth - self.scan_depth) < DEPTH_TOL
+
+
+    def tag_fresh(self):
+        return (self.now() - self.t_tag) < TAG_STALE
+
+
+    # main FSM loop
+    def loop(self):
+        if self.head is None or self.depth is None:
+            return  # wait for sensors
+
+
+        if self.state == self.STATE_WAIT:
+            # initialise first scan
+            self.scan_start_head = round(self.head / HEAD_STEP) * HEAD_STEP
+            self.next_head = self.scan_start_head % 360
+            self.publish_heading(self.next_head)
+            self.publish_depth(self.scan_depth)
+            self.state = self.STATE_SCAN; self.t_state = self.now()
+            self.get_logger().info('→ SCAN start')
+
+
+        elif self.state == self.STATE_SCAN:
+            # tag found?
+            if self.tag_fresh():
+                self.state = self.STATE_APPROACH; self.t_state = self.now()
+                self.get_logger().info('Tag detected → APPROACH')
                 return
+            # move through headings
+            if self.heading_reached():
+                # step to next 45°
+                self.next_head = (self.next_head + HEAD_STEP) % 360
+                self.publish_heading(self.next_head)
+                # completed full circle?
+                if self.next_head == self.scan_start_head:
+                    # toggle depth level
+                    self.scan_depth = DEPTH_SHALLOW if self.scan_depth == DEPTH_DEEP else DEPTH_DEEP
+                    self.publish_depth(self.scan_depth)
+                    self.get_logger().info(f'Full rotation done → toggling depth to {self.scan_depth:.1f} m')
+            # ensure depth PID is on target
+            if not self.depth_reached():
+                self.publish_depth(self.scan_depth)
 
-            if self.current_heading is None:
-                # no compass yet, keep spinning
-                self.pub_manual.publish(ManualControl(r=self.SPIN_RATE, x=0.0, y=0.0, z=0.0))
+
+        elif self.state == self.STATE_APPROACH:
+            if not self.tag_fresh():
+                # lost tag → resume scan
+                self.state = self.STATE_SCAN; self.t_state = self.now()
+                self.get_logger().info('Lost tag → resume scan')
+                self.publish_manual(0,0)
                 return
+            _, x, y, z, *_ = self.tag_pos
+            # keep 0.5 m standoff in +x (forward) axis, centre y
+            dx = x - APP_TARGET_X
+            dy = y
+            surge  = CMD_SCALE if dx > APP_X_TOL else -CMD_SCALE if dx < -APP_X_TOL else 0
+            strafe = CMD_SCALE if dy > APP_Y_TOL else -CMD_SCALE if dy < -APP_Y_TOL else 0
+            self.publish_manual(surge, strafe)
+            # align depth setpoint toward tag z coordinate
+            self.publish_depth(self.depth + z)
+            if abs(dx) < APP_X_TOL and abs(dy) < APP_Y_TOL:
+                self.publish_manual(0,0)
+                self.state = self.STATE_FLASH; self.t_state = self.now()
+                self.get_logger().info('Within stand-off → FLASH')
 
-            diff = self.angle_diff(self.next_heading, self.current_heading)
-            if abs(diff) <= self.SCAN_TOL:
-                # at spoke heading
-                if self.hold_start is None:
-                    self.hold_start = now
-                    self.pub_manual.publish(ManualControl(r=0.0, x=0.0, y=0.0, z=0.0))
-                    self.get_logger().info(f"   Holding {self.next_heading:.1f}°")
-                elif (now - self.hold_start).nanoseconds*1e-9 >= self.SCAN_HOLD:
-                    # advance to next spoke
-                    self.offset_idx += 1
-                    if self.offset_idx >= len(self.cw_offsets):
-                        self.scanning_fw = not self.scanning_fw
-                        self.offset_idx  = 0
-                    offsets = self.cw_offsets if self.scanning_fw else [-o for o in self.cw_offsets]
-                    self.next_heading = (self.start_heading + offsets[self.offset_idx]) % 360.0
-                    self.hold_start = None
-                    self.get_logger().info(f"→ Next spoke {self.next_heading:.1f}°")
-            else:
-                rate = self.SPIN_RATE if diff > 0 else -self.SPIN_RATE
-                self.pub_manual.publish(ManualControl(r=rate, x=0.0, y=0.0, z=0.0))
 
-        # 5 — Approach
-        elif self.state == 5:
-            x, y, z = self.tag_position  # metres
+        elif self.state == self.STATE_FLASH:
+            rc = OverrideRCIn(); rc.channels=[2000]*8
+            self.pub_lights.publish(rc)
+            self.state = self.STATE_FLASHING; self.t_state = self.now()
+        elif self.state == self.STATE_FLASHING:
+            if self.now() - self.t_state > FLASH_TIME:
+                rc = OverrideRCIn(); rc.channels=[1000]*8
+                self.pub_lights.publish(rc)
+                # restart mission
+                self.scan_depth = DEPTH_DEEP
+                self.state = self.STATE_WAIT; self.t_state = self.now()
+                self.get_logger().info('Flash done → restart')
 
-            # camera‑tilt to keep tag centred vertically
-            if abs(y) > 0.10:
-                tilt_deg = max(min(math.degrees(math.atan2(y, z)), self.TILT_MAX), self.TILT_MIN)
-                self.pub_camera_tilt.publish(Float64(data=tilt_deg))
 
-            # proportional drive toward 1 m stand‑off
-            fwd_cmd = (z - 1.0)*500.0
-            yaw_cmd = x*500.0
-            cf = max(min(fwd_cmd, 600.0), -600.0)/600.0
-            cy = max(min(yaw_cmd, 600.0), -600.0)/600.0
-            self.pub_manual.publish(ManualControl(x=cf, y=0.0, z=0.0, r=cy))
+    def publish_manual(self, x=0.0, y=0.0):
+        mc = ManualControl(x=float(x), y=float(y), z=0.0, r=0.0)
+        self.pub_manual.publish(mc)
 
-            # Reached original relative pose?  Stop & re‑scan
-            x0, y0, z0 = self.initial_tag_pos
-            if ( abs(z - z0) <= 0.05 and abs(x) <= 1.0 and abs(y - y0) <= 0.05 ):
-                self.pub_manual.publish(ManualControl(x=0.0, y=0.0, z=0.0, r=0.0))
-                self.rescan_start_time = now
-                self.state = 55
-                self.get_logger().info("→ Holding; verifying ≤1 m")
 
-        # 55 — Confirmation re‑scan
-        elif self.state == 55:
-            if (now - self.rescan_start_time).nanoseconds*1e-9 < 1.0:
-                return
-            if self.tag_position is not None and self.tag_position[2] <= 1.0:
-                self.turn_lights(100)
-                self.state6_start_time = now
-                self.state = 6
-                self.get_logger().info("✅ Confirmed, flashing lights")
-            else:
-                self.get_logger().info("❌ Verification failed — restarting mission")
-                # reset all mission variables
-                self.tag_position = None
-                self.state = 0
-                self.start_time = now
 
-        # 6 — Lights on (3 s)
-        elif self.state == 6:
-            if (now - self.state6_start_time).nanoseconds*1e-9 >= 3.0:
-                self.turn_lights(0)
-                self.state = 7
-                self.get_logger().info("→ Lights off, mission complete")
-
-        # 7 — Idle
-        elif self.state == 7:
-            pass
 
 def main():
     rclpy.init()
-    node = BasicTagMission()
+    node = ScanAndFlashStrategy()
     try:
         rclpy.spin(node)
     finally:
-        node.destroy_node()
-        rclpy.shutdown()
+        node.destroy_node(); rclpy.shutdown()
+
 
 if __name__ == '__main__':
     main()
